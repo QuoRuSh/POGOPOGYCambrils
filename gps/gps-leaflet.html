@@ -1,0 +1,429 @@
+<!DOCTYPE html><html>
+<meta charset="utf-8" />
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<!-- css -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css">
+<!-- js -->
+<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+<script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<style>
+body {padding: 0; margin: 0;}
+html, body, 
+#map { width: 100vw; height: 100vh; }
+
+.displaypokemon {
+    position: absolute;
+    left: -50px;
+    top: -30px;
+    width: 100px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.pokeimg> img {
+    padding-top: 5px;
+    margin: 0;
+    max-width: 50px;
+    min-height: 25px;
+    max-height: 50px;
+}
+.remainingtext, .pokemonDescription{
+    border-radius: 25px;
+    background-color: black;
+    text-align: center;
+    background-color: rgba(100, 100, 100, 0.7);
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+}
+.pokemonDescription {visibility: hidden;}
+</style>
+ 
+</head>
+
+<body>
+
+   <div id="map"></div>
+
+<script>
+// https://fastpokemap.se/#41.36614052687682,2.140799760818482 ((nido charmander))
+// 41.526375, 2.4444620 - mataro puerto
+// 41.48196, 2.32232 - masnou
+// 41.66, -4.72 - valladolid
+// https://www.serebii.net/pokemongo/pokemon/shiny/220.png
+
+
+var map = L.map('map', {center: [41.48192, 2.32266], zoom: 16}),
+    marker = L.marker(map.getCenter()).addTo(map),
+    circle = L.circle(map.getCenter(), 200).addTo(map),
+
+    onLocationfound = function(e){
+      marker.setLatLng(e.latlng);
+      circle.setLatLng(e.latlng);
+
+      map.setView(marker.getLatLng(),map.getZoom());
+      //marker.bindPopup('<p>Estas aqui: '+marker.getLatLng().toString()+'</p>').openPopup();
+      marker.bindPopup('<p>Estas aqui: '+e.latlng.lat.toFixed(5)+", "+e.latlng.lng.toFixed(5)+'</p>').openPopup();
+      //alert('Marker has been set to position :'+marker.lat.toFixed(5)+", "+marker.lng.toFixed(5));
+    };
+        
+    L.tileLayer('https://api.mapbox.com/styles/v1/poulzinho/ciu2fc21400k32iqi2gkb7h7g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicG91bHppbmhvIiwiYSI6ImNpdTJmMmlwMTAwMHAyeW55NmVpbXpoY3oifQ._S-9Yx6OXlnMMq_MgsodlA', {
+        maxZoom: 18,
+        noWrap: true
+    }).addTo(map);
+    
+    map.on('locationfound', onLocationfound);
+    map.on('click', onLocationfound);
+    //map.locate({setView: true, maxZoom: 16,watch:true,timeout: 60000});
+    map.locate({setView: true, maxZoom: 16, watch:true, enableHighAccuracy: true, maximumAge:10000, frequency: 1});
+
+function onLocationError(e) {alert(e.message);}
+map.on('locationerror', onLocationError);
+
+// search coordenate
+map.addControl( new L.Control.Search({
+  url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+  jsonpParam: 'json_callback',
+  propertyName: 'display_name',
+  propertyLoc: ['lat','lon'],
+  marker: {
+      // icon: new L.Icon({iconUrl:'icons/pstop1.png', iconSize: [0,0]}),
+      circle: {
+        radius: 30,
+        color: '#0a0',
+        opacity: 1
+      }
+    },
+  autoCollapse: true,
+  autoType: false,
+  minLength: 2
+}));
+
+// logo pokemongo _______________________
+L.Control.Watermark = L.Control.extend({
+    onAdd: function(map) {
+        var img = L.DomUtil.create('img');
+        img.src = 'https://pokemongolive.com/img/global/pgo_logo.png';
+        img.style.width = '100px';
+        return img;
+    },
+    onRemove: function(map) {}
+});
+L.control.watermark = function(opts) {
+    return new L.Control.Watermark(opts);
+}
+L.control.watermark({ position: 'bottomleft' }).addTo(map);
+// fin logo pokemongo ____________________
+
+</script>
+<script>
+var nearby = [];
+var immediate = [];
+var pokemonPNG = [];
+
+var PokemonIdList={"HORSEA":116,"DODUO":'084'};
+var pokemonNames={116:'Horsea','084':'Doduo'};
+
+// time nidos dias ---------------------
+var deadline = 'Oct 5 2017 0:00:00 GMT';
+if (deadline == '') { deadline = base_deadline; }
+var date_clock = get_recurring_week_day_v2(deadline, 2);
+initializeClock('remainingtext', date_clock, 0, '');
+var timee = Date.parse(date_clock);
+// time nidos---------------------
+
+var JSONoriginal = '{"result":[{"spawn_point_id":"116","encounter_id":"p116","pokemon_id":"HORSEA","expiration_timestamp_ms":"1550138400000","latitude":41.48214,"longitude":2.32868},{"spawn_point_id":"084","encounter_id":"p084","pokemon_id":"DODUO","expiration_timestamp_ms":"'+timee+'","latitude":41.48242,"longitude":2.32531}]}';
+
+// http://stackoverflow.com/questions/39399446/trying-to-display-and-update-map-markers-using-leaflet-js
+// http://www.timestampconvert.com/?go1=true&m=12&d=29&y=2016&hours=000&min=09&sec=48&Submit=++++++Convert+to+timestamp+++++&offset=-1
+
+var pokemon = JSON.parse(JSONoriginal);
+// var pokemon = 'https://api.jsonbin.io/b/5c479f111ca2fd17f8d74424';
+// var pokemon2 = JSON.parse(pokemon);
+// https://api.jsonbin.io/b/5c479f111ca2fd17f8d74424
+// console.log(pokemon);
+
+
+// pokeSpawn
+// ------------------------------
+var pokemon1 = [
+// nidos masnou cerca del dia 0,1,2,3,4
+    ["417","417","Pachirisu",53.547310, -113.534225],
+    ["455","455","Carnivine",30.332212,-81.655731],
+    ["122","122","Mr.Mime",41.48293,2.32395],
+    ["441","441","Chatot",-23.5848435,-46.6559132],
+    ["214","214","Heracross",-23.583768,-46.661171],
+    ["369","369","Relicanth",-41.33150051905472,174.8302646757152],
+    ["369","369","Relicanth",-36.840752,174.765015],
+    ["369","369","Torkoal",28.590581092991236,77.24265351891518],
+    ["369","369","Tropius",-33.925449,18.423904],
+    ["369","369","Farfetch-d",35.6961,139.8144],
+];
+var LeafIcon = L.Icon.extend({
+    options: {
+      iconSize:     [50, 50],
+      popupAnchor:  [0, -16]
+    }
+});
+var pokenido;
+for (var i = 0; i < pokemon1.length; i++) {
+      pokenido = new L.marker([pokemon1[i][3],pokemon1[i][4]],{
+        icon: new LeafIcon({iconUrl: 'http://www.serebii.net/pokemongo/pokemon/'+pokemon1[i][1]+'.png'})
+      })
+        //.bindPopup('<h1>'+pokemonNames[pokemon1[i][0]]+' '+[pokemon1[i][0]]+'</h3>'+
+        .bindPopup('<h1>'+[pokemon1[i][2]]+' '+[pokemon1[i][0]]+'</h3>'+
+            // '<p>'+[pokemon1[i][3]]+', '+[pokemon1[i][4]]+'</p>'+
+            " <h3><a href='http://maps.google.com/maps?q="+[pokemon1[i][3]]+","+[pokemon1[i][4]]+"'>"+[pokemon1[i][3]]+", "+[pokemon1[i][4]]+"</a></h3>"
+            ).addTo(map);
+    }
+// fin pokespawn ------------------------------------
+
+for(var x=0; x <= pokemon.result.length-1; x++){
+    var aPokemon = {
+        pokemon_id: pokemon.result[x].pokemon_id,
+        encounter_id: pokemon.result[x].encounter_id,
+        expiration_timestamp_ms: pokemon.result[x].expiration_timestamp_ms,
+        latitude: pokemon.result[x].latitude,
+        longitude: pokemon.result[x].longitude
+                };
+        if(pokemon.result[x].expiration_timestamp_ms === undefined){
+            //Check if pokemon's already been put into nearby array, if so then we don't need to do anything
+            var a = nearby.filter(function(a){
+              return a.encounter_id === aPokemon.encounter_id;
+              })[0] || immediate.filter(function(a){
+              return a.encounter_id === aPokemon.encounter_id;
+              })[0];
+            if(a === undefined){
+                //Put in nearby Array because we don't have a location
+                nearby.push(aPokemon);
+            }
+        }else{
+            //Check if pokemon's already been put into nearby array, if so then remove it from there
+            var b = nearby.filter(function(b){
+                return b.encounter_id === aPokemon.encounter_id;
+                })[0];
+            if(b !== undefined){
+                nearby.splice(nearby.indexOf(b),1);
+            }
+            //Check if pokemon's already been put into immediate array, if so then we don't need to do anything
+            var c = immediate.filter(function(c){
+                return c.encounter_id === aPokemon.encounter_id;
+                })[0];
+            if(c === undefined){
+                //Put it in immediate Array because we can locate & display them
+                immediate.push(aPokemon);
+            }
+    }
+  }
+  //This is where we get all of the pokemon icons & populate pokemonPNG[] with the base64 string
+  $.get("https://gist.githubusercontent.com/anonymous/50c284e815df6c81aa53497a305a29f2/raw", function(data) { //Init map
+        var pokemons = data.split("\n");
+        var i;
+        for (i in pokemons) {
+            var pokemondata = pokemons[i].split(":");
+            if (pokemondata.length == 2) {
+                pokemonPNG[pokemondata[0]] = pokemondata[1];
+                //console.log(pokemondata);
+            };
+        }
+        
+    //This loop will display the info of each discovered pokemon within in the area
+    for(var v=0; v <= immediate.length-1; v++){
+      //Use this loop,the coords, and expiration times of each pokemon to create the custom pokemarkers on the map
+      //createPokeIcon(immediate[v].pokemon_id, immediate[v].expiration_timestamp_ms);
+      addPokemonToMap(immediate[v])
+      //document.getElementById("test").innerHTML = document.getElementById("test").innerHTML + '<br>' + '<img src="data:image/png;base64,' + pokemonPNG[PokemonIdList[immediate[v].name]] + '" />' + immediate[v].name + ' - ei:' + immediate[v].encounter_id;
+        }
+    
+    //This loop will display the images of all pokemon that is nearby that we don't have coords for
+        for(var q=0; q <= nearby.length-1; q++){ }
+    });
+//----------------------------------------------------------------
+// https://www.serebii.net/pokemongo/pokemon/809.png
+//#shiny - https://www.serebii.net/pokemongo/pokemon/shiny/261.png
+
+var shownMarker = [];
+
+L.HtmlIcon = L.Icon.extend({
+    options: {},
+
+    initialize: function(options) {
+        L.Util.setOptions(this, options);
+    },
+
+    createIcon: function() {
+        //-- Adding pokemon --
+        var div = document.createElement('div');
+    div.innerHTML =
+      '<div class="displaypokemon" data-pokeid="' + this.options.pokemonid  + '">' +
+      '<div class="pokeimg">' +
+      // '<img src="data:image/png;base64,' + pokemonPNG[this.options.pokemonid] + '" />' +
+      '<img src="https://www.serebii.net/pokemongo/pokemon/' + this.options.pokemonid + '.png" height="50"/>' +
+      '</div>' +
+      '<div class="remainingtext" id="remainingtext" data-expire="' + this.options.expire + '"></div>' +
+      '</div>';
+      // console.log(this.options.pokemonid);
+        return div;
+    },
+    createShadow: function() {
+        return null;
+    }
+});
+
+var map;
+
+function deleteDespawnedPokemon() {
+    var j;
+    for (j in shownMarker) {
+        var active = shownMarker[j].active;
+        var expire = shownMarker[j].expire;
+        var now = Date.now();
+        if (active == true && expire <= now) {
+            map.removeLayer(shownMarker[j].marker);
+            shownMarker[j].active = false;
+        }
+    }
+}
+function createPokeIcon(pokemonid, timestamp) {
+    return new L.HtmlIcon({
+        pokemonid: pokemonid,
+        expire: timestamp,
+    });
+}
+function addPokemonToMap(spawn) {
+    var j;
+    var toAdd = true;
+    if (spawn.expiration_timestamp_ms <= 0){
+        spawn.expiration_timestamp_ms = Date.now() + 930000;
+    }
+    for (j in shownMarker) {
+        if (shownMarker[j].id == spawn.encounter_id) {
+            toAdd = false;
+            break
+        }
+    }
+    if (toAdd) {
+        var cp = new L.LatLng(spawn.latitude, spawn.longitude);
+        var pokeid = PokemonIdList[spawn.pokemon_id];
+        var pokenombre = pokemonNames[pokeid];
+        var pokeMarker = new L.marker(cp, {
+            icon: createPokeIcon(pokeid, spawn.expiration_timestamp_ms)
+        });
+        shownMarker.push({
+            marker: pokeMarker,
+            expire: spawn.expiration_timestamp_ms,
+            id: spawn.encounter_id,
+            active: true
+        });
+        map.addLayer(pokeMarker);
+        pokeMarker.setLatLng(cp).bindPopup('<h1>Nido: '+pokenombre+' '+pokeid+'</h1>'+
+            // '<p>'+cp.lat+', '+cp.lng+'</p>'
+            " <h3><a href='http://maps.google.com/maps?q="+cp.lat+","+cp.lng+"'>"+cp.lat+", "+cp.lng+"</a></h3>"
+            );
+    }
+}
+//TODO:<--Timer Functions-->______________________________________//
+function component(x, v) {
+    return Math.floor(x / v);
+}
+
+function calculateRemainingTime(element) {
+    var $element = $(element);
+    var ts = ($element.data("expire") / 1000 | 0) - (Date.now() / 1000 | 0);
+
+var dias = component(ts,(3600*24));
+var horas = component(ts, 60) / 3600 | 1;      
+
+    var minutes = component(ts, 60) % 60,
+        seconds = component(ts, 1) % 60;
+    if (seconds < 10)
+        seconds = '0' + seconds;
+    
+//$element.html(dias+ "d " +horas+ "h " +minutes+ ":" +seconds);
+    $element.html(minutes + ":" + seconds);
+}
+
+function updateTime() {
+    deleteDespawnedPokemon();
+    $(".remainingtext, .remainingtext-tooltip").each(function() {
+        calculateRemainingTime(this);
+    });
+}
+setInterval(updateTime, 1000);
+//<--End of timer functions-->//
+
+
+function getTimeRemaining(endtime){
+          //https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+          var t = Date.parse(endtime) - Date.parse(new Date());
+          var seconds = Math.floor( (t/1000) % 60 );
+          var minutes = Math.floor( (t/1000/60) % 60 );
+          var hours = Math.floor( (t/(1000*60*60)) % 24 );
+          var days = Math.floor( t/(1000*60*60*24) );
+          return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+          };
+        }
+function initializeClock(id, endtime, negative_time, message){
+          if (message == null) { message = ''; }
+          
+          //https://www.sitepoint.com/build-javascript-countdown-timer-no-dependencies/
+          if (negative_time != 1 && negative_time != -1) { negative_time = 1; }
+          else { negative_time = -1; }
+          var clock = document.getElementById(id);
+          var timeinterval = setInterval(function(){
+            var t = getTimeRemaining(endtime);
+            if (t.total < 0) { t.days += 1; t.hours += 1; t.minutes += 1; t.seconds += 1;}
+            var days_string = '';
+            var hours_string = '';  
+if (negative_time * t.days > 0) {
+days_string = '<span class=\'day\'><span class=\'t_val\'>' + negative_time * t.days + '</span>d</span> ';
+}
+if (((negative_time * t.hours) > 0) || ((negative_time * t.days) > 0)) {
+hours_string = '<span class=\'hour\'><span class=\'t_val\'>'+ negative_time * t.hours + '</span>h</span> ';
+}
+
+// clock.innerHTML = days_string + hours_string + 
+//           '<span class=\'min\'><span class=\'t_val\'>' + negative_time * t.minutes + '</span>m</span> ' +
+//           '<span class=\'sec\'><span class=\'t_val\'>' + negative_time * t.seconds + '</span>s</span> ';
+            
+            if(message != '' && (negative_time * t.total)<=0){
+              clock.innerHTML = message;
+              clock.classList.add("ended");
+              clearInterval(timeinterval);
+            } 
+            if((negative_time * t.total)<=0){
+              clearInterval(timeinterval);
+            } 
+          },1000);
+          
+          return timeinterval;
+        }
+function get_recurring_week_day_v2(start_day, week_skip, count_today) {
+  //This  function accepts a date, and count of weeks before recurring, and returns the next valid date
+  //Get the requested date
+  var input_date = new Date(start_day); //alert(input_date);
+  var today = new Date(); //alert(today); //Get todays date
+  //get_temp_date
+  var days = (week_skip * 7);
+  var temp_date = new Date(input_date);
+  temp_date.setDate(temp_date.getDate() + days); //alert(temp_date);
+  //Loop every increment weeks until the date passes 'today'
+  while (temp_date < today) { 
+    temp_date.setDate(temp_date.getDate() + days);
+  }
+  return temp_date;
+}
+</script>
+<!-- <script src="cordova.js"></script> -->
+</body> 
+</html>

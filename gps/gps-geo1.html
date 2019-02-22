@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8" />
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.css" />
+  <link rel="stylesheet" href="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css">
+  <!-- <link rel="stylesheet" href="http://danielmontague.com/projects/easyButton.js/v1/examples/main.css"> -->
+<!-- <link rel="stylesheet" href="http://labs.easyblog.it/maps/leaflet-gps/src/leaflet-gps.css"> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js"></script>
+  <script src="https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js"></script>
+<!-- <script src="http://labs.easyblog.it/maps/leaflet-gps/src/leaflet-gps.js"></script> -->
+  <!-- <script src="http://danielmontague.com/projects/easyButton.js/v1/examples/main.js"></script> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.css" />
+<script src="https://domoritz.github.io/leaflet-locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+<style>
+/*#map { width: 800px; height: 600px; }*/
+body {padding: 0; margin: 0;}
+html, body,
+#map { width: 100vw; height: 100vh; }
+.displaypokemon {
+    position: absolute;
+    left: -25px;
+    top: -40px;
+    width: 80px;
+    margin: 0;padding: 0;
+    text-align: center;
+}
+.pokeimg > img {
+    padding-top: 5px;
+    margin: 0;
+    min-height: 25px;
+    margin-bottom: -5px;
+    
+    max-height: 80px;
+    max-width: 80px;
+}
+.remainingtext, .pokemonDescription{
+    border-radius: 25px;
+    background-color: black;
+    text-align: center;
+    background-color: rgba(100, 100, 100, 0.7);
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+}
+.pokemonDescription {visibility: hidden;}
+</style>
+
+</head>
+
+<body>
+
+<!-- <input type="button" value="Locate me!" onClick="javascript:getLocationLeaflet();" class="gpsboton"> -->
+
+   <div id="map">
+    <div class="leaflet-bar easy-button-container leaflet-control" style="margin-top: 110px;margin-left: 10px;z-index: 1000;">
+<!--     <button onClick="getLocationLeaflet()" class="easy-button-button leaflet-bar-part unnamed-state-active">localizar
+    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+    </button> -->
+    </div>
+   </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="http://maps.google.com/maps/api/js?v=3&key=AIzaSyBm5hiQC4t2wPhGoPKIlL-Vskn3HJHp1JU"></script>
+<script>
+var nearby = [];
+var immediate = [];
+var pokemonPNG = [];
+var PokemonIdList={"BULBASAUR":"001","IVYSAUR":2,"VENUSAUR":3,"CHARMANDER":4,"CHARMELEON":5,"CHARIZARD":6,"SQUIRTLE":7,"WARTORTLE":8,"BLASTOISE":9,"CATERPIE":10,"METAPOD":11,"BUTTERFREE":12,"WEEDLE":13,"KAKUNA":14,"BEEDRILL":15,"PIDGEY":16,"PIDGEOTTO":17,"PIDGEOT":18,"RATTATA":19,"RATICATE":20,"SPEAROW":21,"FEAROW":22,"EKANS":23,"ARBOK":24,"PIKACHU":25,"RAICHU":26,"SANDSHREW":27,"SANDSLASH":28,"NIDORAN_FEMALE":29,"NIDORINA":30,"NIDOQUEEN":31,"NIDORAN_MALE":32,"NIDORINO":33,"NIDOKING":34,"CLEFAIRY":35,"CLEFABLE":36,"VULPIX":37,"NINETALES":38,"JIGGLYPUFF":39,"WIGGLYTUFF":40,"ZUBAT":41,"GOLBAT":42,"ODDISH":43,"GLOOM":44,"VILEPLUME":45,"PARAS":46,"PARASECT":47,"VENONAT":48,"VENOMOTH":49,"DIGLETT":50,"DUGTRIO":51,"MEOWTH":52,"PERSIAN":53,"PSYDUCK":54,"GOLDUCK":55,"MANKEY":56,"PRIMEAPE":57,"GROWLITHE":58,"ARCANINE":59,"POLIWAG":60,"POLIWHIRL":61,"POLIWRATH":62,"ABRA":63,"KADABRA":64,"ALAKAZAM":65,"MACHOP":66,"MACHOKE":67,"MACHAMP":68,"BELLSPROUT":69,"WEEPINBELL":70,"VICTREEBEL":71,"TENTACOOL":72,"TENTACRUEL":73,"GEODUDE":74,"GRAVELER":75,"GOLEM":76,"PONYTA":77,"RAPIDASH":78,"SLOWPOKE":79,"SLOWBRO":80,"MAGNEMITE":81,"MAGNETON":82,"FARFETCHD":83,"DODUO":84,"DODRIO":85,"SEEL":86,"DEWGONG":87,"GRIMER":88,"MUK":89,"SHELLDER":90,"CLOYSTER":91,"GASTLY":92,"HAUNTER":93,"GENGAR":94,"ONIX":95,"DROWZEE":96,"HYPNO":97,"KRABBY":98,"KINGLER":99,"VOLTORB":100,"ELECTRODE":101,"EXEGGCUTE":102,"EXEGGUTOR":103,"CUBONE":104,"MAROWAK":105,"HITMONLEE":106,"HITMONCHAN":107,"LICKITUNG":108,"KOFFING":109,"WEEZING":110,"RHYHORN":111,"RHYDON":112,"CHANSEY":113,"TANGELA":114,"KANGASKHAN":115,"HORSEA":116,"SEADRA":117,"GOLDEEN":118,"SEAKING":119,"STARYU":120,"STARMIE":121,"MR_MIME":122,"SCYTHER":123,"JYNX":124,"ELECTABUZZ":125,"MAGMAR":126,"PINSIR":127,"TAUROS":128,"MAGIKARP":129,"GYARADOS":130,"LAPRAS":131,"DITTO":132,"EEVEE":133,"VAPOREON":134,"JOLTEON":135,"FLAREON":136,"PORYGON":137,"OMANYTE":138,"OMASTAR":139,"KABUTO":140,"KABUTOPS":141,"AERODACTYL":142,"SNORLAX":143,"ARTICUNO":144,"ZAPDOS":145,"MOLTRES":146,"DRATINI":147,"DRAGONAIR":148,"DRAGONITE":149,"MEWTWO":150,"MEW":151};
+var pokemonNames={1:'Bulbasaur',2:'Ivysaur',3:'Venusaur',4:'Charmander',5:'Charmeleon',6:'Charizard',7:'Squirtle',8:'Wartortle',9:'Blastoise',10:'Caterpie',11:'Metapod',12:'Butterfree',13:'Weedle',14:'Kakuna',15:'Beedrill',16:'Pidgey',17:'Pidgeotto',18:'Pidgeot',19:'Rattata',20:'Raticate',21:'Spearow',22:'Fearow',23:'Ekans',24:'Arbok',25:'Pikachu',26:'Raichu',27:'Sandshrew',28:'Sandslash',29:'Nidoran F',30:'Nidorina',31:'Nidoqueen',32:'Nidoran M',33:'Nidorino',34:'Nidoking',35:'Clefairy',36:'Clefable',37:'Vulpix',38:'Ninetales',39:'Jigglypuff',40:'Wigglytuff',41:'Zubat',42:'Golbat',43:'Oddish',44:'Gloom',45:'Vileplume',46:'Paras',47:'Parasect',48:'Venonat',49:'Venomoth',50:'Diglett',51:'Dugtrio',52:'Meowth',53:'Persian',54:'Psyduck',55:'Golduck',56:'Mankey',57:'Primeape',58:'Growlithe',59:'Arcanine',60:'Poliwag',61:'Poliwhirl',62:'Poliwrath',63:'Abra',64:'Kadabra',65:'Alakazam',66:'Machop',67:'Machoke',68:'Machamp',69:'Bellsprout',70:'Weepinbell',71:'Victreebel',72:'Tentacool',73:'Tentacruel',74:'Geodude',75:'Graveler',76:'Golem',77:'Ponyta',78:'Rapidash',79:'Slowpoke',80:'Slowbro',81:'Magnemite',82:'Magneton',83:'Farfetch\'d',84:'Doduo',85:'Dodrio',86:'Seel',87:'Dewgong',88:'Grimer',89:'Muk',90:'Shellder',91:'Cloyster',92:'Gastly',93:'Haunter',94:'Gengar',95:'Onix',96:'Drowzee',97:'Hypno',98:'Krabby',99:'Kingler',100:'Voltorb',101:'Electrode',102:'Exeggcute',103:'Exeggutor',104:'Cubone',105:'Marowak',106:'Hitmonlee',107:'Hitmonchan',108:'Lickitung',109:'Koffing',110:'Weezing',111:'Rhyhorn',112:'Rhydon',113:'Chansey',114:'Tangela',115:'Kangaskhan',116:'Horsea',117:'Seadra',118:'Goldeen',119:'Seaking',120:'Staryu',121:'Starmie',122:'Mr. Mime',123:'Scyther',124:'Jynx',125:'Electabuzz',126:'Magmar',127:'Pinsir',128:'Tauros',129:'Magikarp',130:'Gyarados',131:'Lapras',132:'Ditto',133:'Eevee',134:'Vaporeon',135:'Jolteon',136:'Flareon',137:'Porygon',138:'Omanyte',139:'Omastar',140:'Kabuto',141:'Kabutops',142:'Aerodactyl',143:'Snorlax',144:'Articuno',145:'Zapdos',146:'Moltres',147:'Dratini',148:'Dragonair',149:'Dragonite',150:'Mewtwo',151:'Mew',};
+
+// http://stackoverflow.com/questions/39399446/trying-to-display-and-update-map-markers-using-leaflet-js
+// http://www.timestampconvert.com/?go1=true&m=12&d=29&y=2016&hours=000&min=09&sec=48&Submit=++++++Convert+to+timestamp+++++&offset=-1
+
+
+// var JSONoriginal = '{"result":[{"spawn_point_id":"89c6b2b74eb","encounter_id":"17595616108553733725","pokemon_id":"DITTO","expiration_timestamp_ms":"1480375428000","latitude":41.48233,"longitude":2.32949},{"spawn_point_id":"89c6b2b7527","encounter_id":"15758529471226189581","pokemon_id":"RATTATA","expiration_timestamp_ms":"1482966588000","latitude":41.48603,"longitude":2.32365},{"spawn_point_id":"89c6b2b7493","encounter_id":"6971983303221213597","pokemon_id":"PIDGEY","expiration_timestamp_ms":"1473450294924","latitude":40.12008071126005,"longitude":-74.97818292221527},{"spawn_point_id":"89c6b2b74e5","encounter_id":"17480543075921433165","pokemon_id":"GOLDEEN","expiration_timestamp_ms":"1473450167828","latitude":40.120116933591156,"longitude":-74.97845684520395},{"spawn_point_id":"89c6b2b74e1","encounter_id":"17902760558575156637","pokemon_id":"RATTATA","expiration_timestamp_ms":"1473450053732","latitude":40.12020726772806,"longitude":-74.97854815276379},{"pokemon_id":"PIDGEY","encounter_id":"17595616108553733725","zone":"9927818928707338240"},{"pokemon_id":"RATTATA","encounter_id":"15758529471226189581","zone":"9927818928707338240"},{"pokemon_id":"PIDGEY","encounter_id":"6971983303221213597","zone":"9927818928707338240"},{"pokemon_id":"GOLDEEN","encounter_id":"17480543075921433165","zone":"9927818928707338240"},{"pokemon_id":"BELLSPROUT","encounter_id":"15810554652223729517","zone":"9927818928707338240"},{"pokemon_id":"RATTATA","encounter_id":"17902760558575156637","zone":"9927818928707338240"},{"pokemon_id":"MAGIKARP","encounter_id":"17984477020114413197","zone":"9927818939444756480"},{"pokemon_id":"MAGIKARP","encounter_id":"14216573127881077421","zone":"9927818939444756480"},{"pokemon_id":"STARYU","encounter_id":"18138745508711527341","zone":"9927818939444756480"},{"pokemon_id":"ODDISH","encounter_id":"14888691940006486829","zone":"9927818939444756480"},{"pokemon_id":"RATTATA","encounter_id":"5606307193788009581","zone":"9927818939444756480"}]}';
+
+// muestra
+// ,{"spawn_point_id":"89c6b2b7527","encounter_id":"15758529471226189581","pokemon_id":"EEVEE","expiration_timestamp_ms":"1480464648000","latitude":41.48603,"longitude":2.32365}
+// ,{"spawn_point_id":"002","encounter_id":"p002","pokemon_id":"EEVEE","expiration_timestamp_ms":"1480464648000","latitude":41.48603,"longitude":2.32365}
+
+// var JSONoriginal = '{"result":[{"spawn_point_id":"001","encounter_id":"p001","pokemon_id":"DITTO","expiration_timestamp_ms":"1481152524000","latitude":41.48233,"longitude":2.32949},{"spawn_point_id":"002","encounter_id":"p002","pokemon_id":"EEVEE","expiration_timestamp_ms":"1481152691000","latitude":41.48603,"longitude":2.32365},{"spawn_point_id":"003","encounter_id":"p003","pokemon_id":"DRATINI","expiration_timestamp_ms":"1481152942000","latitude":41.48351,"longitude":2.32374}]}';
+
+var pokemon1 = [
+    ["140","140",41.439779, 2.173608],
+    ["4","004",41.436216, 2.167750],
+    ["126","126",41.408870, 2.214353],
+    // rhyhorn
+    ["111","111",41.385107, 2.134430],
+    ["111","111",41.40762, 2.17074],
+    ["111","111",41.40960, 2.16806],
+
+    ["138","138",41.403502, 2.195122],
+    ["46","046",41.371579, 2.151883],
+    ["90","090",41.408283, 2.190684],
+    ["123","123",41.377601, 2.184542],
+    ["126","126",41.41518, 2.19469],
+    ["129","129",41.37700, 2.17999],
+    ["54","054",41.37866, 2.18291],
+    ["140","140",41.402214, 2.172792],
+    ["102","102",41.395796, 2.159122],
+    ["56","056",41.36726, 2.14169],
+    ["25","025",41.45522, 2.23179],
+    ["35","035",41.44193, 2.17829],
+    ["35","035",41.44292, 2.17958],
+    ["69","069",41.41512, 2.15250],
+    ["63","063",41.38776, 2.11815],
+// nido pikachu
+    ["25","025",41.403913, 2.195229],
+    ["25","025",41.424350, 2.198017],
+    ["25","025",41.419757, 2.197980],
+    ["25","025",41.382729, 2.192466],
+    ["25","025",41.420742, 2.216979],
+// nidos masnou cerca del dia
+    // ["81","081",41.48186, 2.32233],
+    // ["100","100",41.48166, 2.32162],
+    // ["122","122",41.48293, 2.32395],
+    ["127","127",41.48259, 2.33093],
+    // ["125","125",41.48193, 2.32781],
+    ["37","037",41.48244, 2.32991],
+    //["46","046",41.48244, 2.32991],
+    
+];
+
+var pokemon2 = [
+    // masnou
+    ["001","p001","1550138400000",41.48254, 2.32266],
+    ["002","p002","1550138400000",41.48132, 2.32200],
+    ["003","p003","1550138400000",41.48625, 2.32378],
+    ["304","p304","1550138400000",41.47753, 2.31489],
+    ["404","p404","1550138400000",41.47695, 2.31232],
+    ["504","p504","1550138400000",41.48530, 2.30638],
+    ["604","p604","1550138400000",41.48782, 2.30979],
+    ["704","p704","1550138400000",41.48370, 2.32363],
+    ["804","p804","1550138400000",41.48095, 2.32786],
+    ["904","p904","1550138400000",41.48284, 2.31134],
+];
+// 41.08737, 1.15861 portaventura
+
+var JSONoriginal = '{"result":[{"spawn_point_id":"'+pokemon2[0][0]+'","encounter_id":"'+pokemon2[0][1]+'","pokemon_id":"DITTO","expiration_timestamp_ms":"'+pokemon2[0][2]+'","latitude":'+pokemon2[0][3]+',"longitude":'+pokemon2[0][4]+'},{"spawn_point_id":"'+pokemon2[1][0]+'","encounter_id":"'+pokemon2[1][1]+'","pokemon_id":"EEVEE","expiration_timestamp_ms":"'+pokemon2[1][2]+'","latitude":'+pokemon2[1][3]+',"longitude":'+pokemon2[1][4]+'},{"spawn_point_id":"'+pokemon2[2][0]+'","encounter_id":"'+pokemon2[2][1]+'","pokemon_id":"DRATINI","expiration_timestamp_ms":"'+pokemon2[2][2]+'","latitude":'+pokemon2[2][3]+',"longitude":'+pokemon2[2][4]+'},{"spawn_point_id":"'+pokemon2[3][0]+'","encounter_id":"'+pokemon2[3][1]+'","pokemon_id":"MAGIKARP","expiration_timestamp_ms":"'+pokemon2[3][2]+'","latitude":'+pokemon2[3][3]+',"longitude":'+pokemon2[3][4]+'},{"spawn_point_id":"'+pokemon2[4][0]+'","encounter_id":"'+pokemon2[4][1]+'","pokemon_id":"DRAGONAIR","expiration_timestamp_ms":"'+pokemon2[4][2]+'","latitude":'+pokemon2[4][3]+',"longitude":'+pokemon2[4][4]+'},{"spawn_point_id":"'+pokemon2[5][0]+'","encounter_id":"'+pokemon2[5][1]+'","pokemon_id":"DRAGONITE","expiration_timestamp_ms":"'+pokemon2[5][2]+'","latitude":'+pokemon2[5][3]+',"longitude":'+pokemon2[5][4]+'},{"spawn_point_id":"'+pokemon2[6][0]+'","encounter_id":"'+pokemon2[6][1]+'","pokemon_id":"SQUIRTLE","expiration_timestamp_ms":"'+pokemon2[6][2]+'","latitude":'+pokemon2[6][3]+',"longitude":'+pokemon2[6][4]+'},{"spawn_point_id":"'+pokemon2[7][0]+'","encounter_id":"'+pokemon2[7][1]+'","pokemon_id":"CHARMANDER","expiration_timestamp_ms":"'+pokemon2[7][2]+'","latitude":'+pokemon2[7][3]+',"longitude":'+pokemon2[7][4]+'},{"spawn_point_id":"'+pokemon2[8][0]+'","encounter_id":"'+pokemon2[8][1]+'","pokemon_id":"BULBASAUR","expiration_timestamp_ms":"'+pokemon2[8][2]+'","latitude":'+pokemon2[8][3]+',"longitude":'+pokemon2[8][4]+'},{"spawn_point_id":"'+pokemon2[9][0]+'","encounter_id":"'+pokemon2[9][1]+'","pokemon_id":"SNORLAX","expiration_timestamp_ms":"'+pokemon2[9][2]+'","latitude":'+pokemon2[9][3]+',"longitude":'+pokemon2[9][4]+'}]}';
+
+var pokemon = JSON.parse(JSONoriginal);
+//console.log(JSON.parse(JSONoriginal));
+
+  //encounter_ids are unique to each spawned pokemon, use these to look for & remove duplicates
+  for(var x=0; x <= pokemon.result.length-1; x++){
+    var aPokemon = {
+        pokemon_id: pokemon.result[x].pokemon_id,
+        encounter_id: pokemon.result[x].encounter_id,
+        expiration_timestamp_ms: pokemon.result[x].expiration_timestamp_ms,
+        latitude: pokemon.result[x].latitude,
+        longitude: pokemon.result[x].longitude
+                };
+        if(pokemon.result[x].expiration_timestamp_ms === undefined){
+            //Check if pokemon's already been put into nearby array, if so then we don't need to do anything
+            var a = nearby.filter(function(a){
+              return a.encounter_id === aPokemon.encounter_id;
+              })[0] || immediate.filter(function(a){
+              return a.encounter_id === aPokemon.encounter_id;
+              })[0];
+            if(a === undefined){
+                //Put in nearby Array because we don't have a location
+                nearby.push(aPokemon);
+            }
+        }else{
+            //Check if pokemon's already been put into nearby array, if so then remove it from there
+            var b = nearby.filter(function(b){
+                return b.encounter_id === aPokemon.encounter_id;
+                })[0];
+            if(b !== undefined){
+                nearby.splice(nearby.indexOf(b),1);
+            }
+            //Check if pokemon's already been put into immediate array, if so then we don't need to do anything
+            var c = immediate.filter(function(c){
+                return c.encounter_id === aPokemon.encounter_id;
+                })[0];
+            if(c === undefined){
+                //Put it in immediate Array because we can locate & display them
+                immediate.push(aPokemon);
+            }
+    }
+  }
+
+
+  //This is where we get all of the pokemon icons & populate pokemonPNG[] with the base64 string
+  $.get("https://gist.githubusercontent.com/anonymous/50c284e815df6c81aa53497a305a29f2/raw", function(data) { //Init map
+        var pokemons = data.split("\n");
+        var i;
+        for (i in pokemons) {
+            var pokemondata = pokemons[i].split(":");
+            if (pokemondata.length == 2) {
+                pokemonPNG[pokemondata[0]] = pokemondata[1];
+                //console.log(pokemonPNG[pokemondata[0]]);
+            };
+        }
+
+    //This loop will display the info of each discovered pokemon within in the area
+    for(var v=0; v <= immediate.length-1; v++){
+      //Use this loop,the coords, and expiration times of each pokemon to create the custom pokemarkers on the map
+      //createPokeIcon(immediate[v].pokemon_id, immediate[v].expiration_timestamp_ms);
+      addPokemonToMap(immediate[v])
+      //document.getElementById("test").innerHTML = document.getElementById("test").innerHTML + '<br>' + '<img src="data:image/png;base64,' + pokemonPNG[PokemonIdList[immediate[v].name]] + '" />' + immediate[v].name + ' - ei:' + immediate[v].encounter_id;
+        }
+
+    //This loop will display the images of all pokemon that is nearby that we don't have coords for
+        for(var q=0; q <= nearby.length-1; q++){
+      //Use this loop to display a list of images of each pokemon that is nearby that we don't know the exact location of
+
+      //esto--> document.getElementById("test2").innerHTML = document.getElementById("test2").innerHTML + '<br>' + '<img src="data:image/png;base64,' + pokemonPNG[PokemonIdList[nearby[q].pokemon_id]] + '" />' + nearby[q].pokemon_id + ' - ei:' + nearby[q].encounter_id;
+
+        }
+    });
+
+//----------------------------------------------------------------
+
+function initmap() {
+    map = new L.Map('map');
+    var osmUrl = 'https://api.mapbox.com/styles/v1/poulzinho/ciu2fc21400k32iqi2gkb7h7g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicG91bHppbmhvIiwiYSI6ImNpdTJmMmlwMTAwMHAyeW55NmVpbXpoY3oifQ._S-9Yx6OXlnMMq_MgsodlA';
+    var osm = new L.TileLayer(osmUrl);
+    map.addLayer(osm);
+}
+
+var lat = 41.48196;
+var lng = 2.32232;
+var startLatLng = new L.LatLng(lat, lng);
+
+
+initmap();
+//L.marker(startLatLng).addTo(map).bindPopup("<b>Hello world!</b><br />I am a popup.").openPopup();
+
+L.marker(startLatLng).addTo(map)
+    //.bindPopup("<b>Coordenadas</b><br />"+startLatLng).openPopup();
+    .bindPopup("<b>Coordenadas</b><br />"+startLatLng.lat.toFixed(5)+", "+startLatLng.lng.toFixed(5)).openPopup();
+map.setView(startLatLng, 16);
+
+function onLocationFound(e) {
+     //var radius = e.accuracy / 2;
+     var location = e.latlng;
+     L.marker(location).addTo(map);
+     L.circle(location).addTo(map); // , radius
+}
+function onLocationError(e) { alert(e.message); }
+function getLocationLeaflet() {
+     map.on('locationfound', onLocationFound);
+     map.on('locationerror', onLocationError);
+     map.locate({setView: true, maxZoom: 18, watch:true, enableHighAccuracy: true, maximumAge:10000, frequency: 1});
+     // timeout:60000, 
+}
+
+// var marker = new L.Marker([lat, lng]).on('click', markerOnClick).addTo(map);
+// var marker = new L.marker([lat,lng]).addTo(map).on('click', markerOnClick);
+// function markerOnClick(e){
+//     alert(this.getLatLng() + e.latlng);
+// }
+
+
+// map.on('click', function(e) {
+//     //var marker = new L.marker(e.latlng).addTo(map);
+//     //marker = L.marker(map.getCenter()).addTo(map);
+//     marker = L.marker(e.latlng).addTo(map);
+//     // marker.bindPopup('<p>Posicion:'+marker.getLatLng().toString()+'</p>').openPopup();
+//     marker.setLatLng(e.latlng);
+
+//     map.setView(marker.getLatLng());
+//     //map.setView(marker.getLatLng(),map.getZoom());
+//     marker.bindPopup('<h1>'+marker.getLatLng().toString()+
+//         '</h1><input type="button" value="Borrar" class="marker-delete-button"/>');
+//     marker.on("popupopen", onPopupOpen);
+//     return marker;
+//     function onPopupOpen() {
+//         var tempMarker = this;
+//         $(".marker-delete-button:visible").click(function () {
+//             map.removeLayer(tempMarker);
+//         });
+//     }
+// });
+
+
+// var pokealeatorio = L.divIcon({className: 'poke pokeid6'});
+// L.marker([41.48553, 2.31563], {icon: pokealeatorio}).addTo(map);
+
+
+map.on('click', function(e) {
+  var popup = L.popup().setLatLng(e.latlng)
+      .setContent(e.latlng.lat.toFixed(5)+", "+e.latlng.lng.toFixed(5))
+      .openOn(map);
+});
+
+var LeafIcon = L.Icon.extend({
+    options: { iconSize: [50, 50], popupAnchor: [0, -16] }
+});
+
+map.addControl( new L.Control.Search({
+  url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+  jsonpParam: 'json_callback',
+  propertyName: 'display_name',
+  propertyLoc: ['lat','lon'],
+  marker: {
+      // icon: new L.Icon({iconUrl:'icons/pstop1.png', iconSize: [0,0]}),
+      circle: {
+        radius: 60,
+        color: '#0a0',
+        opacity: 1
+      }
+    },
+  autoCollapse: true,
+  autoType: false,
+  minLength: 2
+}));
+
+// var searchControl = new L.Control.Search({
+//     layer: bbTeam,                //layer name to search
+//     propertyName: 'Name',         //Search field
+//     marker: false,
+//     moveToLocation: function(latlng, title, map) {
+//         map.setView(latlng, 7);    // set the zoom
+//     }
+// });
+
+
+
+var geocoder = new google.maps.Geocoder();
+var marcado = L.marker([0,0]);
+
+
+function googleGeocoding(text, callResponse){
+  geocoder.geocode({address: text}, callResponse);
+}
+
+// map.addControl( new L.Control.Search({
+//     sourceData: googleGeocoding,
+//     formatData: formatJSON,
+//     //markerLocation: true,
+//     marker: marcado,
+//     propertyName: 'NAME',
+//     autoType: false,
+//     autoCollapse: true,
+//     minLength: 2
+//   }) );
+
+
+function formatJSON(rawjson){
+  var json = {},
+    key, loc, disp = [];
+
+  for(var i in rawjson){
+    key = rawjson[i].formatted_address;
+    
+    loc = L.latLng(rawjson[i].geometry.location.lat(), rawjson[i].geometry.location.lng());
+    
+    json[ key ]= loc; //key,value format
+
+    marcado.bindPopup(key+"<br />"+loc.lat.toFixed(5)+", "+loc.lng.toFixed(5)).openPopup();
+    //console.log(key+", "+loc.lng.toFixed(5))
+  }
+    return json;
+}
+
+
+L.control.locate({
+       locateOptions: {
+               maxZoom: 16
+}}).addTo(map);
+
+// map.addControl( new L.Control.Gps( {marker: new L.Marker([0,0])} ));//inizialize control
+
+// https://df48mbt4ll5mz.cloudfront.net/images/pokemon/
+// https://silphroad-s3-xika4hn.netdna-ssl.com/img/pokemon/icons/96x96/
+// https://pokemon.gameinfo.io/images/pokemon/16.png
+// http://www.serebii.net/pokemongo/pokemon/016.png
+// http://www.pokestadium.com/sprites/xy/pikachu.gif
+// https://pokemon.gameinfo.io/images/pokemon/
+// 'http://www.pokestadium.com/sprites/xy/'+pokemonNames[pokemon1[i][0]].toLowerCase()+'.gif'
+// 'http://www.serebii.net/pokemongo/pokemon/'+pokemon1[i][1]+'.png'
+
+var pokenido;
+for (var i = 0; i < pokemon1.length; i++) {
+//var pokeicono = L.divIcon({ className: 'poke pokeid'+pokemon1[i][0] });
+      pokenido = new L.marker([pokemon1[i][2],pokemon1[i][3]],{
+        //icon: pokeicono
+        // <img src="" class="poke pokeid'+pokemon1[i][1]+'" alt="" />
+        icon: new LeafIcon({iconUrl: 'https://www.serebii.net/pokemongo/pokemon/'+pokemon1[i][0]+'.png'})
+      })
+        .bindPopup('<h1>Nido de '+pokemonNames[pokemon1[i][0]]+' '+[pokemon1[i][0]]+
+          '</h1><p>'+[pokemon1[i][2]]+', '+[pokemon1[i][3]]+'</p>')
+        .addTo(map);
+
+        // <img src="" class="poke pokeid'+pokemon1[i][0]+'" alt="" />
+        
+        //console.log(pokemonNames[pokemon1[i][0]].toLowerCase());
+        //console.log(pokemonNames[16].toLowerCase());
+    }
+
+
+// logo pokemongo -- http://pokemongolive.com/img/pgo_logo.png
+L.Control.Watermark = L.Control.extend({
+    onAdd: function(map) {
+        var img = L.DomUtil.create('img');
+        img.src = 'pgo_logo.png';
+        img.style.width = '100px';
+        return img;
+    },
+    onRemove: function(map) {}
+});
+L.control.watermark = function(opts) {
+    return new L.Control.Watermark(opts);
+}
+L.control.watermark({ position: 'bottomleft' }).addTo(map);
+// fin logo pokemongo
+
+var shownMarker = [];
+
+L.HtmlIcon = L.Icon.extend({
+    options: {},
+
+    initialize: function(options) {
+        L.Util.setOptions(this, options);
+    },
+
+    createIcon: function() {
+        //console.log("Adding pokemon");
+        var div = document.createElement('div');
+    div.innerHTML =
+      '<div class="displaypokemon" data-pokeid="' + this.options.pokemonid  + '">' +
+      '<div class="pokeimg">' +
+      //'<div class="poke pokeid'+this.options.pokemonid+'"></div>' +
+      // '<img src="" class="poke pokeid'+this.options.pokemonid+'" alt="" />' +
+      // '<img src="data:image/png;base64,' + pokemonPNG[this.options.pokemonid] + '" />' +
+      '<img src="https://www.serebii.net/pokemongo/pokemon/'+this.options.pokemonid+'.png" height="50"/>'+
+      '</div>' +
+      '<div class="remainingtext" data-expire="' + this.options.expire + '"></div>' +
+      '</div>';
+        
+        //console.log(this.options.pokemonid);
+
+        return div;
+
+    },
+
+    createShadow: function() {
+        return null;
+    }
+});
+
+var map;
+
+function deleteDespawnedPokemon() {
+    var j;
+    for (j in shownMarker) {
+        var active = shownMarker[j].active;
+        var expire = shownMarker[j].expire;
+        var now = Date.now();
+        if (active == true && expire <= now) {
+            map.removeLayer(shownMarker[j].marker);
+            shownMarker[j].active = false;
+        }
+    }
+}
+
+function createPokeIcon(pokemonid, timestamp) {
+    return new L.HtmlIcon({
+        pokemonid: pokemonid,
+        expire: timestamp,
+    });
+}
+
+function addPokemonToMap(spawn) {
+    var j;
+    var toAdd = true;
+    if (spawn.expiration_timestamp_ms <= 0){
+        spawn.expiration_timestamp_ms = Date.now() + 930000;
+    }
+    for (j in shownMarker) {
+        if (shownMarker[j].id == spawn.encounter_id) {
+            toAdd = false;
+            break
+        }
+    }
+    if (toAdd) {
+        var cp = new L.LatLng(spawn.latitude, spawn.longitude);
+        var pokeid = PokemonIdList[spawn.pokemon_id];
+        var pokenombre = pokemonNames[pokeid];
+        var pokeMarker = new L.marker(cp, {
+            icon: createPokeIcon(pokeid, spawn.expiration_timestamp_ms)
+        });
+        shownMarker.push({
+            marker: pokeMarker,
+            expire: spawn.expiration_timestamp_ms,
+            id: spawn.encounter_id,
+            active: true
+        });
+        map.addLayer(pokeMarker);
+        pokeMarker.setLatLng(cp);
+        pokeMarker.bindPopup('<h1>'+pokenombre+'</h1><p>'+cp.lat+', '+cp.lng+'</p>');
+    }
+}
+
+//TODO:<--Timer Functions-->//
+function component(x, v) {return Math.floor(x / v);}
+function calculateRemainingTime(element) {
+    var $element = $(element);
+    var ts = ($element.data("expire") / 1000 | 0) - (Date.now() / 1000 | 0);
+    var minutes = component(ts, 60) % 60,
+        seconds = component(ts, 1) % 60;
+    if (seconds < 10)
+        seconds = '0' + seconds;
+    $element.html(minutes + ":" + seconds);
+}
+
+function updateTime() {
+    deleteDespawnedPokemon();
+    $(".remainingtext, .remainingtext-tooltip").each(function() {
+        calculateRemainingTime(this);
+    });
+}
+setInterval(updateTime, 1000);
+//<--End of timer functions-->//
+</script>
+</body>
+</html>
