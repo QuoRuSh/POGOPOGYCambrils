@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+<meta charset="UTF-8">
+<title>leaflet spreadsheet google excel con capas</title>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script> -->
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.css'>
+<link rel='stylesheet' href='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css'>
+<style>
+#map{
+  width: 500px;
+  height: 500px;
+}
+div#infoboxpic {
+    width: 160px;
+    /* 310 */
+    height: 160px;
+    border-radius: 50%;
+    background-color: #8bd1e5;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 22px;
+    position: relative;
+    z-index: 8;
+}
+div#infoboxpicin {
+    width: 150px;
+    /* 300 */
+    height: 150px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+div#infoboxpicimg {
+    width: 150px;
+    /* 296 */
+    height: 150px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    opacity: .85;
+}
+.remainingtext {
+    border-radius: 25px;
+    background-color: black;
+    text-align: center;
+    background-color: rgba(100, 100, 100, 0.7);
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+}
+</style>
+</head>
+
+<body>
+
+  <div id="map"></div>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js'></script>
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/(1.5.1 -1.3.5/tabletop.min.js'></script> -->
+<script src='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js'></script>
+
+<script>
+// https://github.com/jsoma/tabletop
+// https://labs.easyblog.it/maps/leaflet-search/
+// https://journocode.com/2017/02/20/javascript-interactive-map-with-search-bar-leaflet/
+var map;
+var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+var gyms1 = new L.LayerGroup();
+var pokestops1 = new L.LayerGroup();
+var spawn = new L.LayerGroup();
+
+var grayscale = L.tileLayer(mbUrl, {id: 'mapbox.light'}),
+    calles = L.tileLayer(mbUrl, {id: 'mapbox.streets'}),
+    calles2 = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png'),
+    mapboxUrl = L.tileLayer(mbUrl, {id: 'mapbox.dark'});
+  
+map = L.map('map', {
+  layers: [calles2, gyms1]
+}).setView([41.539188,2.444976], 14);
+if (map.tap) map.tap.disable();
+map._layersMinZoom=5;
+
+var baseLayers = {
+  "Gris": grayscale,
+  "calles": calles,
+  "wikimedia": calles2,
+  "mapbox": mapboxUrl
+};
+var overlays = {
+  "Gyms": gyms1,
+  "Pokeparadas": pokestops1,
+  "Pokemon Spawn":spawn
+};
+L.control.layers(baseLayers, overlays).addTo(map);
+
+// https://docs.google.com/spreadsheets/d/1n4hEyFDWXq3EL94SuplnsEQSX2ADuFtGTbVSIYNHVGw/pub?output=html
+var code = "1n4hEyFDWXq3EL94SuplnsEQSX2ADuFtGTbVSIYNHVGw"
+Tabletop.init({
+  key: code,
+  callback: function(sheet, tabletop){
+    
+    $.each( tabletop.sheets("gymsMataro").all(), function(i, gim) {
+
+          var icon = L.icon({
+              iconUrl: gim.icon,
+              iconSize: [48, 48],
+              popupAnchor: [0, -16]
+          });
+
+      var loc = [gim.latitude, gim.longitude]
+      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: icon} );
+      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
+      
+      gyms1.addLayer(marker);
+    })
+
+    $.each( tabletop.sheets("pokestopsMataro").all(), function(i, pokestop) {
+
+      var icon = L.icon({
+              iconUrl: pokestop.icon,
+              iconSize:    [32, 32],
+              popupAnchor: [0, -16]
+          });
+    
+      var loc = [pokestop.latitude, pokestop.longitude]
+      marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: icon} );
+      marker2.bindPopup("<h2><strong style='color: #84b819'>" + pokestop.nombre + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +pokestop.imagen + ");'></div></div></div>");
+      
+      pokestops1.addLayer(marker2);
+    })
+  },
+  wanted: [ "gymsMataro", "pokestopsMataro" ],
+  debug: true
+})
+
+var controlSearch = new L.Control.Search({
+  position:'topleft',
+  //layer: masnou,
+  layer: L.featureGroup([gyms1, pokestops1]),
+  //propertyName: 'nombre',
+  initial: false,
+  zoom: 16,
+  marker: {
+    // icon: new L.Icon({iconUrl:'icons/pstop1.png', iconSize: [0,0]}),
+    circle: {
+      radius: 60,
+      color: '#0a0',
+      opacity: 1
+    }
+  },
+  textPlaceholder: 'Pokeparada...'
+});
+map.addControl(controlSearch);
+
+// time nidos dias ---------------------
+var deadline = 'Oct 5 2017 0:00:00 GMT';
+if (deadline == '') { deadline = base_deadline; }
+var date_clock = get_recurring_week_day_v2(deadline, 2);
+var timee = Date.parse(date_clock);
+// time nidos---------------------
+// Nidos Remaining______________________
+function getTimeRemaining(endtime){
+          var t = Date.parse(endtime) - Date.parse(new Date());
+          var seconds = Math.floor( (t/1000) % 60 );
+          var minutes = Math.floor( (t/1000/60) % 60 );
+          var hours = Math.floor( (t/(1000*60*60)) % 24 );
+          var days = Math.floor( t/(1000*60*60*24) );
+          return {
+            'total': t,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+          };
+        }
+function get_recurring_week_day_v2(start_day, week_skip, count_today) {
+
+  var input_date = new Date(start_day); //alert(input_date);
+  var today = new Date(); //alert(today); //Get todays date
+
+  var days = (week_skip * 7);
+  var temp_date = new Date(input_date);
+  temp_date.setDate(temp_date.getDate() + days); //alert(temp_date);
+  while (temp_date < today) { 
+    temp_date.setDate(temp_date.getDate() + days);
+  }
+  return temp_date;
+}
+
+// pokeSpawn ------------------------------
+// nidos masnou cerca del dia 0,1,2,3,4
+var pokemon1 = [
+    // ["417","417","Pachirisu",53.547310, -113.534225],
+    // ["455","455","Carnivine",30.332212,-81.655731],
+    ["122","122","Mr.Mime",41.48293,2.32395],
+    // ["441","441","Chatot",-23.5848435,-46.6559132],
+    // ["214","214","Heracross",-23.583768,-46.661171],
+    // ["369","369","Relicanth",-41.33150051905472,174.8302646757152],
+    // ["369","369","Relicanth",-36.840752,174.765015],
+    // ["369","369","Torkoal",28.590581092991236,77.24265351891518],
+    // ["369","369","Tropius",-33.925449,18.423904],
+    // ["369","369","Farfetch-d",35.6961,139.8144],
+];
+var LeafIcon = L.Icon.extend({
+    options: {
+      iconSize:     [50, 50],
+      popupAnchor:  [0, -16]
+    }
+});
+var pokenido;
+for (var i = 0; i < pokemon1.length; i++) {
+      pokenido = new L.marker([pokemon1[i][3],pokemon1[i][4]],{
+        icon: new LeafIcon({iconUrl: 'http://www.serebii.net/pokemongo/pokemon/'+pokemon1[i][1]+'.png'})
+      })
+        .bindPopup('<h1>'+[pokemon1[i][2]]+' '+[pokemon1[i][0]]+'</h3>'+
+        " <h3><a href='http://maps.google.com/maps?q="+[pokemon1[i][3]]+","+[pokemon1[i][4]]+"'>"+[pokemon1[i][3]]+", "+[pokemon1[i][4]]+"</a></h3>"+
+        '<div class="remainingtext" id="expire" data-expire="123456"></div>'
+        ).addTo(spawn);//spawn '+Date.parse(date_clock)+'
+    }
+// fin pokespawn ------------------------------------
+
+function calculateRemainingTime(element) {
+  let days, hours, minutes, seconds;
+  
+  element = new Date(element).getTime();
+  
+  if (isNaN(element)) { return; }
+  
+  setInterval(calculate, 1000);
+  
+  function calculate() {
+
+    let startDate = new Date();
+    startDate = startDate.getTime();
+    
+    let timeRemaining = parseInt((element - startDate) / 1000);
+    
+    if (timeRemaining >= 0) {
+      days = parseInt(timeRemaining / 86400);
+      timeRemaining = (timeRemaining % 86400);
+      
+      hours = parseInt(timeRemaining / 3600);
+      timeRemaining = (timeRemaining % 3600);
+      
+      minutes = parseInt(timeRemaining / 60);
+      timeRemaining = (timeRemaining % 60);
+      
+      seconds = parseInt(timeRemaining);
+
+      var ds = parseInt(days, 10);
+      var hr = ("0" + hours).slice(-2);
+      var ms = ("0" + minutes).slice(-2);
+      var sd = ("0" + seconds).slice(-2);
+
+      $(".remainingtext").html(ds+ "d " +hr+ "h " +ms+ ":" +sd);
+    } else { return; }
+  }
+}
+function updateTime() {
+    //deleteDespawnedPokemon();
+    $(".remainingtext, .remainingtext-tooltip").each(function() {
+        calculateRemainingTime(date_clock);
+    });
+}
+setInterval(updateTime, 1000);
+</script>
+</body>
+</html>
