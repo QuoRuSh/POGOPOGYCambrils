@@ -132,6 +132,22 @@ var overlays = {
 };
 L.control.layers(baseLayers, overlays).addTo(map);
 
+// logo pokemongo _______________________
+L.Control.Watermark = L.Control.extend({
+    onAdd: function(map) {
+        var img = L.DomUtil.create('img');
+        img.src = 'https://pokemongolive.com/img/global/pgo_logo.png';
+        img.style.width = '100px';
+        return img;
+    },
+    onRemove: function(map) {}
+});
+L.control.watermark = function(opts) {
+    return new L.Control.Watermark(opts);
+}
+L.control.watermark({ position: 'bottomleft' }).addTo(map);
+// fin logo pokemongo ____________________
+
 // https://docs.google.com/spreadsheets/d/1NewJUeqgSRSu4kodHbodlggMjhI-0IYNYX4tJUdO58A/pub?output=html
 // https://docs.google.com/spreadsheets/d/11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc/pub?output=html
 var code = "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
