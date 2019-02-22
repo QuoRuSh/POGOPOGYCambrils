@@ -1,0 +1,74 @@
+html, body, #map {height:100%;width:100%;padding:0px;margin:0px;}
+div#infoboxpic {
+    width: 160px;
+    /* 310 */
+    height: 160px;
+    border-radius: 50%;
+    background-color: #8bd1e5;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 22px;
+    position: relative;
+    z-index: 8;
+}
+div#infoboxpicin {
+    width: 150px;
+    /* 300 */
+    height: 150px;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    top: 5px;
+    left: 5px;
+}
+div#infoboxpicimg {
+    width: 150px;
+    /* 296 */
+    height: 150px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    opacity: .85;
+}
+.displaypokemon {
+    position: absolute;
+    left: -50px;
+    top: -25px;
+    width: 100px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.pokeimg> img {
+    padding-top: 5px;
+    margin: 0;
+    max-width: 50px;
+    min-height: 25px;
+    max-height: 50px;
+}
+.remainingtext2{
+    border-radius: 25px;
+    background-color: black;
+    text-align: center;
+    background-color: rgba(100, 100, 100, 0.7);
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+}
+.remainingtext, .pokemonDescription{
+    border-radius: 25px;
+    background-color: black;
+    text-align: center;
+    background-color: rgba(100, 100, 100, 0.7);
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+    color: white;
+    width: 100%;
+}.pokemonDescription {visibility: hidden;}
