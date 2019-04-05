@@ -28,15 +28,16 @@
 // https://journocode.com/2017/02/20/javascript-interactive-map-with-search-bar-leaflet/
 var map;
 var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+var comic = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmFsY2FyYXoiLCJhIjoiY2prNmRxcmh1MXNqODNya2NocWY5azEweCJ9.4Qf2Wgh-d1e_ujcRkvq0MA';
+
 var masnou = new L.LayerGroup();
 var mataro = new L.LayerGroup();
 var spawn = new L.LayerGroup();
 
-var grayscale = L.tileLayer(mbUrl, {id: 'mapbox.light'}),
-    calles = L.tileLayer(mbUrl, {id: 'mapbox.streets'}),
+var calles = L.tileLayer(mbUrl, {id: 'mapbox.streets'}),
     calles2 = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png'),
     verde = L.tileLayer('https://api.mapbox.com/styles/v1/poulzinho/ciu2fc21400k32iqi2gkb7h7g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoicG91bHppbmhvIiwiYSI6ImNpdTJmMmlwMTAwMHAyeW55NmVpbXpoY3oifQ._S-9Yx6OXlnMMq_MgsodlA'),
-    mapboxUrl = L.tileLayer(mbUrl, {id: 'mapbox.dark'});
+    comico = L.tileLayer(comic, {id: 'mapbox.comic'});
   
 map = L.map('map', {
   layers: [calles2, masnou]
@@ -46,10 +47,9 @@ map._layersMinZoom=5;
 
 var baseLayers = {
   "Verde": verde,
-  "Gris": grayscale,
+  "Comic": comico,
   "calles": calles,
-  "wikimedia": calles2,
-  "mapbox": mapboxUrl
+  "wikimedia": calles2
 };
 var overlays = {
   "Gyms": masnou,
