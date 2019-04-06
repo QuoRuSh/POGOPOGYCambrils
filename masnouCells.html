@@ -9,8 +9,9 @@
     <link rel="shortcut icon" href="./icons/pstop.png">
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.css'>
 <link rel='stylesheet' href='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css'>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/regular.css" crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" crossorigin="anonymous">
+<!-- markers awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/dist/css/leaflet.extra-markers.min.css">
 <link rel="stylesheet" href="./css/style.css">
 <style>
 .actualizar {
@@ -40,6 +41,7 @@
 <script src="cells2.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js'></script>
 <script src='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
 <script>
 // map = L.map('map', {
 //   layers: [calles2, masnou]
@@ -57,6 +59,18 @@
 
 // setInterval(reloj,5000);
 
+// https://github.com/coryasilva/Leaflet.ExtraMarkers
+let pokestop = L.ExtraMarkers.icon({
+  icon: "fa-dice-d6",
+  markerColor: "cyan",
+  shape: "circle",
+  prefix: "fas"
+});
+var icon = L.icon({
+  iconUrl: './icons/pstop.png',
+  iconSize:    [32, 32],
+  popupAnchor: [0, -16]
+});
 
 //function cargarMapa(){
 // https://docs.google.com/spreadsheets/d/1NewJUeqgSRSu4kodHbodlggMjhI-0IYNYX4tJUdO58A/pub?output=html
@@ -66,12 +80,6 @@ Tabletop.init({
   callback: function(sheet, tabletop){
     
     $.each( tabletop.sheets("gymsM").all(), function(i, gim) {
-
-          var icon = L.icon({
-              iconUrl: './icons/pstop.png',
-              iconSize:    [32, 32],
-              popupAnchor: [0, -16]
-          });
 
       var loc = [gim.latitude, gim.longitude]
       marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: icon} );
@@ -83,12 +91,6 @@ Tabletop.init({
     })
 
     $.each( tabletop.sheets("pokestopsM").all(), function(i, pokestop) {
-
-      var icon = L.icon({
-              iconUrl: './icons/pstop.png',
-              iconSize:    [32, 32],
-              popupAnchor: [0, -16]
-          });
     
       var loc = [pokestop.latitude, pokestop.longitude]
       marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: icon} );
@@ -100,6 +102,26 @@ Tabletop.init({
     })
   },
   wanted: [ "gymsM", "pokestopsM" ],
+  debug: true
+})
+    
+    // nuevas pokeparadas masnou
+var code = "1NewJUeqgSRSu4kodHbodlggMjhI-0IYNYX4tJUdO58A"
+Tabletop.init({
+  key: code,
+  callback: function(sheet, tabletop){
+    
+    $.each( tabletop.sheets("avistamiento").all(), function(i, gim) {
+      
+      var loc = [gim["latitude"].replace(',','.'), gim["longitude"].replace(',','.')]
+      marker = new L.Marker(new L.latLng(loc), {title: gim.name, icon: pokestop} );
+      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.name + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gim["latitude"]+', '+gim["longitude"]+ "'>" +gim["latitude"]+', '+gim["longitude"]+ "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
+      map.addLayer(marker);
+    })
+  },
+  wanted: [ "avistamiento" ],
   debug: true
 })
 
