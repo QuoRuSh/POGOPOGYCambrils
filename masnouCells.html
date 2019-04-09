@@ -61,15 +61,13 @@
 
 // https://github.com/coryasilva/Leaflet.ExtraMarkers
 let pokestop = L.ExtraMarkers.icon({
-  icon: "fa-dice-d6",
-  markerColor: "cyan",
-  shape: "circle",
-  prefix: "fas"
+  icon: "fa-dice-d6",markerColor: "green",shape: "circle", prefix: "fas"
 });
-var icon = L.icon({
-  iconUrl: './icons/pstop.png',
-  iconSize:    [32, 32],
-  popupAnchor: [0, -16]
+let gym = L.ExtraMarkers.icon({
+  icon: "fa-ethereum",markerColor: "red",shape: "circle", prefix: "fab"
+});
+let icon = L.ExtraMarkers.icon({
+  icon: "fa-cube",markerColor: "cyan",shape: "circle", prefix: "fas"
 });
 
 //function cargarMapa(){
@@ -82,7 +80,7 @@ Tabletop.init({
     $.each( tabletop.sheets("gymsM").all(), function(i, gim) {
 
       var loc = [gim.latitude, gim.longitude]
-      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: icon} );
+      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: gym} );
       marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
