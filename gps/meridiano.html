@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <!-- Leaflet's CSS -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+   crossorigin=""/>
+   <!-- Leaflet's JS -->
+   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+   integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+   crossorigin=""></script>
+<style>
+html, body, #map {height:100%;width:100%;padding:0px;margin:0px;}
+/*.leaflet-popup { width: 201px!important;}*/
+</style>
+</head>
+
+<body>
+
+	<div id="map"></div>
+
+<script>  
+var lati = '41.49512'; // 41.49512, 2.36385
+var logi = '2.36385';
+
+// Greenwich - https://en.wikipedia.org/wiki/Prime_meridian
+
+// Longitude of Greenwich: -0.0076589 Latitude of Greenwich: 51.4825766
+
+var map = L.map('map').setView([41.41, 0], 8);
+L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+		subdomains:['mt0','mt1','mt2','mt3']
+}).addTo(map);
+
+// var marker = L.marker([lati, logi]).addTo(map);
+
+map.on('click', function(e) {
+  var popup = L.popup().setLatLng(e.latlng)
+      .setContent(e.latlng.lat.toFixed(5)+", "+e.latlng.lng.toFixed(5))
+      .openOn(map);
+});
+
+var pointA = new L.LatLng(90, 0);
+var pointB = new L.LatLng(-90, 0);
+var pointList = [pointA, pointB];
+
+var firstpolyline = new L.Polyline(pointList, {
+    color: 'red',
+    weight: 3,
+    opacity: 0.5,
+    smoothFactor: 1
+});
+firstpolyline.addTo(map);
+
+
+// pokeSpawn ------------------------------
+var pokemon1 = [
+    ["417","417","Pachirisu",53.547310, -113.534225],
+    ["455","455","Carnivine",30.332212,-81.655731],
+    ["122","122","Mr.Mime",41.48293,2.32395],
+    ["441","441","Chatot",-23.5848435,-46.6559132],
+    ["214","214","Heracross",-23.583768,-46.661171],
+    ["222","222","Corsola",28.45779, -16.30174],
+    ["369","369","Relicanth",-36.840752,174.765015],
+    ["324","324","Torkoal",28.590581092991236,77.24265351891518],
+    ["357","357","Tropius",-33.925449,18.423904],
+    ["83","083","Farfetch-d",35.6961,139.8144],
+
+    ["422","422","Shellos",42.13825, -0.40809],
+    ["422","422-e","Shellos",41.39131, 2.14341],
+];
+var LeafIcon = L.Icon.extend({
+    options: {
+      iconSize:     [120, 120],
+    }
+});
+var pokenido;
+for (var i = 0; i < pokemon1.length; i++) {
+      pokenido = new L.marker([pokemon1[i][3],pokemon1[i][4]],{
+        icon: new LeafIcon({iconUrl: 'http://www.serebii.net/pokemongo/pokemon/'+pokemon1[i][1]+'.png'})
+      }).bindPopup('<h1>'+[pokemon1[i][2]]+' '+[pokemon1[i][0]]+'</h3>'+
+        " <h3><a href='http://maps.google.com/maps?q="+[pokemon1[i][3]]+","+[pokemon1[i][4]]+"'>"+[pokemon1[i][3]]+", "+[pokemon1[i][4]]+"</a></h3>"+
+        '<div class="remainingtext" id="expire" data-expire="123456"></div>'
+        ).addTo(map);
+    }
+// fin pokespawn ------------------------------------
+</script>
+</body>
+</html>
