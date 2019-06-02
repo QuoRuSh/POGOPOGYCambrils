@@ -30,9 +30,9 @@ var map;
 var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 var comic = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmFsY2FyYXoiLCJhIjoiY2prNmRxcmh1MXNqODNya2NocWY5azEweCJ9.4Qf2Wgh-d1e_ujcRkvq0MA';
 
-var masnou = new L.LayerGroup();
-var mataro = new L.LayerGroup();
-var spawn = new L.LayerGroup();
+var gyms = new L.LayerGroup();
+var pokeparadas = new L.LayerGroup();
+var nidos = new L.LayerGroup();
 
 var calles = L.tileLayer(mbUrl, {id: 'mapbox.streets'}),
     calles2 = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png'),
@@ -52,9 +52,9 @@ var baseLayers = {
   "wikimedia": calles2
 };
 var overlays = {
-  "Gyms": masnou,
-  "Pokeparadas": mataro,
-  "Pokemon Spawn":spawn
+  "Gyms": gyms,
+  "Pokeparadas": pokeparadas,
+  "Pokemon Nidos": nidos
 };
 L.control.layers(baseLayers, overlays).addTo(map);
 
@@ -94,7 +94,7 @@ Tabletop.init({
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
       
-      masnou.addLayer(marker);
+      gyms.addLayer(marker);
     })
 
     $.each( tabletop.sheets("pokestopsM").all(), function(i, pokestop) {
@@ -111,10 +111,27 @@ Tabletop.init({
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +pokestop.imagen + ");'></div></div></div>");
       
-      mataro.addLayer(marker2);
+      pokeparadas.addLayer(marker2);
+    })
+      
+    $.each( tabletop.sheets("nidos").all(), function(i, nido) {
+
+          var icon = L.icon({
+              iconUrl: nido.icon,
+              iconSize:     [48, 48],
+              popupAnchor: [0, -16]
+          });
+
+      var loc = [nido.latitude, nido.longitude]
+      marker = new L.Marker(new L.latLng(loc), {title: nido.nombre, icon: icon} );
+      marker.bindPopup("<h2><strong style='color: #84b819'>" + nido.nombre + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +nido.latitude+","+nido.longitude+ "'>" + nido.latitude+", "+nido.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +nido.imagen + ");'></div></div></div>");
+      
+      nidos.addLayer(marker);
     })
   },
-  wanted: [ "gymsM", "pokestopsM" ],
+  wanted: [ "gymsM", "pokestopsM", "nidos" ],
   debug: true
 })
 
@@ -136,8 +153,6 @@ var controlSearch = new L.Control.Search({
   textPlaceholder: 'Pokeparada...'
 });
 map.addControl(controlSearch);
-
 </script>
-<script src="spawn3.js"></script>
 </body>
 </html>
