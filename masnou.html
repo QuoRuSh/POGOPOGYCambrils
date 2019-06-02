@@ -40,7 +40,7 @@ var calles = L.tileLayer(mbUrl, {id: 'mapbox.streets'}),
     comico = L.tileLayer(comic, {id: 'mapbox.comic'});
   
 map = L.map('map', {
-  layers: [calles2, masnou]
+  layers: [calles2, gyms]
 }).setView([41.482539,2.325211], 14);
 if (map.tap) map.tap.disable();
 map._layersMinZoom=5;
