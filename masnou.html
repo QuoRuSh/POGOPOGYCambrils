@@ -117,8 +117,8 @@ Tabletop.init({
     $.each( tabletop.sheets("nidos").all(), function(i, nido) {
 
           var icon = L.icon({
-              iconUrl: nido.icon,
-              iconSize:     [48, 48],
+              iconUrl: "https://fefroyo.github.io/pokemon/icons/"+nido.icon+".png",
+              iconSize:    [48, 48],
               popupAnchor: [0, -16]
           });
 
@@ -126,7 +126,7 @@ Tabletop.init({
       marker = new L.Marker(new L.latLng(loc), {title: nido.nombre, icon: icon} );
       marker.bindPopup("<h2><strong style='color: #84b819'>" + nido.nombre + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +nido.latitude+","+nido.longitude+ "'>" + nido.latitude+", "+nido.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +nido.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url( https://fefroyo.github.io/pokemon/icons/"+nido.imagen+".png);'></div></div></div>");
       
       nidos.addLayer(marker);
     })
