@@ -41,7 +41,7 @@ const bounds = L.latLngBounds(southWest, northEast);
 var map = L.map('map').setView([lati, logi], 16);
 // tileLayer examples --- https://leaflet-extras.github.io/leaflet-providers/preview/
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-		maxZoom: 32, //16,
+		maxZoom: 20, //16,
 		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ',
 		id: 'mapbox.streets'
 	}).addTo(map);
@@ -143,7 +143,7 @@ function showS2Cells(level, style, showNames) {
             steps++;
         } while (steps < count);
     }
-    showS2Cells(17, {color: 'blue', weight: 1});
+    showS2Cells(17, {color: 'cyan', weight: 1});
     showS2Cells(14, {color: 'black', weight: 2});
     
 </script>
