@@ -94,24 +94,24 @@ Tabletop.init({
     
     // nuevas pokeparadas masnou
 // var code = "1NewJUeqgSRSu4kodHbodlggMjhI-0IYNYX4tJUdO58A"
- Var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
-Tabletop.init({
-  key: code,
-  callback: function(sheet, tabletop){
+// Var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
+//Tabletop.init({
+//  key: code,
+//  callback: function(sheet, tabletop){
     
-    $.each( tabletop.sheets("avistamiento").all(), function(i, gim) {
+//    $.each( tabletop.sheets("avistamiento").all(), function(i, gim) {
       
-      var loc = [gim["latitude"].replace(',','.'), gim["longitude"].replace(',','.')]
-      marker = new L.Marker(new L.latLng(loc), {title: gim.name, icon: pokestop} );
-      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.name + "</strong></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +gim["latitude"]+', '+gim["longitude"]+ "'>" +gim["latitude"]+', '+gim["longitude"]+ "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
-      map.addLayer(marker);
-    })
-  },
-  wanted: [ "avistamiento" ],
-  debug: true
-})
+//      var loc = [gim["latitude"].replace(',','.'), gim["longitude"].replace(',','.')]
+//      marker = new L.Marker(new L.latLng(loc), {title: gim.name, icon: pokestop} );
+//      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.name + "</strong></h2>" +
+//  " <h3><a href='http://maps.google.com/maps?q=" +gim["latitude"]+', '+gim["longitude"]+ "'>" +gim["latitude"]+', '+gim["longitude"]+ "</a></h3>" +
+//  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
+//      map.addLayer(marker);
+//    })
+ // },
+//  wanted: [ "avistamiento" ],
+//  debug: true
+//})
 
 // cells s2
 
