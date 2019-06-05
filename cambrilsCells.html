@@ -43,21 +43,21 @@
 <script src='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
 <script>
- map = L.map('map', {
-   layers: [calles2, masnou]
- }).setView([41.482539,2.325211], 14);
- if (map.tap) map.tap.disable();
- map._layersMinZoom=5;
+ //map = L.map('map', {
+ //  layers: [calles2, masnou]
+ //}).setView([41.482539,2.325211], 14);
+ //if (map.tap) map.tap.disable();
+ //map._layersMinZoom=5;
+//
+// var myVar;
+// timeout_init();
+// function timeout_init() {
+//     myVar = setInterval(function(){
+//         actualizar();
+//        },5000);
+// }
 
- var myVar;
- timeout_init();
- function timeout_init() {
-     myVar = setInterval(function(){
-         actualizar();
-/        },5000);
- }
-
- setInterval(reloj,5000);
+// setInterval(reloj,5000);
 
 // https://github.com/coryasilva/Leaflet.ExtraMarkers
 let pokestop = L.ExtraMarkers.icon({
