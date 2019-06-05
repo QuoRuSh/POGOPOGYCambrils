@@ -73,7 +73,7 @@ Tabletop.init({
   key: code,
   callback: function(sheet, tabletop){
     
-    $.each( tabletop.sheets("gymsMataro").all(), function(i, gim) {
+    $.each( tabletop.sheets("gymsMatar").all(), function(i, gim) {
          
       var loc = [gim.latitude, gim.longitude]
       marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: gym} );
