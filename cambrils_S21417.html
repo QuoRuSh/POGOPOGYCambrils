@@ -52,7 +52,7 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 
 // ICONOS
 let igym =      L.ExtraMarkers.icon ({
-	icon: "fa-ethereum",markerColor: "yellow",shape: "circle", prefix: "fab" }); // Icono Gimnasio
+	icon: "fa-ethereum",markerColor: "yellow",shape: "diamond", prefix: "fab" }); // Icono Gimnasio
 let igymex =    L.ExtraMarkers.icon ({  
 	icon: "fa-ethereum",markerColor: "green",shape: "star", prefix: "fab" }); // Icono Gim ex
 let ipokestop = L.ExtraMarkers.icon ({  
@@ -67,7 +67,7 @@ Tabletop.init({
     
    $.each( tabletop.sheets("gym").all(), function(i, gim) {
       var loc = [gim.latitude, gim.longitude]
-      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igymex} );
+      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
       marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
