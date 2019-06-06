@@ -51,17 +51,15 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 	//marker = L.circle([lati, logi], 200).addTo(map);
 
 // tabletop
-let ipokestop = L.ExtraMarkers.icon({
-  icon: "fa-dice-d6",markerColor: "green",shape: "circle", prefix: "fas"
-});
-let igym = L.ExtraMarkers.icon({
-  icon: "fa-ethereum",markerColor: "red",shape: "circle", prefix: "fab"
-});
-let igymex = L.ExtraMarkers.icon({
-  icon: "fa-cube",markerColor: "black",shape: "circle", prefix: "fas"
-});
+
+let ipokestop = L.ExtraMarkers.icon
+ ({  icon: "fa-cube",markerColor: "blue",shape: "circle", prefix: "fas" }); // Icono Pokeparada
+let igym = L.ExtraMarkers.icon
+ ({  icon: "fa-ethereum",markerColor: "red",shape: "circle", prefix: "fab" }); // Icono Gimnasio
+let igymex = L.ExtraMarkers.icon
+ ({  icon: "fa-ethereum",markerColor: "orange",shape: "circle", prefix: "fas" }); // Icono Gim ex
+	
 //function cargarMapa(){
-// https://docs.google.com/spreadsheets/d/1NewJUeqgSRSu4kodHbodlggMjhI-0IYNYX4tJUdO58A/pub?output=html
 // https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/edit?usp=sharing
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
 Tabletop.init({
