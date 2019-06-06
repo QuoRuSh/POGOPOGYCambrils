@@ -90,12 +90,12 @@ Tabletop.init({
     $.each( tabletop.sheets("gymex").all(), function(i, gymex) {
     
      var loc = [gymex.latitude, gymex.longitude]
-      marker2 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
-      marker2.bindPopup("<h2><strong style='color: #84b819'>" + gymex.nombre + "</strong></h2>" +
+      marker3 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
+      marker3.bindPopup("<h2><strong style='color: #84b819'>" + gymex.nombre + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gymex.imagen + ");'></div></div></div>");
       
-      map.addLayer(marker2);
+      map.addLayer(marker3);
     })
   },
   },
