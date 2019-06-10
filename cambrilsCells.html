@@ -48,7 +48,7 @@ Tabletop.init({
 
       var loc = [gim.latitude, gim.longitude]
       marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
-      marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2 h2 style='color: #ff8888'>" + gim.city + "</strong></h2>" +
+      marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2 h2 style='color: #88ff88'>" + gim.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
       
@@ -59,7 +59,7 @@ Tabletop.init({
     
       var loc = [pokestop.latitude, pokestop.longitude]
       marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
-      marker2.bindPopup("<h2><strong style='color: #0088ff'>" + pokestop.nombre + "<br>" + "<style='color: #ff2000'>" + pokestop.city + "</strong></h2>" +
+      marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2 h2 style='color: #88ff88'>" + pokestop.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +pokestop.imagen + ");'></div></div></div>");
       
@@ -69,7 +69,7 @@ Tabletop.init({
     
      var loc = [gymex.latitude, gymex.longitude]
       marker3 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
-      marker3.bindPopup("<h2><strong style='color: #ffcc00'>" + gymex.nombre + "<br>" + "<style='color: #ff2000'>" + gymex.city + "</strong></h2>" +
+      marker3.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2 h2 style='color: #88ff88'>" + gymex.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gymex.imagen + ");'></div></div></div>");
       
