@@ -48,7 +48,7 @@ Tabletop.init({
 
       var loc = [gim.latitude, gim.longitude]
       marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
-      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "<br>" + gim.city + "</strong></h2>" +
+      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "<br style='color: #904500'>" + gim.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
       
