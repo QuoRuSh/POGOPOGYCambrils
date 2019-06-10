@@ -48,7 +48,7 @@ Tabletop.init({
 
       var loc = [gim.latitude, gim.longitude]
       marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
-      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "</cr>" + gymex.city + "</strong></h2>" +
+      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "</cr>" + gim.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
       
@@ -59,7 +59,7 @@ Tabletop.init({
     
       var loc = [pokestop.latitude, pokestop.longitude]
       marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
-      marker2.bindPopup("<h2><strong style='color: #84b810'>" + pokestop.nombre + "</cr>" + gymex.city + "</strong></h2>" +
+      marker2.bindPopup("<h2><strong style='color: #84b810'>" + pokestop.nombre + "</cr>" + pokestop.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +pokestop.imagen + ");'></div></div></div>");
       
