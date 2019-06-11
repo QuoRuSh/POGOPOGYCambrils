@@ -82,8 +82,18 @@ Tabletop.init({
       
       map.addLayer(marker3);
     })
+   $.each( tabletop.sheets("propuesta").all(), function(i, propuesta) {
+    
+     var loc = [propuesta.latitude, propuesta.longitude]
+      marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
+      marker4.bindPopup("<h2><strong style='color: #ffdd00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +propuesta.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker4);
+    })
   },
-  wanted: [ "gym", "pokestop","gymex" ],
+  wanted: [ "gym", "pokestop","gymex","propuesta" ],
   debug: true
 })
     
