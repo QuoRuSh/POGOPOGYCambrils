@@ -43,7 +43,9 @@ let igym =      L.ExtraMarkers.icon ({
 let igymex =    L.ExtraMarkers.icon ({  
 	icon: "fa-star",markerColor: "yellow",shape: "star", prefix: "fas" 
                                      }); // Icono Gim ex     
-
+let iaceptada =    L.ExtraMarkers.icon ({  
+	icon: "fa-thumbs-up",markerColor: "purple",shape: "circle", prefix: "fas" 
+                                     }); // Icono aceptada
 //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
    // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
@@ -92,8 +94,18 @@ Tabletop.init({
       
       map.addLayer(marker4);
     })
+   $.each( tabletop.sheets("aceptada").all(), function(i, aceptada) {
+    
+     var loc = [aceptada.latitude, aceptada.longitude]
+      marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
+      marker5.bindPopup("<h2><strong style='color: #ffdd00'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +aceptada.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker5);
+    })
   },
-  wanted: [ "gym", "pokestop","gymex","propuesta" ],
+  wanted: [ "gym" , "pokestop" , "gymex" , "propuesta" , "aceptada" ],
   debug: true
 })
     
