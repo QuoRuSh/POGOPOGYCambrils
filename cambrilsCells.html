@@ -84,7 +84,7 @@ Tabletop.init({
       
       map.addLayer(marker3);
     })
-   $.each( tabletop.sheets("propuesta").all(), function(i, propuesta) {
+   $.each( tabletop.sheets("Propuesta").all(), function(i, propuesta) {
     
      var loc = [propuesta.latitude, propuesta.longitude]
       marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
@@ -94,7 +94,7 @@ Tabletop.init({
       
       map.addLayer(marker4);
     })
-   $.each( tabletop.sheets("aceptada").all(), function(i, aceptada) {
+   $.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada) {
     
      var loc = [aceptada.latitude, aceptada.longitude]
       marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
