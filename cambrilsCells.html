@@ -32,19 +32,19 @@ th<!DOCTYPE html>
 // ICONOS
 
 let ipokestop = L.ExtraMarkers.icon ({  
-	icon: "fa-cube",markerColor: "cyan",shape: "circle", prefix: "fas" 
+	icon: "fa-cube-2x",markerColor: "cyan",shape: "circle", prefix: "fas" 
                                      }); // Icono Pokeparada
 let ipropuesta = L.ExtraMarkers.icon ({  
-	icon: "fa-tools",markerColor: "green",shape: "square", prefix: "fas" 
+	icon: "fa-tools-2x",markerColor: "red",shape: "square", prefix: "fas" 
                                      }); // Icono Propuesta
 let igym =      L.ExtraMarkers.icon ({
-	icon: "fa-egg",markerColor: "yellow",shape: "penta", prefix: "fas" 
+	icon: "fa-egg-2x",markerColor: "yellow",shape: "penta", prefix: "fas" 
                                     }); // Icono Gimnasio
 let igymex =    L.ExtraMarkers.icon ({  
-	icon: "fa-star",markerColor: "yellow",shape: "star", prefix: "fas" 
+	icon: "fa-star-2x",markerColor: "yellow",shape: "star", prefix: "fas" 
                                      }); // Icono Gim ex     
 let iaceptada =    L.ExtraMarkers.icon ({  
-	icon: "fa-thumbs-up",markerColor: "purple",shape: "circle", prefix: "fas" 
+	icon: "fa-thumbs-up-2x",markerColor: "green",shape: "circle", prefix: "fas" 
                                      }); // Icono aceptada
 //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
@@ -88,7 +88,7 @@ Tabletop.init({
     
      var loc = [propuesta.latitude, propuesta.longitude]
       marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
-      marker4.bindPopup("<h2><strong style='color: #ffdd00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
+      marker4.bindPopup("<h2><strong style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +propuesta.imagen + ");'></div></div></div>");
       
@@ -98,7 +98,7 @@ Tabletop.init({
     
      var loc = [aceptada.latitude, aceptada.longitude]
       marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
-      marker5.bindPopup("<h2><strong style='color: #ffdd00'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
+      marker5.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +aceptada.imagen + ");'></div></div></div>");
       
