@@ -53,7 +53,7 @@ let iaceptada =    L.ExtraMarkers.icon ({
 	icon: "fa-thumbs-up",markerColor: "green-light",shape: "circle", prefix: "fas" 
                                      }); // Icono aceptada
 let isugerencia =  L.ExtraMarkers.icon ({  
-	icon: "hand-point-down",markerColor: "red-light",shape: "circle", prefix: "fas" 
+	icon: "hand-point-down",markerColor: "red",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
@@ -79,7 +79,7 @@ Tabletop.init({
       marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
       marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +pokestop.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
       
       map.addLayer(marker2);
     })
@@ -89,7 +89,7 @@ Tabletop.init({
       marker3 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
       marker3.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gymex.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
       
       map.addLayer(marker3);
     })
@@ -99,7 +99,7 @@ Tabletop.init({
       marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
       marker4.bindPopup("<h2><strong style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +propuesta.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
       
       map.addLayer(marker4);
     })
@@ -109,7 +109,7 @@ Tabletop.init({
       marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
       marker5.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +aceptada.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
       
       map.addLayer(marker5);
     })
@@ -119,7 +119,7 @@ Tabletop.init({
       marker6 = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
       marker6.bindPopup("<h2><strong style='color: #0044ff'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +sugerencia.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
       
       map.addLayer(marker6);
     })
