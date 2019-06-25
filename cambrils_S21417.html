@@ -30,8 +30,8 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
 <script>
-var lati = '41.482539'; // mataro 41.539188,2.444976 - masnou 41.482539, 2.325211
-var logi = '2.325211'; // cambrils 41.069829, 1.055040
+var lati = '41.069829'; // mataro 41.539188,2.444976 - masnou 41.482539, 2.325211
+var logi = '1.055040'; // cambrils 41.069829, 1.055040
 	
 var southWest = L.latLng(lati, logi),
     northEast = L.latLng(lati, logi);
@@ -50,76 +50,103 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_M
 //var marker = L.marker([lati, logi]).addTo(map),
 	//marker = L.circle([lati, logi], 200).addTo(map);
 
-// ICONOS
-let igym =      L.ExtraMarkers.icon ({
-	icon: "fa-ethereum",markerColor: "yellow",shape: "penta", prefix: "fab" }); // Icono Gimnasio
-let igymex =    L.ExtraMarkers.icon ({  
-	icon: "fa-ethereum",markerColor: "yellow",shape: "star", prefix: "fab" }); // Icono Gim ex
 let ipokestop = L.ExtraMarkers.icon ({  
-	icon: "fa-cube",markerColor: "cyan",shape: "circle", prefix: "fas" }); // Icono Pokeparada	
-	
+	icon: "fa-dice-d6",markerColor: "cyan",shape: "circle", prefix: "fas" 
+                                     }); // Icono Pokeparada
+let ipropuesta = L.ExtraMarkers.icon ({  
+//	icon: "fa-tools",markerColor: "orange",shape: "square", prefix: "fas" 
+//	icon: 'fa-spinner',
+	icon: 'fa-cog',
+        shape: 'circle',
+        markerColor: 'blue-dark',
+        prefix: 'fa',
+        extraClasses: 'fa-spin'
+                                     }); // Icono Propuesta
+let igym =      L.ExtraMarkers.icon ({
+	icon: "fa-egg",markerColor: "yellow",shape: "penta", prefix: "fas" 
+                                    }); // Icono Gimnasio
+let igymex =    L.ExtraMarkers.icon ({  
+	icon: "fa-star",markerColor: "yellow",shape: "star", prefix: "fas" ,extraClasses: 'fa-pulse'
+                                     }); // Icono Gim ex     
+let iaceptada =    L.ExtraMarkers.icon ({  
+	icon: "fa-thumbs-up",markerColor: "green-light",shape: "circle", prefix: "fas" 
+                                     }); // Icono aceptada
+let isugerencia =  L.ExtraMarkers.icon ({  
+	icon: "fa-hand-point-down",markerColor: "black",shape: "circle", prefix: "fas" 
+                                     }); // Icono sugerencia
 //function cargarMapa(){
-// https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/edit?usp=sharing
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
+   // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
 Tabletop.init({
   key: code,
+	
+	
   callback: function(sheet, tabletop){
     
-   $.each( tabletop.sheets("gym").all(), function(i, gim) {
+    $.each( tabletop.sheets("gym").all(), function(i, gim) {
       var loc = [gim.latitude, gim.longitude]
       marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
-      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.nombre + "</strong></h2>" +
+      marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
       
       map.addLayer(marker);
     })
-    $.each( tabletop.sheets("pokestop").all(), function(i, pokistop) {
+    $.each( tabletop.sheets("pokestop").all(), function(i, pokestop) {
     
-     var loc = [pokistop.latitude, pokistop.longitude]
-      marker2 = new L.Marker(new L.latLng(loc), {title: pokistop.nombre, icon: ipokestop} );
-      marker2.bindPopup("<h2><strong style='color: #84b819'>" + pokistop.nombre + "</strong></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +pokistop.latitude+","+pokistop.longitude+ "'>" + pokistop.latitude+", "+pokistop.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +pokistop.imagen + ");'></div></div></div>");
+      var loc = [pokestop.latitude, pokestop.longitude]
+      marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
+      marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
       
       map.addLayer(marker2);
     })
-    $.each( tabletop.sheets("gymex").all(), function(i, gymex) {
+   $.each( tabletop.sheets("gymex").all(), function(i, gymex) {
     
      var loc = [gymex.latitude, gymex.longitude]
       marker3 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
-      marker3.bindPopup("<h2><strong style='color: #84b819'>" + gymex.nombre + "</strong></h2>" +
+      marker3.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gymex.imagen + ");'></div></div></div>");
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
       
       map.addLayer(marker3);
     })
+   $.each( tabletop.sheets("Propuesta").all(), function(i, propuesta) {
+    
+     var loc = [propuesta.latitude, propuesta.longitude]
+      marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
+      marker4.bindPopup("<h2><strong style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker4);
+    })
+   $.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada) {
+    
+     var loc = [aceptada.latitude, aceptada.longitude]
+      marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
+      marker5.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker5);
+    })
+   $.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia) {
+    
+     var loc = [sugerencia.latitude, sugerencia.longitude]
+      marker6 = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
+      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker6);
+    })
   },
-  wanted: [ "gym", "pokestop","gymex" ],
+  wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
 })
     
-    // nuevas pokeparadas masnou
-// var code = "1NewJUeqgSRSu4kodHbodlggMjhI-0IYNYX4tJUdO58A"
-//	// https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/edit?usp=sharing
-// Var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
-//Tabletop.init({
-//  key: code,
-//  callback: function(sheet, tabletop){
-    
-//    $.each( tabletop.sheets("avistamiento").all(), function(i, gim) {
-      
-//     var loc = [gim["latitude"].replace(',','.'), gim["longitude"].replace(',','.')]
-//      marker = new L.Marker(new L.latLng(loc), {title: gim.name, icon: pokestop} );
-//      marker.bindPopup("<h2><strong style='color: #84b819'>" + gim.name + "</strong></h2>" +
-//  " <h3><a href='http://maps.google.com/maps?q=" +gim["latitude"]+', '+gim["longitude"]+ "'>" +gim["latitude"]+', '+gim["longitude"]+ "</a></h3>" +
-//  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
-//      map.addLayer(marker);
-//    })
-//  },
-//  wanted: [ "avistamiento" ],
-//  debug: true
-//})
 
 // cells s2
 
