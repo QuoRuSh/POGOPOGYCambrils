@@ -60,6 +60,11 @@ var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
    // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
 Tabletop.init({
   key: code,
+
+	map.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: 'Map data © OpenStreetMap contributors, CC-BY-SA, Jortilles',
+maxZoom: 18 }).addTo(map);
+	
   callback: function(sheet, tabletop){
     
     $.each( tabletop.sheets("gym").all(), function(i, gim) {
