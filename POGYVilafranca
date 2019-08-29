@@ -1,0 +1,137 @@
+th<!DOCTYPE html>
+<html lang="en" >
+<head>
+<meta charset="UTF-8">
+<title>POGO mapa pokestop&gyms Cambrils</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <meta http-equiv="refresh" content="5"> -->
+    <link rel="apple-touch-icon" href="./icons/pstop.png">
+    <link rel="shortcut icon" href="./icons/pstop.png">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.css'>
+<link rel='stylesheet' href='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css'>
+<!-- markers awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/dist/css/leaflet.extra-markers.min.css">
+<link rel="stylesheet" href="./css/style.css">
+
+</head>
+
+<body>
+  <!-- <div id="map"></div> -->
+<div class="single">
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="cells2.js"></script>
+	<script src="cells1.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js'></script>
+<script src='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
+<script>
+ 
+
+// https://github.com/coryasilva/Leaflet.ExtraMarkers
+// ICONOS
+
+let ipokestop = L.ExtraMarkers.icon ({  
+	icon: "fa-dice-d6",markerColor: "cyan",shape: "circle", prefix: "fas" 
+                                     }); // Icono Pokeparada
+let ipropuesta = L.ExtraMarkers.icon ({  
+//	icon: "fa-tools",markerColor: "orange",shape: "square", prefix: "fas" 
+//	icon: 'fa-spinner',
+	icon: 'fa-tools',
+        shape: 'square',
+        markerColor: 'violet',
+        prefix: 'fa',
+        extraClasses: 'fa-spin'
+                                     }); // Icono Propuesta
+let igym =      L.ExtraMarkers.icon ({
+	icon: "fa-egg",markerColor: "yellow",shape: "penta", prefix: "fas" 
+                                    }); // Icono Gimnasio
+let igymex =    L.ExtraMarkers.icon ({  
+	icon: "fa-star",markerColor: "yellow",shape: "star", prefix: "fas" ,extraClasses: 'fa-pulse'
+                                     }); // Icono Gim ex     
+let iaceptada =    L.ExtraMarkers.icon ({  
+	icon: "fa-thumbs-up",markerColor: "green-light",shape: "circle", prefix: "fas" 
+                                     }); // Icono aceptada
+let isugerencia =  L.ExtraMarkers.icon ({  
+	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
+                                     }); // Icono sugerencia
+//function cargarMapa(){
+var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
+   // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
+Tabletop.init({
+  key: code,
+	
+	
+  callback: function(sheet, tabletop){
+    
+    $.each( tabletop.sheets("gym").all(), function(i, gim) {
+
+      var loc = [gim.latitude, gim.longitude]
+      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
+      marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker);
+    })
+
+    $.each( tabletop.sheets("pokestop").all(), function(i, pokestop) {
+    
+      var loc = [pokestop.latitude, pokestop.longitude]
+      marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
+      marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker2);
+    })
+   $.each( tabletop.sheets("gymex").all(), function(i, gymex) {
+    
+     var loc = [gymex.latitude, gymex.longitude]
+      marker3 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
+      marker3.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker3);
+    })
+   $.each( tabletop.sheets("Propuesta").all(), function(i, propuesta) {
+    
+     var loc = [propuesta.latitude, propuesta.longitude]
+      marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
+      marker4.bindPopup("<h2><strong style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker4);
+    })
+   $.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada) {
+    
+     var loc = [aceptada.latitude, aceptada.longitude]
+      marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
+      marker5.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker5);
+    })
+   $.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia) {
+    
+     var loc = [sugerencia.latitude, sugerencia.longitude]
+      marker6 = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
+      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
+      
+      map.addLayer(marker6);
+    })
+  },
+  wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
+  debug: true
+})
+    
+
+</script>
+</body>
+</html>
