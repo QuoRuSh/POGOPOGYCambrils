@@ -116,11 +116,13 @@ Tabletop.init({
       
       map.addLayer(marker5);
     })
+   let contador = 0
    $.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia) {
     
-     var loc = [sugerencia.latitude, sugerencia.longitude]
+      contador = contador + 1
+      var loc = [sugerencia.latitude, sugerencia.longitude]
       marker6 = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
-      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "</strong></h2>" +
+      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "(" + contador + ")" + "<br>" + "</h2>" + sugerencia.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
       
