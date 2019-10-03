@@ -64,8 +64,9 @@ var baseMaps = {
 };
   
   
-  L.control.layers(baseMaps).addTo(map);
-  
+  // L.control.layers(baseMaps).addTo(map);
+  L.control.activeLayers(baseMaps).addto(map)
+	
   // https://github.com/coryasilva/Leaflet.ExtraMarkers
 // ICONOS
 let ipokestop = L.ExtraMarkers.icon ({  
