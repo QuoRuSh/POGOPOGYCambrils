@@ -61,7 +61,7 @@ var baseMaps = {
   //"Terreno": Mterreno,
 };
 
-map.addControl( new L.Control.CategorizedLayers(baseMaps, {collapsed: false}) );
+map.addControl( new L.Control.Layers(null , baseMaps, {collapsed: false}) );
 	
   // L.control.layers(baseMaps).addTo(map);
   //L.control.Layers(baseMaps).addto(map);
