@@ -61,9 +61,14 @@ var baseMaps = {
   //"Terreno": Mterreno,
 };
   
-  
+ var panelLayers = new L.Control.PanelLayers(baseMaps {
+	//compact: true,
+	//collapsed: true,
+	collapsibleGroups: true
+});
+map.addControl(panelLayers);
   // L.control.layers(baseMaps).addTo(map);
-  L.control.Layers(baseMaps).addto(map);
+  //L.control.Layers(baseMaps).addto(map);
 	
   // https://github.com/coryasilva/Leaflet.ExtraMarkers
 // ICONOS
