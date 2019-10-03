@@ -61,8 +61,8 @@ var baseMaps = {
   //"Terreno": Mterreno,
 };
 
-map.addControl( new L.Control.Layers(null , baseMaps, {collapsed: false}) );
-	
+	var control = L.control.selectLayers(baseMaps, null);
+        control.addTo(map);
   // L.control.layers(baseMaps).addTo(map);
   //L.control.Layers(baseMaps).addto(map);
 	
