@@ -60,13 +60,9 @@ var baseMaps = {
   "Satelite": Msatelit,
   //"Terreno": Mterreno,
 };
-  
- var panelLayers = new L.Control.PanelLayers(baseMaps {
-	//compact: true,
-	//collapsed: true,
-	collapsibleGroups: true
-});
-map.addControl(panelLayers);
+
+map.addControl( new L.Control.CategorizedLayers(baseMaps, {collapsed: false}) );
+	
   // L.control.layers(baseMaps).addTo(map);
   //L.control.Layers(baseMaps).addto(map);
 	
