@@ -62,7 +62,9 @@ var baseMaps = {
 };
 
 
- L.control.layers(baseMaps).addTo(map);
+ control = L.control.layers(baseMaps);
+	control.setPosition(bottomleft);
+	control.addto(map);
   //L.control.Layers(baseMaps).addto(map);
 	
   // https://github.com/coryasilva/Leaflet.ExtraMarkers
