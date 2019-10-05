@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/dist/css/leaflet.extra-markers.min.css">
 <link rel="stylesheet" href="./css/style.css">
-
+<link rel="stylesheet" href="leaflet-panel-layers.css" />
 </head>
 
 <body>
@@ -26,6 +26,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js'></script>
 <script src='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
+<script src="leaflet-panel-layers.js"></script>
 <script>
 
 var Mcalles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
@@ -68,7 +69,7 @@ var conf = {
                     }]
             };
 		
-//var base1 = L.control.panelLayers( conf.layers, null,  { position: 'bottomleft', compact: true });
+var base1 = L.control.panelLayers( conf.layers, null,  { position: 'bottomleft', compact: true });
 	//.addTo(map);
 	
 //var scale = L.control.scale().addTo(map);
