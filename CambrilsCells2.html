@@ -30,16 +30,16 @@
 <script>
 
 var Mcalles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3']
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 16
 });
 var Mhibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3']
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 16
 });
 var Msatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3']
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 16
 });
 var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3']
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 16
 });
 
 // googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
@@ -53,7 +53,30 @@ var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', 
 // Streets: m;
 // Terrain: p;
 
+var conf = {
+           base: {
+                 layers: [{
+                          group: "Mapas",
+                          collapsed: true,
+                          layers: [{
+                		   name: "Calles",
+                		   active: true,
+                		   layer: Mcalles 
+                	           },
+                                   {
+                                   name: "Satelite",
+                                   layer: Msatelit
+                                   }]
+                          }]
+	          } 
+            };
+		
+var base1 = L.control.panelLayers(conf.base.layers, null,  {
+    title: conf.base.title,
+	position: 'topright',
+	compact: true}).addTo(map);
 	
+var scale = L.control.scale().addTo(map);
 	
 var baseMaps = {
   "Calles": Mcalles,
@@ -96,9 +119,6 @@ let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 
-  
-  
-  L.control.scale().addTo(map);  
   
   
   //function cargarMapa(){
