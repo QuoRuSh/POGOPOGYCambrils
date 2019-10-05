@@ -61,10 +61,11 @@ var baseMaps = {
   //"Terreno": Mterreno,
 };
 
-
- control = L.control.layers(baseMaps);
-	control.setPosition(bottomleft);
-	map.addControl(control);
+L.control.scale().addTo(map);
+	
+ //control = L.control.layers(baseMaps);
+//	control.setPosition(bottomleft);
+//	map.addControl(control);
   //L.control.Layers(baseMaps).addto(map);
 	
   // https://github.com/coryasilva/Leaflet.ExtraMarkers
