@@ -18,7 +18,6 @@
 
 <body>
   <!-- <div id="map"></div> -->
-	<div id="map"></div>
 <div class="single">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -73,7 +72,7 @@ var conf = {
 		
 var base1 = L.control.panelLayers(conf.base.layers, null,  {
     title: conf.base.title,
-	position: 'topright',
+	position: 'bottomleft',
 	compact: true}).addTo(map);
 	
 var scale = L.control.scale().addTo(map);
