@@ -70,8 +70,7 @@ var baseLayers =  [{
                     layer: Msatelit
                   }];
 		
-var base1 = L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
-	
+
 
 	
 var baseMaps = {
@@ -123,8 +122,7 @@ var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
 Tabletop.init({
     key: code,
  
-	
-  callback: function(sheet, tabletop){
+    callback: function(sheet, tabletop){
     
     $.each( tabletop.sheets("gym").all(), function(i, gim) {
       var loc = [gim.latitude, gim.longitude]
@@ -191,7 +189,9 @@ Tabletop.init({
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
 });
- 
+	
+ var base1 = L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
+	
 </script>
 </body>
 </html>
