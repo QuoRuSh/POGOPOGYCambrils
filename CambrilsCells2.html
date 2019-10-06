@@ -126,14 +126,13 @@ let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 
-  
+var scale = L.control.scale().addTo(map);  
   
   //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
    // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
 Tabletop.init({
-  //var scale = L.control.scale().addTo(map);
-  key: code,
+    key: code,
  
 	
   callback: function(sheet, tabletop){
