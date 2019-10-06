@@ -115,9 +115,11 @@ let isugerencia =  L.ExtraMarkers.icon ({
                                      }); // Icono sugerencia
 
 //L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
-L.control.Layers(baseMaps).addto(map);
+//L.control.Layers(baseMaps).addto(map);
 //L.control.scale().addto(map);  
-  
+ map.addControl( new L.Control.PanelLayers(baseLayers, null,{ position: 'bottomleft', compact: true });
+	
+	
   //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
    // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
