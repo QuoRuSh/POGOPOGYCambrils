@@ -64,7 +64,7 @@ var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', 
 var baseLayers =  [{
                     name: "Calles",
                     active: true,
-                    layer: Mcalles 
+                    layer: Mcalles
                    },{
                     name: "Satelite",
                     layer: Msatelit
@@ -76,7 +76,7 @@ var baseLayers =  [{
 var baseMaps = {
   "Calles": Mcalles,
   "Hibrido": Mhibrido,
-  "Satelite": Msatelit,
+  "Satelite": Msatelit
   //"Terreno": Mterreno,
 };
 
@@ -114,6 +114,9 @@ let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 
+L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
+L.control.Layers(baseMaps).addto(map);
+L.control.scale().addto(map);  
   
   //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
@@ -189,9 +192,7 @@ Tabletop.init({
   debug: true,
 });
 	
- var base1 = L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
-L.control.Layers(baseMaps).addto(map);
-L.control.scale().addto(map);  
+
 	
 </script>
 </body>
