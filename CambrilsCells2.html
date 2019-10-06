@@ -114,7 +114,6 @@ let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 
-// map.addLayer(L.control.scale());  
   
   //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
@@ -191,6 +190,8 @@ Tabletop.init({
 });
 	
  var base1 = L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
+L.control.Layers(baseMaps).addto(map);
+L.control.scale().addto(map);  
 	
 </script>
 </body>
