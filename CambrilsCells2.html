@@ -114,7 +114,10 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({  
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
-var map = L.map('map');
+
+var map = L.map('map', {
+  layers: [Mcalles]
+});
 
 //L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
 //L.control.Layers(baseMaps).addto(map);
