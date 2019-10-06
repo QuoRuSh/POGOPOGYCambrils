@@ -7,7 +7,8 @@
 <!-- <meta http-equiv="refresh" content="5"> -->
     <link rel="apple-touch-icon" href="./icons/pstop.png">
     <link rel="shortcut icon" href="./icons/pstop.png">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.css'>
+<link rel='stylesheet' href='./leaflet/leaflet.css'>
+			     <!-- https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.4.0/leaflet.css' -->
 <link rel='stylesheet' href='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.css'>
 <!-- markers awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -25,7 +26,7 @@
 <body>
   <!-- <div id="map"></div> -->
 <div class="single">
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src="./cells2.js"></script>
@@ -113,7 +114,7 @@ let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 
-	map.addLayer(L.control.scale());  
+	// map.addLayer(L.control.scale());  
   
   //function cargarMapa(){
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
