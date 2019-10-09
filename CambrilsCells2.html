@@ -26,12 +26,12 @@
 </head>
 
 <body>
-<div id="map"></div>
+<!-- div id="map"></div -->
 <div class="single">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
 <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<!-- script src="./cells2.js"></script -->
+<script src="./cells2.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.3.5/tabletop.min.js'></script>
 <script src='https://labs.easyblog.it/maps/leaflet-search/src/leaflet-search.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
@@ -115,14 +115,12 @@ let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas" 
                                      }); // Icono sugerencia
 
-var map = L.map('map', {
-  layers: Mcalles
-});
+// var map = L.map('map', { layers: Mcalles });
 
 //L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
 //L.control.Layers(baseMaps).addto(map);
 //L.control.scale().addto(map);  
- map.addControl( new L.Control.PanelLayers(baseLayers, null,{ position: 'bottomleft', compact: true });
+// map.addControl( new L.Control.PanelLayers(baseLayers, null,{ position: 'bottomleft', compact: true });
 	
 	
   //function cargarMapa(){
