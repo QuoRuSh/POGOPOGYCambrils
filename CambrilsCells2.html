@@ -28,6 +28,15 @@
 <body>
 <!-- div id="map"></div -->
 <div class="single">
+<script>
+    // Before map(s) is(are) being initialized.
+    var mapsPlaceholder = [];
+    
+    // http://leafletjs.com/reference-1.1.0.html#class-constructor-hooks
+    L.Map.addInitHook(function () {
+      mapsPlaceholder.push(this); // Use whatever global scope variable you like.
+    });
+</script>
 <script src="./cells2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js"></script>
 <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script -->
@@ -81,7 +90,8 @@ var baseMaps = {
   //"Terreno": Mterreno,
 };
 
-//L.control.scale().addTo(this.map);
+var map = mapsPlaceholder.pop();
+L.control.scale().addTo(map);
 //this.map.addControl(L.control.scale());
  //control = L.control.layers(baseMaps);
  //control.setPosition(bottomleft);
