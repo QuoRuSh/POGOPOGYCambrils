@@ -118,9 +118,10 @@ let isugerencia =  L.ExtraMarkers.icon ({
 // var map = L.map('map', { layers: Mcalles });
 
 //L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(this.map);
-//L.control.Layers(baseMaps).addto(this.map);
-//L.control.scale().addto(this.map);  
-this.map.addControl( new L.Control.PanelLayers(baseLayers, null,{ position: 'bottomleft', compact: true });
+	mip=map.getcontainer();
+//L.control.Layers(baseMaps).addto(mip);
+L.control.scale().addto(mip);  
+//this.map.addControl( new L.Control.PanelLayers(baseLayers, null,{ position: 'bottomleft', compact: true });
 	
 	
   //function cargarMapa(){
