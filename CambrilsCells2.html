@@ -82,11 +82,11 @@ var baseMaps = {
 };
 
 //L.control.scale().addTo(this.map);
-this.map.addControl(L.control.scale());
+//this.map.addControl(L.control.scale());
  //control = L.control.layers(baseMaps);
  //control.setPosition(bottomleft);
  //map.addControl(control);
-  L.control.Layers(baseMaps).addto(this.map);
+ // L.control.Layers(baseMaps).addto(this.map);
 	
   // https://github.com/coryasilva/Leaflet.ExtraMarkers
 // ICONOS
@@ -117,7 +117,7 @@ let isugerencia =  L.ExtraMarkers.icon ({
 
 // var map = L.map('map', { layers: Mcalles });
 
-//L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(map);
+L.control.panelLayers(baseLayers,null,{ position: 'bottomleft', compact: true }).addTo(this.map);
 //L.control.Layers(baseMaps).addto(map);
 //L.control.scale().addto(map);  
 // map.addControl( new L.Control.PanelLayers(baseLayers, null,{ position: 'bottomleft', compact: true });
