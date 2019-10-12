@@ -109,11 +109,11 @@ const tileSatellite = L.gridLayer.googleMutant({
 // And Mapbox' vector
 // eslint-disable-next-line no-unused-vars
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
 }).addTo(map);
 
 const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
 }).addTo(map);
 /*L.tileLayer(
   'https://api.mapbox.com/styles/v1/scio/cjvuj7krb2j1g1cs29u8y3z49/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
@@ -126,7 +126,7 @@ const updateTiles = () => {
   const zoom = map.getZoom();
   if (zoom >= 15) tileStreet.setOpacity(1 - (zoom - 15) / 5)
   else tileSatellite.setOpacity(1);
-  if (zoom <= 25) tileSatellite.setOpacity(1 - (25 - zoom) / 4)
+  if (zoom <= 20) tileSatellite.setOpacity(1 - (20 - zoom) / 4)
   else tileSatellite.setOpacity(1);
 };
 map.on('zoomend', updateTiles);
