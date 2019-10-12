@@ -15,7 +15,7 @@
     <!-- script src="https://unpkg.com/leaflet" crossorigin></script -->
 
     <script src="https://unpkg.com/leaflet-hash" crossorigin></script>
-    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
+    <!-- script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script -->
     <script src="https://unpkg.com/leaflet-omnivore/leaflet-omnivore.min.js" crossorigin ></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" crossorigin />
@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin />
     <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh5BJFxbVP4vwv4hpxyxifhuc_tQtUwCU" async defer ></script>
+    <!-- script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh5BJFxbVP4vwv4hpxyxifhuc_tQtUwCU" async defer ></script -->
 
     <script src="https://use.fontawesome.com/releases/v5.11.2/js/all.js" ></script>
     <link rel="stylesheet" href="./css/style.css" />
@@ -83,24 +83,38 @@ L.control.locate({
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
 // eslint-disable-next-line no-unused-vars
+var Mcalles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+var Mhibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+var Msatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
 
+/*
 const tileSatellite = L.gridLayer.googleMutant({
   maxZoom: 24,
   type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
   opacity: 0,
 }).addTo(map);
-
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // And Mapbox' vector
 // eslint-disable-next-line no-unused-vars
-
-const tileStreet = L.tileLayer(
+const tileSatellite = Msatelit.addto(map);
+const tileStreet = Mcalles.addto(map);
+/*L.tileLayer(
   'https://api.mapbox.com/styles/v1/scio/cjvuj7krb2j1g1cs29u8y3z49/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
     accessToken: 'pk.eyJ1Ijoic2NpbyIsImEiOiJjanZocmp0aXAwNjZ2NDNsamE3dXNwc2I1In0.zfAzKEDrAmDSqiOfS_naVw',
     // attribution: 'map tiles &copy; <a href="https://www.openstreetmap.org/">Mapbox</a>, <a href="https://creativecommons.org/licenses/by/3.0/us/">CC-BY</a> | map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | dataset from <a href="https://github.com/PoGOHWH/db-poi">pogohwh/db-poi</a>',
     maxZoom: 25,
   }).addTo(map);
-
+*/
 const updateTiles = () => {
   const zoom = map.getZoom();
   if (zoom >= 15) tileStreet.setOpacity(1 - (zoom - 15) / 5)
