@@ -110,10 +110,11 @@ const tileSatellite = L.gridLayer.googleMutant({
 // eslint-disable-next-line no-unused-vars
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
-}).addto(map);
+}).addTo(map);
+
 const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
-}).addto(map);
+}).addTo(map);
 /*L.tileLayer(
   'https://api.mapbox.com/styles/v1/scio/cjvuj7krb2j1g1cs29u8y3z49/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
     accessToken: 'pk.eyJ1Ijoic2NpbyIsImEiOiJjanZocmp0aXAwNjZ2NDNsamE3dXNwc2I1In0.zfAzKEDrAmDSqiOfS_naVw',
