@@ -74,6 +74,7 @@ const map = L.map('map').locate({setView: true, maxZoom: 25}); //setView([22.57,
 const hash = new L.Hash(map);
 
 L.control.locate({
+  icon: 'fa-map-marker',
   flyTo: true,
   drawCircle: false,
   drawMarker: false,
@@ -84,9 +85,9 @@ L.control.locate({
 // eslint-disable-next-line no-unused-vars
 
 const tileSatellite = L.gridLayer.googleMutant({
+  maxZoom: 24,
   type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
   opacity: 0,
-  maxZoom: 25,
 }).addTo(map);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
