@@ -85,8 +85,9 @@ L.control.locate({
 // eslint-disable-next-line no-unused-vars
 
 const tileSatellite = L.gridLayer.googleMutant({
-  type: 'sateLLite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+  type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
   opacity: 0,
+  maxZoom: 25;
 }).addTo(map);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -233,12 +234,12 @@ const updateMapGrid = () => {
   const levels = {
     17: {
       color: '#ff7700',
-      opacity: 0.8,
+      opacity: 0.6,
       weight: 1,
         },
     14: {
-      color: '#77ff00',
-      opacity: 0.5,
+      color: '#00ff77',
+      opacity: 0.4,
       weight: 3,
         },
       };
