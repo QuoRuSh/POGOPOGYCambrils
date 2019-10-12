@@ -27,8 +27,8 @@
     <!-- link rel="stylesheet" href="./leaflet panel layers/leaflet-panel-layers.css" / -->
     <!-- script src="./leaflet panel layers/leaflet-panel-layers.js"></script -->
 
-    <!-- link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin / -->
-    <!-- script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin />
+    <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh5BJFxbVP4vwv4hpxyxifhuc_tQtUwCU" async defer ></script>
 
@@ -74,7 +74,6 @@ const map = L.map('map').locate({setView: true, maxZoom: 25}); //setView([22.57,
 const hash = new L.Hash(map);
 
 L.control.locate({
-  icon: 'fa-map-marker',
   flyTo: true,
   drawCircle: false,
   drawMarker: false,
@@ -87,7 +86,7 @@ L.control.locate({
 const tileSatellite = L.gridLayer.googleMutant({
   type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
   opacity: 0,
-  maxZoom: 25;
+  maxZoom: 25,
 }).addTo(map);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
