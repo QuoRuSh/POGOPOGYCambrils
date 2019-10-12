@@ -297,11 +297,11 @@ fetch('https://api.github.com/repos/pogohwh/db-poi/commits?path=poi.geojson')
   .then(date => date.toLocaleString('en-IN-u-ca-iso8601', { dateStyle: 'medium', timeStyle: 'short' }))
   .then(dateString => map.attributionControl.setPrefix(`last updated on <strong>${dateString}</strong>`))
 */
-regionLayer = L.layerGroup()
-map.addLayer(regionLayer)
-map.on('moveend', updateMapGrid)
+regionLayer = L.layerGroup();
+map.addLayer(regionLayer);
+map.on('moveend', updateMapGrid);
 updateTiles();
-updateMapGrid()
+updateMapGrid();
 
 </script>
 </body>
