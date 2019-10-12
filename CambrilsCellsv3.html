@@ -65,7 +65,7 @@
 //* global L, S2, omnivore
 //* Setup the Leaflet map
 
-const map = L.map('map').locate({setView: true, maxZoom: 15}); //setView([22.57, 88.32403643149632], 15)
+const map = L.map('map').locate({setView: true, maxZoom: 25}); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -81,7 +81,7 @@ L.control.locate({
 // eslint-disable-next-line no-unused-vars
 
 const tileSatellite = L.gridLayer.googleMutant({
-  type: 'Hybrid', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+  type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
   opacity: 0,
 }).addTo(map);
 
@@ -100,7 +100,7 @@ const updateTiles = () => {
   const zoom = map.getZoom();
   if (zoom >= 17) tileStreet.setOpacity(1 - (zoom - 17) / 5)
   else tileSatellite.setOpacity(1);
-  if (zoom <= 20) tileSatellite.setOpacity(1 - (20 - zoom) / 4)
+  if (zoom <= 25) tileSatellite.setOpacity(1 - (25 - zoom) / 4)
   else tileSatellite.setOpacity(1);
 };
 map.on('zoomend', updateTiles);
@@ -133,7 +133,7 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas"
                                      }); // Icono sugerencia
-
+/*
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
@@ -210,21 +210,21 @@ Tabletop.init({
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
 });
+*/
 
-/*
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
 // CREDIT: S2 cell drawing pretty much borrowed directly from
 // https://gitlab.com/AlfonsoML/pogo-s2/blob/93cc77c1973b4978610ff25a85273d290e2754a0/s2check.user.js
 // eslint-disable-next-line prefer-const
 
-let regionLayer
+let regionLayer;
 
 const updateMapGrid = () => {
-  regionLayer.clearLayers()
+  regionLayer.clearLayers();
 
-  const bounds = map.getBounds()
-  const seenCells = {}
+  const bounds = map.getBounds();
+  const seenCells = {};
 
   const levels = {
     17: {
@@ -233,15 +233,15 @@ const updateMapGrid = () => {
       weight: 1,
         },
     14: {
-      color: '#e57002',
-      opacity: 0.3,
+      color: '#70e502',
+      opacity: 0.5,
       weight: 3,
         },
-                }
+      };
 
   const drawCell = (cell, options) => {
     // corner points
-    const corners = cell.getCornerLatLngs()
+    const corners = cell.getCornerLatLngs();
     // the level 6 cells have noticible errors with non-geodesic lines - and the larger level 4 cells are worse
     // NOTE: we only draw two of the edges. as we draw all cells on screen, the other two edges will either be drawn
     // from the other cell, or be off screen so we don't care
@@ -249,55 +249,54 @@ const updateMapGrid = () => {
       fill: false,
       clickable: false,
       ...options,
-    })
-    regionLayer.addLayer(region)
-  }
+    });
+    regionLayer.addLayer(region);
+  };
 
   const drawCellAndNeighbors = (cell, options) => {
-    const cellStr = cell.toString()
+    const cellStr = cell.toString();
     if (!seenCells[cellStr]) {
       // cell not visited - flag it as visited now
-      seenCells[cellStr] = true
+      seenCells[cellStr] = true;
       // is it on the screen?
-      const corners = cell.getCornerLatLngs()
-      const cellBounds = L.latLngBounds([corners[0], corners[1]]).extend(corners[2]).extend(corners[3])
+      const corners = cell.getCornerLatLngs();
+      const cellBounds = L.latLngBounds([corners[0], corners[1]]).extend(corners[2]).extend(corners[3]);
       if (cellBounds.intersects(bounds)) {
         // on screen - draw it
-        drawCell(cell, options)
+        drawCell(cell, options);
         // and recurse to our neighbors
-        const neighbors = cell.getNeighbors()
+        const neighbors = cell.getNeighbors();
         for (let i = 0; i < neighbors.length; i++) {
-          drawCellAndNeighbors(neighbors[i], options)
-        }
-      }
-    }
-  }
+          drawCellAndNeighbors(neighbors[i], options);
+        };
+      };
+    };
+  };
 
   // center cell
-  const zoom = map.getZoom()
+  const zoom = map.getZoom();
 
   Object.keys(levels).forEach(level => {
-    const options = levels[level]
+    const options = levels[level];
     if (zoom >= level) {
-      const cell = S2.S2Cell.FromLatLng(map.getCenter(), level)
-      drawCellAndNeighbors(cell, options)
-    }
-  })
-}
-
-map.attributionControl.setPrefix('getting last update')
+      const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+      drawCellAndNeighbors(cell, options);
+    };
+  });
+};
+/*
+map.attributionControl.setPrefix('getting last update');
 fetch('https://api.github.com/repos/pogohwh/db-poi/commits?path=poi.geojson')
   .then(res => res.json())
   .then(json => new Date(json[0].commit.author.date))
   .then(date => date.toLocaleString('en-IN-u-ca-iso8601', { dateStyle: 'medium', timeStyle: 'short' }))
   .then(dateString => map.attributionControl.setPrefix(`last updated on <strong>${dateString}</strong>`))
-
+*/
 regionLayer = L.layerGroup()
 map.addLayer(regionLayer)
 map.on('moveend', updateMapGrid)
-*/
 updateTiles();
-// updateMapGrid()
+updateMapGrid()
 
 </script>
 </body>
