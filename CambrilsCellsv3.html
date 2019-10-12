@@ -124,7 +124,7 @@ const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z
 */
 const updateTiles = () => {
   const zoom = map.getZoom();
-  if (zoom >= 15) tileStreet.setOpacity(1 - (zoom - 15) / 5)
+  if (zoom >= 17) tileStreet.setOpacity(1 - (zoom - 17) / 5)
   else tileSatellite.setOpacity(1);
   if (zoom <= 20) tileSatellite.setOpacity(1 - (20 - zoom) / 4)
   else tileSatellite.setOpacity(1);
@@ -159,7 +159,7 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question",markerColor: "black",shape: "circle", prefix: "fas"
                                      }); // Icono sugerencia
-/*
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
@@ -236,7 +236,7 @@ Tabletop.init({
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
 });
-*/
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
