@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.css" crossorigin />
     <script src="https://unpkg.com/leaflet.locatecontrol/dist/L.Control.Locate.min.js" crossorigin ></script>
 
-    <!-- link rel="stylesheet" href="https://raw.githack.com/route360/Leaflet.CondensedAttribution/master/dist/leaflet-control-condended-attribution.css" -->
-    <!-- script type="text/javascript" src="https://raw.githack.com/route360/Leaflet.CondensedAttribution/master/dist/leaflet-control-condended-attribution.js" ></script -->
+    <link rel="stylesheet" href="https://raw.githack.com/route360/Leaflet.CondensedAttribution/master/dist/leaflet-control-condended-attribution.css" >
+    <script type="text/javascript" src="https://raw.githack.com/route360/Leaflet.CondensedAttribution/master/dist/leaflet-control-condended-attribution.js" ></script>
 
     <link rel="stylesheet" href="./leaflet panel layers/leaflet-panel-layers.css">
     <script src="./leaflet panel layers/leaflet-panel-layers.js"></script>
@@ -98,7 +98,7 @@ const tileStreet = L.tileLayer(
 
 const updateTiles = () => {
   const zoom = map.getZoom();
-  if (zoom >= 17) tileStreet.setOpacity(1 - (zoom - 17) / 5)
+  if (zoom >= 15) tileStreet.setOpacity(1 - (zoom - 15) / 5)
   else tileSatellite.setOpacity(1);
   if (zoom <= 25) tileSatellite.setOpacity(1 - (25 - zoom) / 4)
   else tileSatellite.setOpacity(1);
@@ -228,12 +228,12 @@ const updateMapGrid = () => {
 
   const levels = {
     17: {
-      color: '#f9af02',
-      opacity: 1,
+      color: '#ff7700',
+      opacity: 0.8,
       weight: 1,
         },
     14: {
-      color: '#70e502',
+      color: '#77ff00',
       opacity: 0.5,
       weight: 3,
         },
