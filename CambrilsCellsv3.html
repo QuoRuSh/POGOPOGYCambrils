@@ -333,7 +333,7 @@ function buscarLocalizacion(e) {
   var b = Math.floor(Math.random() * 255);
   colorf= "rgb("+r+" ,"+g+","+ b+")";
 */
-  if ( AnchoCircle = 10) { AnchoCircle = 0 };
+  if ( AnchoCircle == 10) { AnchoCircle = 0 };
   AnchoCircle = AnchoCircle + 1;
   if (Circulo) { map.removeLayer(Circulo) };
   Circulo = L.circle(e.latlng, AnchoCircle , {
