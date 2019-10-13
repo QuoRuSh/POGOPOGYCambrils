@@ -106,31 +106,20 @@ var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', 
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
 
-/*
-const tileSatellite = L.gridLayer.googleMutant({
-  maxZoom: 24,
-  type: 'satellite', // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-  opacity: 0,
-}).addTo(map);
-*/
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// And Mapbox' vector
-// eslint-disable-next-line no-unused-vars
-const tileSatellite = Mcalles.addTo(map);
-//L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-//    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
-//}).addTo(map);
+// Mapas calles y satellite
+
+const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+}).addTo(map);
 
 const tileStreet = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
 }).addTo(map);
-/*L.tileLayer(
-  'https://api.mapbox.com/styles/v1/scio/cjvuj7krb2j1g1cs29u8y3z49/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
-    accessToken: 'pk.eyJ1Ijoic2NpbyIsImEiOiJjanZocmp0aXAwNjZ2NDNsamE3dXNwc2I1In0.zfAzKEDrAmDSqiOfS_naVw',
-    // attribution: 'map tiles &copy; <a href="https://www.openstreetmap.org/">Mapbox</a>, <a href="https://creativecommons.org/licenses/by/3.0/us/">CC-BY</a> | map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | dataset from <a href="https://github.com/PoGOHWH/db-poi">pogohwh/db-poi</a>',
-    maxZoom: 25,
-  }).addTo(map);
-*/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Visusalizacion de mapa segun zoom
+
 const updateTiles = () => {
   const zoom = map.getZoom();
   if (zoom >= 17) tileStreet.setOpacity(1 - (zoom - 17) / 5)
