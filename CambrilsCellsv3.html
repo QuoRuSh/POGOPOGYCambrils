@@ -336,11 +336,11 @@ function buscarLocalizacion(e) {
   if ( AnchoCircle = 4) { AnchoCircle = 0 };
   AnchoCircle = AnchoCircle + 1;
   if (Circulo) { map.removeLayer(Circulo) };
-  Circulo = L.circle(e.latlng, 1 , {
+  Circulo = L.circle(e.latlng, AnchoCircle , {
      color: '#000000',
      weight: AnchoCircle,
      opacity: 0.5,
-     fillColor: "#4444CC",
+     fillColor: "#0000EE",
      fillOpacity: 0.8,
 
   });
