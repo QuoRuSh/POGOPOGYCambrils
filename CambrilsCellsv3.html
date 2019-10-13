@@ -324,6 +324,7 @@ const updateMapGrid = () => {
 // Situarnos en el Mapas
 
 var AnchoCircle = 0 ;
+var SumaAncho = 1 ;
 var Circulo ;
 function buscarLocalizacion(e) {
   /*
@@ -333,12 +334,13 @@ function buscarLocalizacion(e) {
   var b = Math.floor(Math.random() * 255);
   colorf= "rgb("+r+" ,"+g+","+ b+")";
 */
-  if ( AnchoCircle == 10) { AnchoCircle = 0 };
-  AnchoCircle = AnchoCircle + 1;
+  AnchoCircle = AnchoCircle + SumaAncho ;
+  if ( AnchoCircle == 5) { SumaAncho = -1 };
+  if ( AnchoCircle == 0 ) { SumaAncho = 1 };
   if (Circulo) { map.removeLayer(Circulo) };
   Circulo = L.circle(e.latlng, AnchoCircle , {
      color: '#000000',
-     weight: AnchoCircle,
+     weight: 4,
      opacity: 0.5,
      fillColor: "#00AAEE",
      fillOpacity: 0.8,
