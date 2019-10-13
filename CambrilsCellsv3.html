@@ -79,7 +79,7 @@
 //* global L, S2, omnivore
 //* Setup the Leaflet map
 let ZoomMax = 22 ;
-const map = L.map('map').locate({setView: true , watch: true, maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
+const map = L.map('map').locate({setView: true , watch: true, enableHighAccuracy:true , maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -323,6 +323,8 @@ const updateMapGrid = () => {
 ////////////////////////////////////////////////////////////////////////
 // Situarnos en el Mapas
 
+var AnchoCircle = 0 ;
+var Circulo ;
 function buscarLocalizacion(e) {
   /*
   var colorf;
@@ -331,14 +333,17 @@ function buscarLocalizacion(e) {
   var b = Math.floor(Math.random() * 255);
   colorf= "rgb("+r+" ,"+g+","+ b+")";
 */
-
-  L.circle(e.latlng, 1 , {
+  if ( AnchoCircle = 4) { AnchoCircle = 0 };
+  AnchoCircle = AnchoCircle + 1;
+  if (Circulo) { map.removeLayer(Circulo) };
+  Circulo = L.circle(e.latlng, 1 , {
      color: '#000000',
      opacity: 0.5,
      fillColor: "#880000",
      fillOpacity: 0.8,
 
-  }).addTo(map);
+  });
+  Circulo.Width(AnchoCircle).addTo(map);
 /*
   L.Circle(e.latlng, 0.5 , {
      color: '#000000',
