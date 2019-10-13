@@ -75,8 +75,8 @@
 ///////////////////////////////////////////////////////////////////
 //* global L, S2, omnivore
 //* Setup the Leaflet map
-
-const map = L.map('map').locate({setView: true, maxZoom: 20}); //setView([22.57, 88.32403643149632], 15)
+let ZoomMax = 22 ;
+const map = L.map('map').locate({setView: true, maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -112,11 +112,11 @@ var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', 
 // Mapas calles y satellite
 
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
 
 const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ const updateTiles = () => {
   const zoom = map.getZoom();
   if (zoom >= 17) tileStreet.setOpacity(1 - (zoom - 17) / 5)
   else tileSatellite.setOpacity(1);
-  if (zoom <= 20) tileSatellite.setOpacity(1 - (20 - zoom) / 4)
+  if (zoom <= ZoomMax) tileSatellite.setOpacity(1 - (ZoomMax - zoom) / 4)
   else tileSatellite.setOpacity(1);
 };
 map.on('zoomend', updateTiles);
