@@ -335,10 +335,10 @@ function buscarLocalizacion(e) {
   colorf= "rgb("+r+" ,"+g+","+ b+")";
 */
   AnchoCircle = AnchoCircle + SumaAncho ;
-  if ( AnchoCircle == 5) { SumaAncho = -1 };
+  if ( AnchoCircle == 4) { SumaAncho = -1 };
   if ( AnchoCircle == 0 ) { SumaAncho = 1 };
   if (Circulo) { map.removeLayer(Circulo) };
-  Circulo = L.Circle(e.latlng, AnchoCircle , {
+  Circulo = L.circle(e.latlng, AnchoCircle , {
      color: '#000000',
      weight: 4,
      opacity: 0.5,
