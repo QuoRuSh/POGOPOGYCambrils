@@ -305,18 +305,16 @@ const updateMapGrid = () => {
 
   Object.keys(levels).forEach(level => {
     const options = levels[level];
-    if ( (level = 14 && zoom >= 15 ) || (level = 17 && zoom >= 17 ) ) {
-                                        const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
-                                        drawCellAndNeighbors(cell, options);
-                                                                      };
-//    if (level = 17 && zoom >= 17 ) {
-//                                      const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
-//                                      drawCellAndNeighbors(cell, options);
-//                                      };
-//                    };
-//
-//  });
-                                        };
+    if (level = 14 && zoom >= 15 ) {
+                                   const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+                                   drawCellAndNeighbors(cell, options);
+                                   };
+    if (level = 17 && zoom >= 17 ) {
+                                   const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+                                   drawCellAndNeighbors(cell, options);
+                                   };
+                                      });
+      };
 
 
 ////////////////////////////////////////////////////////////////////////
