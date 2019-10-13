@@ -79,7 +79,7 @@
 //* global L, S2, omnivore
 //* Setup the Leaflet map
 let ZoomMax = 22 ;
-const map = L.map('map').locate({setView: 'always', maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
+const map = L.map('map').locate({setView: true , watch: true, maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -87,7 +87,7 @@ const hash = new L.Hash(map);
 L.control.locate({
 //  icon: 'fa-map-marker',
   flyTo: true,
-  drawCircle: false,
+  drawCircle: true,
   drawMarker: false,
 }).addTo(map);
 
