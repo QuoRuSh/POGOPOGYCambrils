@@ -338,7 +338,7 @@ function buscarLocalizacion(e) {
   if ( AnchoCircle == 5) { SumaAncho = -1 };
   if ( AnchoCircle == 0 ) { SumaAncho = 1 };
   if (Circulo) { map.removeLayer(Circulo) };
-  Circulo = L.circle(e.latlng, AnchoCircle , {
+  Circulo = L.CircleMarker(e.latlng, AnchoCircle , {
      color: '#000000',
      weight: 4,
      opacity: 0.5,
