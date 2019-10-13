@@ -90,9 +90,10 @@ L.control.locate({
 
 
 L.control.scale().addTo(map);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
-// eslint-disable-next-line no-unused-vars
+/*
 var Mcalles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
@@ -105,6 +106,7 @@ var Msatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', 
 var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
+*/
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Mapas calles y satellite
@@ -258,8 +260,8 @@ const updateMapGrid = () => {
       weight: 1,
         },
     14: {
-      color: '#00ffAA',
-      opacity: 0.5,
+      color: '#009999',
+      opacity: 0.6,
       weight: 3,
         },
       };
@@ -309,14 +311,7 @@ const updateMapGrid = () => {
     };
   });
 };
-/*
-map.attributionControl.setPrefix('getting last update');
-fetch('https://api.github.com/repos/pogohwh/db-poi/commits?path=poi.geojson')
-  .then(res => res.json())
-  .then(json => new Date(json[0].commit.author.date))
-  .then(date => date.toLocaleString('en-IN-u-ca-iso8601', { dateStyle: 'medium', timeStyle: 'short' }))
-  .then(dateString => map.attributionControl.setPrefix(`last updated on <strong>${dateString}</strong>`))
-*/
+
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
 map.on('moveend', updateMapGrid);
