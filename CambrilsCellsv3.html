@@ -116,11 +116,12 @@ const tileSatellite = L.gridLayer.googleMutant({
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // And Mapbox' vector
 // eslint-disable-next-line no-unused-vars
-const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
-}).addTo(map);
+const tileSatellite = Mcalles.addTo(map);
+//L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+//    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
+//}).addTo(map);
 
-const tileStreet = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' {
+const tileStreet = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 20
 }).addTo(map);
 /*L.tileLayer(
