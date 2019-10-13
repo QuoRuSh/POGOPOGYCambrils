@@ -49,6 +49,9 @@
     <!-- link rel="stylesheet" href="./css/leaflet.extra-markers.min.css" -->
     <!-- script src="./js/leaflet.extra-markers.min.js"></script -->
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@latest/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@latest/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
 
     <style>
       * {
@@ -76,7 +79,7 @@
 //* global L, S2, omnivore
 //* Setup the Leaflet map
 let ZoomMax = 22 ;
-const map = L.map('map').locate({setView: true, maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
+const map = L.map('map').locate({setView: 'always', maxZoom: ZoomMax}); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -321,25 +324,26 @@ const updateMapGrid = () => {
 // Situarnos en el Mapas
 
 function buscarLocalizacion(e) {
+  /*
   var colorf;
   var r = Math.floor(Math.random() * 255);
   var g = Math.floor(Math.random() * 255);
   var b = Math.floor(Math.random() * 255);
   colorf= "rgb("+r+" ,"+g+","+ b+")";
-
+*/
 
   L.circle(e.latlng, 1 , {
      color: '#000000',
      opacity: 0.5,
-     fillColor: colorf,
+     fillColor: "#880000",
      fillOpacity: 0.8,
 
   }).addTo(map);
-
+/*
   L.Circle(e.latlng, 0.5 , {
      color: '#000000',
      opacity: 1,
-  }).addTo(map);
+  }).addTo(map);*/
 };
 
 function errorLocalizacion(e) {
