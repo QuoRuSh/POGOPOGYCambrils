@@ -339,7 +339,7 @@ function buscarLocalizacion(e) {
   L.Circle(e.latlng, 0.5 , {
      color: '#000000',
      opacity: 1,
-  })
+  }).addTo(map);
 };
 
 function errorLocalizacion(e) {
