@@ -260,7 +260,7 @@ const updateMapGrid = () => {
       weight: 1,
         },
     14: {
-      color: '#009999',
+      color: '#008888',
       opacity: 0.6,
       weight: 3,
         },
@@ -305,12 +305,18 @@ const updateMapGrid = () => {
 
   Object.keys(levels).forEach(level => {
     const options = levels[level];
-    if (zoom >= level) {
-      const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
-      drawCellAndNeighbors(cell, options);
-    };
-  });
-};
+    if ( (level = 14 && zoom >= 15 ) || (level = 17 && zoom >= 17 ) ) {
+                                        const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+                                        drawCellAndNeighbors(cell, options);
+                                                                      };
+//    if (level = 17 && zoom >= 17 ) {
+//                                      const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+//                                      drawCellAndNeighbors(cell, options);
+//                                      };
+//                    };
+//
+//  });
+                                        };
 
 
 ////////////////////////////////////////////////////////////////////////
