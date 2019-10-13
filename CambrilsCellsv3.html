@@ -333,14 +333,14 @@ function buscarLocalizacion(e) {
   var b = Math.floor(Math.random() * 255);
   colorf= "rgb("+r+" ,"+g+","+ b+")";
 */
-  if ( AnchoCircle = 4) { AnchoCircle = 0 };
+  if ( AnchoCircle = 10) { AnchoCircle = 0 };
   AnchoCircle = AnchoCircle + 1;
   if (Circulo) { map.removeLayer(Circulo) };
   Circulo = L.circle(e.latlng, AnchoCircle , {
      color: '#000000',
      weight: AnchoCircle,
      opacity: 0.5,
-     fillColor: "#0000EE",
+     fillColor: "#00AAEE",
      fillOpacity: 0.8,
 
   });
