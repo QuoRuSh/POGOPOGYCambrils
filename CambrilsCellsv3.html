@@ -317,12 +317,19 @@ const updateMapGrid = () => {
 // Situarnos en el Mapas
 
 function buscarLocalizacion(e) {
+  var colorf;
+  var r = Math.floor(Math.random() * 255);
+  var g = Math.floor(Math.random() * 255);
+  var b = Math.floor(Math.random() * 255);
+  colorfill= "rgb("+r+" ,"+g+","+ b+")";
 
-  L.circle(e.latlng, 2 , {
-     color: '#000033',
-     opacity: 0.8,
-     fillColor: '#0000FF',
+
+  L.circle(e.latlng, 1 , {
+     color: '#000000',
+     opacity: 0.5,
+     fillColor: colorf,
      fillOpacity: 0.8,
+
   }).addTo(map);
 };
 
