@@ -312,9 +312,29 @@ const updateMapGrid = () => {
   });
 };
 
+
+////////////////////////////////////////////////////////////////////////
+// Situarnos en el Mapas
+
+function buscarLocalizacion(e) {
+
+  L.circle(e.latlng, 6 , {
+     color: 'black',
+     fillColor: '#00FF00',
+     fillOpacity: 0.8,
+  }).addTo(map);
+};
+
+function errorLocalizacion(e) {
+   alert("No es posible encontrar su ubicación. Es posible que tenga que activar la geolocalización.");
+};
+
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
+
 map.on('moveend', updateMapGrid);
+map.on('locationerror', errorLocalizacion);
+map.on('locationfound', buscarLocalizacion);
 updateTiles();
 updateMapGrid();
 
