@@ -335,6 +335,11 @@ function buscarLocalizacion(e) {
      fillOpacity: 0.8,
 
   }).addTo(map);
+
+  L.Circle(e.latlng, 0.5 , {
+     color: '#000000',
+     opacity: 1,
+  })
 };
 
 function errorLocalizacion(e) {
