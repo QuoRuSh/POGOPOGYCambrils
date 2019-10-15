@@ -75,7 +75,7 @@
 //* global L, S2, omnivore
 //* Setup the Leaflet map
 let ZoomMax = 22 ;	// Zoom Maximo
-let ZoomVis = 8 ;	// A partir de que zoom se empieza ver mapa satelite
+let ZoomVis = 6 ;	// A partir de que zoom se empieza ver mapa satelite
 
 const map = L.map('map').locate({setView: true , enableHighAccuracy:true }); //setView([22.57, 88.32403643149632], 15)
 
@@ -271,7 +271,7 @@ const updateMapGrid = () => {
       weight: 1,
         },
     14: {
-      color: '#005555',
+      color: '#00DD88',
       opacity: 0.8,
       weight: 3,
         },
