@@ -49,6 +49,10 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
 
+<!-- LEAFLET POLILINEMEASURE -->
+<link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+<script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+	  
     <style>
       * {
         box-sizing: border-box;
@@ -88,7 +92,9 @@ L.control.locate({
   drawMarker: true,
 }).addTo(map);
 
-
+L.control.polylineMeasure({ 
+			  showClearControl: true,        // Show a control to clear all the measurements
+			 }).addTo(map);
 L.control.scale().addTo(map);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
