@@ -86,6 +86,8 @@ const map = L.map('map').locate({setView: true , enableHighAccuracy:true }); //s
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
 
+///////////////////////////////////////////////////////////////////	  
+// Controles	  
 L.control.locate({
   flyTo: true,
   drawCircle: true,
@@ -93,6 +95,7 @@ L.control.locate({
 }).addTo(map);
 
 L.control.polylineMeasure({ 
+			  position: 'topright',
 			  showClearControl: true,        // Show a control to clear all the measurements
 			 }).addTo(map);
 L.control.scale().addTo(map);
