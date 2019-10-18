@@ -52,7 +52,7 @@
 <!-- LEAFLET POLILINEMEASURE -->
 <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
 <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
-	  
+
     <style>
       * {
         box-sizing: border-box;
@@ -79,22 +79,22 @@
 //* global L, S2, omnivore
 //* Setup the Leaflet map
 let ZoomMax = 20 ;	// Zoom Maximo
-let ZoomVis = 6 ;	// A partir de que zoom se empieza ver mapa satelite
+let ZoomVis = 5 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
 
 const map = L.map('map').locate({setView: true , enableHighAccuracy:true }); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
 
-///////////////////////////////////////////////////////////////////	  
-// Controles	  
+///////////////////////////////////////////////////////////////////
+// Controles
 L.control.locate({
   flyTo: true,
   drawCircle: true,
   drawMarker: true,
 }).addTo(map);
 
-L.control.polylineMeasure({ 
+L.control.polylineMeasure({
 		//	  position: 'topright',
 		//	  showClearControl: true,        // Show a control to clear all the measurements
 			 }).addTo(map);
@@ -241,7 +241,7 @@ Tabletop.init({
 
       map.addLayer(marker5);
     })
-   let contador = 0
+   let contador = 0;
    $.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia) {
 
       contador = contador + 1
