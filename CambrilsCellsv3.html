@@ -125,7 +125,7 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
 
-const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A3|s.e%3Al|p.v%3Aoff', {
+const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&style=feature:poi.business%7Cvisibility:off&style=feature:poi.park%7Celement:labels.text%7Cvisibility:off', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
 	  
