@@ -125,9 +125,10 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
 
-const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m@289000001&hl=en&src=app&x=41189&y=25680&z=16&s=Gal&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
+const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
+//'https://mts0.google.com/vt/lyrs=m@289000001&hl=en&src=app&x=41189&y=25680&z=16&s=Gal&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff'
 /*const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);*/	  
