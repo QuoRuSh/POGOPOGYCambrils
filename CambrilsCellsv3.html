@@ -127,15 +127,6 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
 
 const tileStreet = L.tileLayer('http://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
-	[{
-    "featureType": "poi.business",
-    "stylers": [{ "visibility": "off", }];
-        },
-        {
-    "featureType": "poi.park",
-    "elementType": "labels.text",
-    "stylers": [{ "visibility": "off" }];
-        }];
 }).addTo(map);
 	  
   
