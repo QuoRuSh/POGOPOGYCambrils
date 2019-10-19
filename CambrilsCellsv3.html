@@ -212,7 +212,7 @@ Tabletop.init({
       contador = contador + 1;
       var loc = [pokestop.latitude, pokestop.longitude]
       marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
-      marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "     (" + contador + ")" + "<br>" + "</h2>" + pokestop.city + "</strong></h2>" +
+      marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
 
@@ -254,7 +254,7 @@ Tabletop.init({
       contador = contador + 1
       var loc = [sugerencia.latitude, sugerencia.longitude]
       marker6 = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
-      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "     (" + contador + ")" + "<br>" + "</h2>" + sugerencia.city + "</strong></h2>" +
+      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
 
