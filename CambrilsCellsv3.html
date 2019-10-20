@@ -76,10 +76,16 @@
 
 
 ///////////////////////////////////////////////////////////////////
-//* global L, S2, omnivore
-//* Setup the Leaflet map
+// Setup the Leaflet map (declaracion variables y constantes)
 let ZoomMax = 20 ;	// Zoom Maximo
 let ZoomVis = 4 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
+// Grupos de marcadores	  
+var LG_gym = new L.LayerGroup();
+var LG_pokestop = new L.LayerGroup();
+var LG_gymex = new L.LayerGroup();
+var LG_propuestas = new L.LayerGroup();
+var LG_aceptadas = new L.LayerGroup();
+var LG_sugerencias = new L.LayerGroup();
 
 const map = L.map('map').locate({setView: true , enableHighAccuracy:true }); //setView([22.57, 88.32403643149632], 15)
 
@@ -115,6 +121,8 @@ var Msatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', 
 var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
+
+https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-url
 */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,32 +136,23 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
 const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
-//'https://mts0.google.com/vt/lyrs=m@289000001&hl=en&src=app&x=41189&y=25680&z=16&s=Gal&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff'
-/*const tileStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
-}).addTo(map);*/	  
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
 
 const updateTiles = () => {
-  const zoom = map.getZoom();
+  			const zoom = map.getZoom();
 
-  if (zoom >(ZoomMax- ZoomVis)) {
-	  		 tileStreet.setOpacity(1 - (zoom - (ZoomMax-ZoomVis)) / ZoomVis) ;
-	  		 tileSatellite.setOpacity(0 + (zoom - (ZoomMax-ZoomVis)) /ZoomVis);
-  			 }
-  			else
-			 {
-		         tileStreet.setOpacity(1);
-			 tileSatellite.setOpacity(0);
-			 };
-
-//  if (zoom >(ZoomMax-5)) tileStreet.setOpacity(1 - (zoom - 17) / 5)
-//  else tileSatellite.setOpacity(1);
-//  if (zoom <= ZoomMax) tileSatellite.setOpacity(1 - (ZoomMax - zoom) / 4)
-//  else tileSatellite.setOpacity(1);
-};
+  			if (zoom >(ZoomMax- ZoomVis)) {
+	  		 		tileStreet.setOpacity(1 - (zoom - (ZoomMax-ZoomVis)) / ZoomVis) ;
+	  				tileSatellite.setOpacity(0 + (zoom - (ZoomMax-ZoomVis)) /ZoomVis);
+  							}
+  							else
+			 				{
+		         		tileStreet.setOpacity(1);
+			 		tileSatellite.setOpacity(0);
+			 				};
+			  };
 map.on('zoomend', updateTiles);
 
 
@@ -191,86 +190,96 @@ let isugerencia =  L.ExtraMarkers.icon ({
 
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
    // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
-Tabletop.init({
+Tabletop.init(
+  {
   key: code,
+  callback: function(sheet, tabletop)
+	{
 
+	$.each( tabletop.sheets("gym").all(), function(i, gim)		// Marcadores Gimnsasios
+		{
+		var loc = [gim.latitude, gim.longitude];
+		marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
+		marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</strong></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
+		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
+		map.addLayer(marker);
+		});
+		
+	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
+	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)	// Marcadores Pokeparadas
+	       {
 
-  callback: function(sheet, tabletop){
-
-    $.each( tabletop.sheets("gym").all(), function(i, gim) {
-      var loc = [gim.latitude, gim.longitude]
-      marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
-      marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</strong></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude+", "+gim.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" +gim.imagen + ");'></div></div></div>");
-
-      map.addLayer(marker);
-    })
-    let contador = 1;
-    $.each( tabletop.sheets("pokestop").all(), function(i, pokestop) {
-
-      contador = contador + 1;
-      var loc = [pokestop.latitude, pokestop.longitude]
-      marker2 = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
-      marker2.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</strong></h2>" +
+		contador = contador + 1;	// Para saber en que linea de la hoja de datos se encuentra el marcador
+		var loc = [pokestop.latitude, pokestop.longitude];
+		marker = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
+		marker.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
+  		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
+		map.addLayer(marker);
+    		});
+	  
+	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		// Marcadores Gimnasios EX
+		{
 
-      map.addLayer(marker2);
-    })
-   $.each( tabletop.sheets("gymex").all(), function(i, gymex) {
-
-     var loc = [gymex.latitude, gymex.longitude]
-      marker3 = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
-      marker3.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
+		var loc = [gymex.latitude, gymex.longitude];
+		marker = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
+		marker.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
+		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex	
+		map.addLayer(marker3);
+		});
+	  
+	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		// Marcadores Pedidos
+		{
 
-      map.addLayer(marker3);
-    })
-   $.each( tabletop.sheets("Propuesta").all(), function(i, propuesta) {
-
-     var loc = [propuesta.latitude, propuesta.longitude]
-      marker4 = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
-      marker4.bindPopup("<h2><strong style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
+		var loc = [propuesta.latitude, propuesta.longitude];
+		marker = new L.Marker(new L.latLng(loc), {title: propuesta.nombre, icon: ipropuesta} );
+		marker.bindPopup("<h2><strong style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
+		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
+		map.addLayer(marker);
+		});
+		
+	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)		// Marcadores Aceptadas
+		{
 
-      map.addLayer(marker4);
-    })
-   $.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada) {
-
-     var loc = [aceptada.latitude, aceptada.longitude]
-      marker5 = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
-      marker5.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
+		var loc = [aceptada.latitude, aceptada.longitude];
+		marker = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
+		marker.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
+		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas	
+		map.addLayer(marker);
+		});
+		
+	contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
+	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)
+		{
 
-      map.addLayer(marker5);
-    })
-   contador = 1;
-   $.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia) {
-
-      contador = contador + 1
-      var loc = [sugerencia.latitude, sugerencia.longitude]
-      marker6 = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
-      marker6.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</strong></h2>" +
+		contador = contador + 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
+		var loc = [sugerencia.latitude, sugerencia.longitude];
+		marker = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
+		marker.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
-
-      map.addLayer(marker6);
-    })
-  },
+		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas	
+		map.addLayer(marker);
+  		});
+	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
-});
+  });
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
 // CREDIT: S2 cell drawing pretty much borrowed directly from
 // https://gitlab.com/AlfonsoML/pogo-s2/blob/93cc77c1973b4978610ff25a85273d290e2754a0/s2check.user.js
-// eslint-disable-next-line prefer-const
 
 let regionLayer;
 
