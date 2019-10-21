@@ -89,38 +89,12 @@ var LG_sugerencias = new L.LayerGroup();
 
 const map = L.map('map', {
   maxZoom: ZoomMax,
-  layers: [LG_gym]
+  layers: [LG_gym, LG_pkestop, LG_gymex,]
 }).locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
 
-///////////////////////////////////////////////////////////////////
-// Controles
-L.control.locate({
-  flyTo: true,
-  drawCircle: true,
-  drawMarker: true,
-  enableHighAccuracy:true
-}).addTo(map);
-
-L.control.polylineMeasure({
-		//	  position: 'topright',
-		//	  showClearControl: true,        // Show a control to clear all the measurements
-			 }).addTo(map);
-L.control.scale().addTo(map);
-	  
-var overlayMaps = 
-	{
-	"Gym": LG_gym,	
-	"Pokeparada": LG_pokestop,
-	"Gym EX": LG_gymex,
-	"Pedidas": LG_propuestas,		
-	"Sugerencias": LG_sugerencias,
-	"Aceptadas": LG_aceptadas,
- 	};
-	  
-L.control.layers(null, overlayMaps).addTo(map);
 	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
@@ -152,6 +126,37 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
 const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
+	  
+	  
+	  
+///////////////////////////////////////////////////////////////////
+// Controles
+L.control.locate({
+  flyTo: true,
+  drawCircle: true,
+  drawMarker: true,
+  enableHighAccuracy:true
+}).addTo(map);
+
+L.control.polylineMeasure({
+		//	  position: 'topright',
+		//	  showClearControl: true,        // Show a control to clear all the measurements
+			 }).addTo(map);
+L.control.scale().addTo(map);
+	  
+var overlayMaps = 
+	{
+	"Gym": LG_gym,	
+	"Pokeparada": LG_pokestop,
+	"Gym EX": LG_gymex,
+	"Pedidas": LG_propuestas,		
+	"Sugerencias": LG_sugerencias,
+	"Aceptadas": LG_aceptadas,
+ 	};
+	  
+L.control.layers(null, overlayMaps).addTo(map);
+	  
+
   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
@@ -220,7 +225,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
-		map.addLayer(marker);
+	//	map.addLayer(marker);
 		});
 		
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
@@ -234,7 +239,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
-		map.addLayer(marker);
+	//	map.addLayer(marker);
     		});
 	  
 	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		// Marcadores Gimnasios EX
@@ -246,7 +251,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex	
-		map.addLayer(marker);
+	//	map.addLayer(marker);
 		});
 	  
 	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		// Marcadores Pedidos
@@ -258,7 +263,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
-		map.addLayer(marker);
+	//	map.addLayer(marker);
 		});
 		
 	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)		// Marcadores Aceptadas
@@ -270,7 +275,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
 		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas	
-		map.addLayer(marker);
+	//	map.addLayer(marker);
 		});
 		
 	contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
