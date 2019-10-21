@@ -87,7 +87,10 @@ var LG_propuestas = new L.LayerGroup();
 var LG_aceptadas = new L.LayerGroup();
 var LG_sugerencias = new L.LayerGroup();
 
-const map = L.map('map').locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
+const map = L.map('map', {
+  maxZoom: ZoomMax,
+  layers: [LG_gym]
+}).locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
 
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -106,7 +109,19 @@ L.control.polylineMeasure({
 		//	  showClearControl: true,        // Show a control to clear all the measurements
 			 }).addTo(map);
 L.control.scale().addTo(map);
-
+	  
+var overlayMaps = 
+	{
+	"Gym": LG_gym,	
+	"Pokeparada": LG_pokestop,
+	"Gym EX": LG_gymex,
+	"Pedidas": LG_propuestas,		
+	"Sugerencias": LG_sugerencias,
+	"Aceptadas": LG_aceptadas,
+ 	};
+	  
+L.control.layers(null, overlayMaps).addTo(map);
+	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
 /*
