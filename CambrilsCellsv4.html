@@ -86,6 +86,7 @@ var LG_gymex = new L.LayerGroup();
 var LG_propuestas = new L.LayerGroup();
 var LG_aceptadas = new L.LayerGroup();
 var LG_sugerencias = new L.LayerGroup();
+var LG_ContadorPG = new L.LayerGroup();
 
 const map = L.map('map', {
   maxZoom: ZoomMax,
@@ -209,8 +210,20 @@ let isugerencia =  L.ExtraMarkers.icon ({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
+var MarkerNumCell14				// Para contar pokestops y gyms en celdas 14
+	{
+	var Lat1 = 0,		// Latitud esquina superior izquierda
+	var Lon1 = 0,	    	// Longitud esquina superior izquierda
+	var Lat2 = 0,		// Latitud esquina inferior derecha
+	var Lon2 = 0,		// Longitud esquina inferior derecha
+	var ContMark = 1	// Contador de markadores misma celda
+	};
+var ArrayMarkerNumCell14 [];
+var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
+	  
+
+
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
-   // "11NuCbN1bKx9MZ6jx412OyRvBqb0l7k0ppFpmkDejIxc"
 Tabletop.init(
   {
   key: code,
@@ -219,12 +232,35 @@ Tabletop.init(
 
 	$.each( tabletop.sheets("gym").all(), function(i, gim)		// Marcadores Gimnsasios
 		{
-		var loc = [gim.latitude, gim.longitude];
-		marker = new L.Marker(new L.latLng(loc), {title: gim.nombre, icon: igym} );
+		var loc = new L.latLng(gim.latitude, gim.longitude);
+		marker = new L.Marker(loc, {title: gim.nombre, icon: igym} );
 		marker.bindPopup("<h2><strong style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
+	
+		const cell = S2.S2Cell.FromLatLng(loc, 14);
+		const corners = cell.getCornerLatLngs();
+		MarkerNumCell14.Lat1= corners[1].lat;
+		MarkerNumCell14.Lon1= corners[1].lng;
+		MarkerNumCell14.Lat2= corners[3].lat;
+		MarkerNumCell14.Lon2= corners[3].lng;
+	
+		var Nuevorepe=0;	// 0 = Nuevo  1= Repe
+		for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
+			{
+			if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
+				{
+				Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
+				ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
+				break;
+				};
+			};
+		if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
+			{
+			ArrayMarkerNumCell14[i] = MarkerNumCell14;
+			ContMarkerNumCell14++;			
+			};
 	//	map.addLayer(marker);
 		});
 		
@@ -232,7 +268,7 @@ Tabletop.init(
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)	// Marcadores Pokeparadas
 	       {
 
-		contador = contador + 1;	// Para saber en que linea de la hoja de datos se encuentra el marcador
+		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = [pokestop.latitude, pokestop.longitude];
 		marker = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
 		marker.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</strong></h2>" +
@@ -282,7 +318,7 @@ Tabletop.init(
 	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)
 		{
 
-		contador = contador + 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
+		contador ++;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = [sugerencia.latitude, sugerencia.longitude];
 		marker = new L.Marker(new L.latLng(loc), {title: sugerencia.nombre, icon: isugerencia} );
 		marker.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</strong></h2>" +
