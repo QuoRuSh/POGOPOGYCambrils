@@ -241,16 +241,15 @@ Tabletop.init(
 	
 		const cell = S2.S2Cell.FromLatLng(loc, 14);
 		const corners = cell.getCornerLatLngs();
-		MC14 = new MarkerNumCell14;
-		MC14.Lat1= corners[1].lat;
-		MC14.Lon1= corners[1].lng;
-		MC14.Lat2= corners[3].lat;
-		MC14.Lon2= corners[3].lng;
+		MarkerNumCell14.Lat1= corners[1].lat;
+		MarkerNumCell14.Lon1= corners[1].lng;
+		MarkerNumCell14.Lat2= corners[3].lat;
+		MarkerNumCell14.Lon2= corners[3].lng;
 	
 		var Nuevorepe=0;	// 0 = Nuevo  1= Repe
 		for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
 			{
-			if( (ArrayMarkerNumCell14[i].Lat1 == MC14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MC14.Lon1))
+			if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
 				{
 				Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
 				ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
@@ -259,7 +258,11 @@ Tabletop.init(
 			};
 		if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
 			{
-			ArrayMarkerNumCell14[i] = MC14;
+			ArrayMarkerNumCell14[i].Lat1 = MarkerNumCell14.Lat1;
+			ArrayMarkerNumCell14[i].Lon1 = MarkerNumCell14.Lon1;
+			ArrayMarkerNumCell14[i].Lat2 = MarkerNumCell14.Lat2;
+			ArrayMarkerNumCell14[i].Lon2 = MarkerNumCell14.Lat2;
+			ArrayMarkerNumCell14[i].ContMark = 1;
 			ContMarkerNumCell14++;			
 			};
 	//	map.addLayer(marker);
