@@ -241,7 +241,7 @@ Tabletop.init(
 	
 		const cell = S2.S2Cell.FromLatLng(loc, 14);
 		const corners = cell.getCornerLatLngs();
-		MC14 = new MarkerNumCell14();
+		MC14 = new MarkerNumCell14;
 		MC14.Lat1= corners[1].lat;
 		MC14.Lon1= corners[1].lng;
 		MC14.Lat2= corners[3].lat;
