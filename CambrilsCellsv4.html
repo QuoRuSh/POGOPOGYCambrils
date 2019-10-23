@@ -219,14 +219,8 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 	Lon2 : 0,		// Longitud esquina inferior derecha
 	ContMark : 1		// Contador de markadores misma celda
 	};
-ArrayMarkerNumCell14 = [];
-// new Array ({
-//	Lat1 : 0,		// Latitud esquina superior izquierda
-//	Lon1 : 0,	    	// Longitud esquina superior izquierda
-//	Lat2 : 0,		// Latitud esquina inferior derecha
-//	Lon2 : 0,		// Longitud esquina inferior derecha
-//	ContMark : 1		// Contador de markadores misma celda
-//	});
+ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
+
 var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 	  
 
@@ -247,34 +241,8 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
 
+		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
-		const cell = S2.S2Cell.FromLatLng(loc, 14);
-		const corners = cell.getCornerLatLngs();
-		MarkerNumCell14.Lat1= corners[1].lat;
-		MarkerNumCell14.Lon1= corners[1].lng;
-		MarkerNumCell14.Lat2= corners[3].lat;
-		MarkerNumCell14.Lon2= corners[3].lng;
-	
-		var Nuevorepe=0;	// 0 = Nuevo  1= Repe
-		for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
-			{
-			if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
-				{
-				Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
-				ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
-				break;
-				};
-			};
-		if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
-			{
-                        ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
-//			ArrayMarkerNumCell14[i].Lat1 = MarkerNumCell14.Lat1;
-//			ArrayMarkerNumCell14[i].Lon1 = MarkerNumCell14.Lon1;
-//			ArrayMarkerNumCell14[i].Lat2 = MarkerNumCell14.Lat2;
-//			ArrayMarkerNumCell14[i].Lon2 = MarkerNumCell14.Lat2;
-//			ArrayMarkerNumCell14[i].ContMark = 1;
-			ContMarkerNumCell14++;			
-			};
 	//	map.addLayer(marker);
 		});
 		
@@ -283,25 +251,31 @@ Tabletop.init(
 	       {
 
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
-		var loc = [pokestop.latitude, pokestop.longitude];
-		marker = new L.Marker(new L.latLng(loc), {title: pokestop.nombre, icon: ipokestop} );
+		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
+		marker = new L.Marker(loc, {title: pokestop.nombre, icon: ipokestop} );
 		marker.bindPopup("<h2><strong style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
-	//	map.addLayer(marker);
+
+		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+
+		//	map.addLayer(marker);
     		});
 	  
 	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		// Marcadores Gimnasios EX
 		{
 
-		var loc = [gymex.latitude, gymex.longitude];
-		marker = new L.Marker(new L.latLng(loc), {title: gymex.nombre, icon: igymex} );
+		var loc = new L.latLng(gymex.latitude, gymex.longitude);
+		marker = new L.Marker(loc, {title: gymex.nombre, icon: igymex} );
 		marker.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex	
-	//	map.addLayer(marker);
+
+		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+
+		//	map.addLayer(marker);
 		});
 	  
 	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		// Marcadores Pedidos
@@ -346,7 +320,34 @@ Tabletop.init(
   debug: true
   });
 
-
+	  
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// Contar Pokeparadas y Gyms en celdas 14
+function ContarPOGYC14(loc)
+	{
+	const cell = S2.S2Cell.FromLatLng(loc, 14);
+	const corners = cell.getCornerLatLngs();
+	MarkerNumCell14.Lat1= corners[1].lat;
+	MarkerNumCell14.Lon1= corners[1].lng;
+	MarkerNumCell14.Lat2= corners[3].lat;
+	MarkerNumCell14.Lon2= corners[3].lng;
+	
+	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
+	for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
+		{
+		if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
+			{
+			Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
+			ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
+			break;
+			};
+		};
+	if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
+		{
+		ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
+		ContMarkerNumCell14++;			
+		};
+	};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
 // CREDIT: S2 cell drawing pretty much borrowed directly from
