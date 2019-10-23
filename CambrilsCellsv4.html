@@ -207,12 +207,12 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,   iconSize: '[48,64]',
                                      }); // Icono sugerencia
-let itotalpg =   L.ExtraMarkers.icon
+/*let itotalpg =   L.ExtraMarkers.icon
 	({
 	icon: 'fa-number',
         shape: 'penta',
         markerColor: 'red',
- 	});
+ 	});*/
 	 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
@@ -326,8 +326,15 @@ Tabletop.init(
 	for (i = 0; i < ContMarkerNumCell14; i++)
 		{
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
+		let itotalpg =   L.ExtraMarkers.icon
+			({
+			icon: 'fa-number',
+        		shape: 'penta',
+        		markerColor: 'red',
+			number: ArrayMarkerNumCell14[i].ContMark.toString();
+ 			});
 		marker = new L.Marker(loc, {title: " número de pokestops y gyms", icon: itotalpg} );
-		marker.number=ArrayMarkerNumCell14[i].ContMark.toString();
+//		marker.number=ArrayMarkerNumCell14[i].ContMark.toString();
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY	
 		};
 	},
