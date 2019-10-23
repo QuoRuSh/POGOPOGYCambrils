@@ -372,16 +372,16 @@ function midPoint(lat1,lon1,lat2,lon2)
 	let dLon = Math.toRadians(lon2 - lon1);
 	
 	//convert to radians
-	lat1 = Math.toRadians(lat1);
-	lat2 = Math.toRadians(lat2);
-	lon1 = Math.toRadians(lon1);
+	lat1 = lat1 * Math.PI / 180;
+	lat2 = lat2 * Math.PI / 180;
+	lon1 = lon1 * Math.PI / 180;
 
 	let Bx = Math.cos(lat2) * Math.cos(dLon);
 	let By = Math.cos(lat2) * Math.sin(dLon);
 	let lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
 	let lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
 
-	return new L.latLng (Math.toDegrees(lat3),Math.toDegrees(lon3));
+	return new L.latLng (lat3 * 180 / Math.PI),(lon3 * 180 / Math.PI));  // Devolvemos valores a grados
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
