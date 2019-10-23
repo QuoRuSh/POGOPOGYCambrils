@@ -327,7 +327,7 @@ Tabletop.init(
 		{
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		marker = new L.Marker(loc, {title: " número de pokestops y gyms", icon: itotalpg} );
-		marker.number=ArrayMarkerNumCell14[i].ContMark.tostring();
+		marker.number=ArrayMarkerNumCell14[i].ContMark.toString();
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY	
 		};
 	},
