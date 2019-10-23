@@ -153,6 +153,7 @@ var overlayMaps =
 	"Pedidas": LG_propuestas,		
 	"Sugerencias": LG_sugerencias,
 	"Aceptadas": LG_aceptadas,
+	"Total Po GY" : LG_ContadorPG,
  	};
 	  
 L.control.layers(null, overlayMaps).addTo(map);
@@ -206,7 +207,14 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,   iconSize: '[48,64]',
                                      }); // Icono sugerencia
-
+let itotalpg =   L.ExtraMarkers.icon
+	({
+	icon: 'fa-number',
+        shape: 'penta',
+        markerColor: 'red',
+        number: '1'
+	)};
+	 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
@@ -315,7 +323,14 @@ Tabletop.init(
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas	
 	//	map.addLayer(marker);
   		});
-	},
+// Ponemos Marcadores con numero de pokeparadas y gyms en celda 14	
+	for (i = 0; i < ContMarkerNumCell14; i++)
+		{
+		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
+		marker = new L.Marker(loc, {title: " número de pokestops y gyms", icon: itotalpg} );
+		marker.number=ArrayMarkerNumCell14[i].ContMark;
+		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY	
+		},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
   });
@@ -348,6 +363,25 @@ function ContarPOGYC14(loc)
 		ContMarkerNumCell14++;			
 		};
 	};
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Calcular el medio entre 2 puntos
+function midPoint(lat1,lon1,lat2,lon2)
+	{
+	let dLon = Math.toRadians(lon2 - lon1);
+	
+	//convert to radians
+	lat1 = Math.toRadians(lat1);
+	lat2 = Math.toRadians(lat2);
+	lon1 = Math.toRadians(lon1);
+
+	let Bx = Math.cos(lat2) * Math.cos(dLon);
+	let By = Math.cos(lat2) * Math.sin(dLon);
+	let lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+	let lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+
+	return new L.latLng (Math.toDegrees(lat3),Math.toDegrees(lon3));
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
 // CREDIT: S2 cell drawing pretty much borrowed directly from
