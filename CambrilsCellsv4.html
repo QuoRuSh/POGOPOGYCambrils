@@ -210,6 +210,7 @@ let isugerencia =  L.ExtraMarkers.icon ({
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
+ 
 var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
     	{
 	Lat1 : 0,		// Latitud esquina superior izquierda
@@ -245,7 +246,8 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
-	
+
+
 		const cell = S2.S2Cell.FromLatLng(loc, 14);
 		const corners = cell.getCornerLatLngs();
 		MarkerNumCell14.Lat1= corners[1].lat;
@@ -265,7 +267,7 @@ Tabletop.init(
 			};
 		if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
 			{
-                        ArrayMarkerNumCell14[i]= MarkerNumCell14.slice();
+                        ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
 //			ArrayMarkerNumCell14[i].Lat1 = MarkerNumCell14.Lat1;
 //			ArrayMarkerNumCell14[i].Lon1 = MarkerNumCell14.Lon1;
 //			ArrayMarkerNumCell14[i].Lat2 = MarkerNumCell14.Lat2;
