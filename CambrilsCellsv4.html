@@ -459,54 +459,10 @@ const updateMapGrid = () => {
       };
 
 
-////////////////////////////////////////////////////////////////////////
-// Situarnos en el Mapas
-/*
-var AnchoCircle = 0 ;
-var SumaAncho = 1 ;
-var Circulo ;
-function buscarLocalizacion(e) {
-  /*
-  var colorf;
-  var r = Math.floor(Math.random() * 255);
-  var g = Math.floor(Math.random() * 255);
-  var b = Math.floor(Math.random() * 255);
-  colorf= "rgb("+r+" ,"+g+","+ b+")";
-*/
-/*
-  AnchoCircle = AnchoCircle + SumaAncho ;
-  if ( AnchoCircle == 4) { SumaAncho = -1 };
-  if ( AnchoCircle == 0 ) { SumaAncho = 1 };
-  if (Circulo) { map.removeLayer(Circulo) };
-  Circulo = L.circle(e.latlng, AnchoCircle , {
-     color: '#000000',
-     weight: 4,
-     opacity: 0.5,
-     fillColor: "#55AAEE",
-     fillOpacity: 0.8,
-
-  });
-  //Circulo.setStyle( weight: AnchoCircle ).addTo(map);
-  Circulo.addTo(map);
-  */
-/*
-  L.Circle(e.latlng, 0.5 , {
-     color: '#000000',
-     opacity: 1,
-  }).addTo(map);*/
-/*};
-
-
-function errorLocalizacion(e) {
-   alert("No es posible encontrar su ubicación. Es posible que tenga que activar la geolocalización.");
-};
-*/
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
 
 map.on('moveend', updateMapGrid);
-//map.on('locationerror', errorLocalizacion);
-//map.on('locationfound', buscarLocalizacion);
 updateTiles();
 updateMapGrid();
 
