@@ -207,13 +207,7 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,   iconSize: '[48,64]',
                                      }); // Icono sugerencia
-/*let itotalpg =   L.ExtraMarkers.icon
-	({
-	icon: 'fa-number',
-        shape: 'penta',
-        markerColor: 'red',
- 	});*/
-	 
+ 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
@@ -334,7 +328,6 @@ Tabletop.init(
 			number: ArrayMarkerNumCell14[i].ContMark.toString(),
  			});
 		marker = new L.Marker(loc, {title: " Nuevo gym  2a, 6a y 20a ", icon: itotalpg} );
-//		marker.number=ArrayMarkerNumCell14[i].ContMark.toString();
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY	
 		};
 	},
