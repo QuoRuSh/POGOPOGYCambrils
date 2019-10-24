@@ -351,6 +351,13 @@ Tabletop.init(
   	MarkerNumCell14.Lon2= corners[3].lng;
 
   	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
+
+    if ( ArrayMarkerNumCell14[MarkIndex] == undefined )
+        {
+        ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));
+        ListIndex[ContMarkerNumCell14]=MarkIndex;
+        ContMarkerNumCell14++;
+        };
   	for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
   		{
   		if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
