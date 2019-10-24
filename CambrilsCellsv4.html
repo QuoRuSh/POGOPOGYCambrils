@@ -79,7 +79,7 @@
 // Setup the Leaflet map (declaracion variables y constantes)
 let ZoomMax = 20 ;	// Zoom Maximo
 let ZoomVis = 3 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
-// Grupos de marcadores	  
+// Grupos de marcadores
 var LG_gym = new L.LayerGroup();
 var LG_pokestop = new L.LayerGroup();
 var LG_gymex = new L.LayerGroup();
@@ -96,7 +96,7 @@ const map = L.map('map', {
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
 
-	  
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
 /*
@@ -119,7 +119,7 @@ https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Mapas calles y satellite
 
-	  
+
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
@@ -127,9 +127,9 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
 const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
-	  
-	  
-	  
+
+
+
 ///////////////////////////////////////////////////////////////////
 // Controles
 L.control.locate({
@@ -144,22 +144,22 @@ L.control.polylineMeasure({
 		//	  showClearControl: true,        // Show a control to clear all the measurements
 			 }).addTo(map);
 L.control.scale().addTo(map);
-	  
-var overlayMaps = 
+
+var overlayMaps =
 	{
-	"Gym": LG_gym,	
+	"Gym": LG_gym,
 	"Pokeparada": LG_pokestop,
 	"Gym EX": LG_gymex,
-	"Pedidas": LG_propuestas,		
+	"Pedidas": LG_propuestas,
 	"Sugerencias": LG_sugerencias,
 	"Aceptadas": LG_aceptadas,
 	"Total Po GY" : LG_ContadorPG,
  	};
-	  
-L.control.layers(null, overlayMaps).addTo(map);
-	  
 
-  
+L.control.layers(null, overlayMaps).addTo(map);
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
 
@@ -207,11 +207,11 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,   iconSize: '[48,64]',
                                      }); // Icono sugerencia
- 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
- 
+
 var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
     	{
 	Lat1 : 0,		// Latitud esquina superior izquierda
@@ -223,7 +223,7 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
 
 var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
-	  
+
 
 
 var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
@@ -246,7 +246,7 @@ Tabletop.init(
 
 	//	map.addLayer(marker);
 		});
-		
+
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)	// Marcadores Pokeparadas
 	       {
@@ -263,7 +263,7 @@ Tabletop.init(
 
 		//	map.addLayer(marker);
     		});
-	  
+
 	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		// Marcadores Gimnasios EX
 		{
 
@@ -272,13 +272,13 @@ Tabletop.init(
 		marker.bindPopup("<h2><strong style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
-		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex	
+		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
 		//	map.addLayer(marker);
 		});
-	  
+
 	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		// Marcadores Pedidos
 		{
 
@@ -290,7 +290,7 @@ Tabletop.init(
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
 	//	map.addLayer(marker);
 		});
-		
+
 	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)		// Marcadores Aceptadas
 		{
 
@@ -299,10 +299,10 @@ Tabletop.init(
 		marker.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
-		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas	
+		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas
 	//	map.addLayer(marker);
 		});
-		
+
 	contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)
 		{
@@ -313,29 +313,29 @@ Tabletop.init(
 		marker.bindPopup("<h2><strong style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
-		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas	
+		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
 	//	map.addLayer(marker);
   		});
-// Ponemos Marcadores con numero de pokeparadas y gyms en celda 14	
+// Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
 	for (i = 0; i < ContMarkerNumCell14; i++)
 		{
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		let itotalpg =   L.ExtraMarkers.icon
 			({
 			icon: 'fa-number',
-        		shape: 'penta',
-        		markerColor: 'red',
+      shape: 'penta',
+      markerColor: 'red',
 			number: ArrayMarkerNumCell14[i].ContMark.toString(),
  			});
 		marker = new L.Marker(loc, {title: " Nuevo gym  2a, 6a y 20a ", icon: itotalpg} );
-		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY	
+		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" ],
   debug: true
   });
 
-	  
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contar Pokeparadas y Gyms en celdas 14
 function ContarPOGYC14(loc)
@@ -346,7 +346,7 @@ function ContarPOGYC14(loc)
 	MarkerNumCell14.Lon1= corners[1].lng;
 	MarkerNumCell14.Lat2= corners[3].lat;
 	MarkerNumCell14.Lon2= corners[3].lng;
-	
+
 	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
 	for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
 		{
@@ -360,7 +360,7 @@ function ContarPOGYC14(loc)
 	if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
 		{
 		ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
-		ContMarkerNumCell14++;			
+		ContMarkerNumCell14++;
 		};
 	};
 
@@ -369,7 +369,7 @@ function ContarPOGYC14(loc)
 function midPoint(lat1,lon1,lat2,lon2)
 	{
 	let dLon = (lon2 - lon1) * Math.PI / 180;
-	
+
 	//convert to radians
 	lat1 = lat1 * Math.PI / 180;
 	lat2 = lat2 * Math.PI / 180;
