@@ -335,10 +335,40 @@ Tabletop.init(
   debug: true
   });
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Contar Pokeparadas y Gyms en celdas 14
+  const MaxArray = 2048-1;  // Espacio para el array de celdas
+  const AndIndex = 1024-1;  //
+  var ListIndex = [];   // Array de indices
+  function ContarPOGYC14(loc)
+  	{
+  	const cell = S2.S2Cell.FromLatLng(loc, 14);
+  	const corners = cell.getCornerLatLngs();
+    let MarkIndex= (cell.ij[1] ^ cell.ij[2]) & AndIndex;
+  	MarkerNumCell14.Lat1= corners[1].lat;
+  	MarkerNumCell14.Lon1= corners[1].lng;
+  	MarkerNumCell14.Lat2= corners[3].lat;
+  	MarkerNumCell14.Lon2= corners[3].lng;
 
+  	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
+  	for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
+  		{
+  		if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
+  			{
+  			Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
+  			ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
+  			break;
+  			};
+  		};
+  	if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
+  		{
+  		ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
+  		ContMarkerNumCell14++;
+  		};
+  	};
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Contar Pokeparadas y Gyms en celdas 14
-function ContarPOGYC14(loc)
+/*function ContarPOGYC14(loc)
 	{
 	const cell = S2.S2Cell.FromLatLng(loc, 14);
 	const corners = cell.getCornerLatLngs();
@@ -363,7 +393,7 @@ function ContarPOGYC14(loc)
 		ContMarkerNumCell14++;
 		};
 	};
-
+*/
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Calcular el medio entre 2 puntos
 function midPoint(lat1,lon1,lat2,lon2)
