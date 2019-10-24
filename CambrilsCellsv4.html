@@ -369,7 +369,7 @@ Tabletop.init(
         			ArrayMarkerNumCell14[MarkIndex].ContMark++	// Incrementamos contador de marcador en celda
               } else
               {
-              MarkIndex= (MarkIndex++) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
+              MarkIndex= (MarkIndex+1) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
               };
           };
       } while (Nuevorepe == 0);
