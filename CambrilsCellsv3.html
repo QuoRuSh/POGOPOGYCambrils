@@ -347,7 +347,7 @@ function ContarPOGYC14(loc)
 	MarkerNumCell14.Lat2= corners[3].lat;
 	MarkerNumCell14.Lon2= corners[3].lng;
 
-	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
+	var Nuevorepe=0;	// 0 = Nuevo 1 = Repe
 	for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
 		{
 		if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
@@ -395,14 +395,16 @@ const updateMapGrid = () => {
   const bounds = map.getBounds();
   const seenCells = {};
 
+  var ColorCell17= '#000000';
+  var ColorCell14= '#22CC44';
   const levels = {
     17: {
-      color: '#000000',
+      color: ColorCell14, 	//'#000000',
       opacity: 1,
       weight: 1,
         },
     14: {
-      color: '#22CC44',
+      color: ColorCell17,	//'#22CC44',
       opacity: 0.9,
       weight: 3,
         },
