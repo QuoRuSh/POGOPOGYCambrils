@@ -28,7 +28,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin />
     <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <link rel="stylesheet" href="./css/style.css" />
 
@@ -41,9 +40,13 @@
 <!-- LEAFLET EXTRA MARKERS -->
     <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/dist/css/leaflet.extra-markers.min.css">
+<!-- LEAFLET SLIDER -->
+    <script src="https://github.com/Eclipse1979/leaflet-slider/blob/master/dist/leaflet-slider.js"></script>
+    <link rel="stylesheet" href="https://github.com/Eclipse1979/leaflet-slider/blob/master/dist/leaflet-slider.css">
 
 <!-- FONT AWESOME -->
 <!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 <!-- LEAFLET CONTROL LOCATE -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
@@ -226,7 +229,7 @@ var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 
 
 
-var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
+var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	//Key code hoja de datos Cambrils
 Tabletop.init(
   {
   key: code,
@@ -294,13 +297,16 @@ Tabletop.init(
 	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)		// Marcadores Aceptadas
 		{
 
-		var loc = [aceptada.latitude, aceptada.longitude];
-		marker = new L.Marker(new L.latLng(loc), {title: aceptada.nombre, icon: iaceptada} );
+		var loc = new L.latLng(aceptada.latitude, aceptada.longitude);
+		marker = new L.Marker(loc, {title: aceptada.nombre, icon: iaceptada} );
 		marker.bindPopup("<h2><strong style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</strong></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
 		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas
-	//	map.addLayer(marker);
+
+		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		
+		//	map.addLayer(marker);
 		});
 
 	contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
@@ -319,13 +325,13 @@ Tabletop.init(
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
 	for (a = 0; a < ContMarkerNumCell14; a++)
 		{
-    let i = ListIndex[a];
+    		let i = ListIndex[a];
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		let itotalpg =   L.ExtraMarkers.icon
 			({
 			icon: 'fa-number',
-      shape: 'penta',
-      markerColor: 'red',
+      			shape: 'penta',
+      			markerColor: 'red',
 			number: ArrayMarkerNumCell14[i].ContMark.toString(),
  			});
 		marker = new L.Marker(loc, {title: " Nuevo gym  2a, 6a y 20a ", icon: itotalpg} );
@@ -345,78 +351,36 @@ Tabletop.init(
   	{
   	const cell = S2.S2Cell.FromLatLng(loc, 14);
   	const corners = cell.getCornerLatLngs();
-    let MarkIndex= (cell.ij[0] ^ cell.ij[1]) & AndIndex;
+	let MarkIndex= (cell.ij[0] ^ cell.ij[1]) & AndIndex;	// Creamos un indice en la tabla de arrays
   	MarkerNumCell14.Lat1= corners[1].lat;
   	MarkerNumCell14.Lon1= corners[1].lng;
   	MarkerNumCell14.Lat2= corners[3].lat;
   	MarkerNumCell14.Lon2= corners[3].lng;
 
-  	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
+  	var Nuevorepe=0;	// 1 = Nuevo o Repe
 
-    do
-      {
-        if ( ArrayMarkerNumCell14[MarkIndex] == undefined )
-          {
-            ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));
-            ListIndex[ContMarkerNumCell14]=MarkIndex;
-            ContMarkerNumCell14++;
-            Nuevorepe = 1;
-          } else
-          {
-            if( (ArrayMarkerNumCell14[MarkIndex].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[MarkIndex].Lon1 == MarkerNumCell14.Lon1))
+    	do
+      		{
+        	if ( ArrayMarkerNumCell14[MarkIndex] == undefined )
+          		{
+            		ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));
+            		ListIndex[ContMarkerNumCell14]=MarkIndex;
+            		ContMarkerNumCell14++;
+            		Nuevorepe = 1;
+         		} else
+          		{
+           		if( (ArrayMarkerNumCell14[MarkIndex].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[MarkIndex].Lon1 == MarkerNumCell14.Lon1))
         			{
-        			Nuevorepe=1;                     		//Celda repetida, incrementamos numero de marcador.
+        			Nuevorepe=1;                     		//Celda repetida
         			ArrayMarkerNumCell14[MarkIndex].ContMark++	// Incrementamos contador de marcador en celda
-              } else
-              {
-              MarkIndex= (MarkIndex+1) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
-              };
-          };
-      } while (Nuevorepe == 0);
-  	/*for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
-  		{
-  		if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
-  			{
-  			Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
-  			ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
-  			break;
-  			};
-  		};
-  	if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
-  		{
-  		ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
-  		ContMarkerNumCell14++;
-  		};
-*/
-  	};
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// Contar Pokeparadas y Gyms en celdas 14
-/*function ContarPOGYC14(loc)
-	{
-	const cell = S2.S2Cell.FromLatLng(loc, 14);
-	const corners = cell.getCornerLatLngs();
-	MarkerNumCell14.Lat1= corners[1].lat;
-	MarkerNumCell14.Lon1= corners[1].lng;
-	MarkerNumCell14.Lat2= corners[3].lat;
-	MarkerNumCell14.Lon2= corners[3].lng;
-
-	var Nuevorepe=0;	// 0 = Nuevo  1= Repe
-	for (i = 0; i < ContMarkerNumCell14; i++)	//Comprobamos que la celda 14 esta en la lista
-		{
-		if( (ArrayMarkerNumCell14[i].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[i].Lon1 == MarkerNumCell14.Lon1))
-			{
-			Nuevorepe=1;		//Celda repetida, incrementamos numero de marcador.
-			ArrayMarkerNumCell14[i].ContMark++	// Incrementamos contador de marcador en celda
-			break;
-			};
-		};
-	if ( Nuevorepe == 0 )			// Nueva Celda 14 con marcador
-		{
-		ArrayMarkerNumCell14[i]= JSON.parse(JSON.stringify(MarkerNumCell14));
-		ContMarkerNumCell14++;
-		};
+              			} else
+              			{
+              			MarkIndex= (MarkIndex+1) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
+              			};
+          		};
+      		} while (Nuevorepe == 0);
 	};
-*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Calcular el medio entre 2 puntos
 function midPoint(lat1,lon1,lat2,lon2)
@@ -442,23 +406,25 @@ function midPoint(lat1,lon1,lat2,lon2)
 
   let regionLayer;
   var ColorCell17= '#000000';
-  var ColorCell14= '#22CC44';
+  var InColorCell17= 0;
+  var ColorCell14= '#00CC00';
+  var InColorCell14=86;
   var ArrayColorCell= 
 	[
-	'#000000','#220000','#440000','#660000','#880000','#AA0000','#CC0000','#FF0000',
-		 ,'#FF2200','#FF4400','#FF6600','#FF8800','#FFAA00','#FFCC00','#FFFF00',
-		 ,'#CCCC00','#AAAA00','#888800','#666600','#444400','#222200',
-		 ,'#002222','#004444','#006666','#008888','#00AAAA','#00CCCC','#00FFFF',
-		 ,'#00CCFF','#00AAFF','#0088FF','#0066FF','#0044FF','#0022FF','#0000FF'
-		 ,'#2200FF','#4400FF','#6600FF','#8800FF','#AA00FF','#CC00FF','#FF00FF',
-		 ,'#CC00CC','#AA00AA','#880088','#660066','#440044','#220022',
-		 ,'#222222','#444444','#666666','#888888','#AAAAAA','#CCCCCC','#FFFFFF',
-		 ,'#FFFFCC','#FFFFAA','#FFFF88','#FFFF66','#FFFF44','#FFFF22',
-		 ,'#CCFF00','#AAFF00','#88FF00','#66FF00','#44FF00','#22FF00','#00FF00',
-		 ,'#22FF22','#44FF44','#66FF66','#88FF88','#AAFFAA','#CCFFCC',
-		 ,'#CCFFFF','#AAFFFF','#88FFFF','#66FFFF','#44FFFF','#22FFFF',
-		 ,'#00FFCC','#00FFAA','#00FF88','#00FF66','#00FF44','#00FF22',
-		 ,'#00CC00','#00AA00','#008800','#006600','#004400','#002200',
+	'#000000','#220000','#440000','#660000','#880000','#AA0000','#CC0000','#FF0000',	//00-07
+		 ,'#FF2200','#FF4400','#FF6600','#FF8800','#FFAA00','#FFCC00','#FFFF00',	//08-14
+		 ,'#CCCC00','#AAAA00','#888800','#666600','#444400','#222200',			//15-20
+		 ,'#002222','#004444','#006666','#008888','#00AAAA','#00CCCC','#00FFFF',	//21-27
+		 ,'#00CCFF','#00AAFF','#0088FF','#0066FF','#0044FF','#0022FF','#0000FF',	//28-34
+		 ,'#2200FF','#4400FF','#6600FF','#8800FF','#AA00FF','#CC00FF','#FF00FF',	//35-41
+		 ,'#CC00CC','#AA00AA','#880088','#660066','#440044','#220022',			//42-47
+		 ,'#222222','#444444','#666666','#888888','#AAAAAA','#CCCCCC','#FFFFFF',	//48-54
+		 ,'#FFFFCC','#FFFFAA','#FFFF88','#FFFF66','#FFFF44','#FFFF22',			//55-60
+		 ,'#CCFF00','#AAFF00','#88FF00','#66FF00','#44FF00','#22FF00','#00FF00',	//61-67
+		 ,'#22FF22','#44FF44','#66FF66','#88FF88','#AAFFAA','#CCFFCC',			//68-73
+		 ,'#CCFFFF','#AAFFFF','#88FFFF','#66FFFF','#44FFFF','#22FFFF',			//74-79
+		 ,'#00FFCC','#00FFAA','#00FF88','#00FF66','#00FF44','#00FF22',			//80-85
+		 ,'#00CC00','#00AA00','#008800','#006600','#004400','#002200',			//86-91
 	];
 
   const updateMapGrid = () => {
