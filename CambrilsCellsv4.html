@@ -161,7 +161,27 @@ var overlayMaps =
 
 L.control.layers(null, overlayMaps).addTo(map);
 
-
+/*var ColorCell17= '#000000';
+  var InColorCell17= 0;
+  var ColorCell14= '#00CC00';
+  var InColorCell14=86;
+  var ArrayColorCell= */
+      
+SliderCol17 = L.control.slider(function(value) {
+			ColorCell17=ArrayColorCell[value];
+    			console.log(value);
+			}, {
+		position: 'topleft',
+		logo: 'C17',
+		increment: true,
+		min: 0,
+    		max: ArrayColorCell.length-1,
+    		value: InColorCell17,
+    		step:1,
+    		size: (ArrayColorCell.length*2).toString(),
+    		orientation:'horizontal',
+    		id: 'SliderCol17'
+		}).addTo(map);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
