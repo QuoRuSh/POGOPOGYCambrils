@@ -408,7 +408,7 @@ const updateMapGrid = () => {
   const bounds = map.getBounds();
   const seenCells = {};
 
-  var ColorCell17= '#FFFFFF';
+  var ColorCell17= '#000000';
   var ColorCell14= '#22AA22';
   const levels = {
     17: {
@@ -461,16 +461,25 @@ const updateMapGrid = () => {
   const zoom = map.getZoom();
 
   Object.keys(levels).forEach(level => {
-    const options = levels[level];
-    if (level == 14 && zoom >= 15 ) {
-                                   const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
-                                   drawCellAndNeighbors(cell, options);
-                                   }
-                else if (level == 17 && zoom >= 17 ) {
-                                   const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
-                                   drawCellAndNeighbors(cell, options);
-                                   };
-                                      });
+	const options = levels[level];
+	if (level == 14 && zoom >= 15 ) 
+		{
+		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+		drawCellAndNeighbors(cell, options);
+		}
+	else if (level == 17 && zoom >= 17 )
+		{
+		if (ZoomMax-2 >= zoom ) 
+			{ 
+			ColorCell17= '#FFFFFF';
+			} else
+			{
+			ColorCell17= '#000000';
+			};
+		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+		drawCellAndNeighbors(cell, options);
+		};
+	});
       };
 
 
