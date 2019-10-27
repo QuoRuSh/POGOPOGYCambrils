@@ -401,6 +401,8 @@ function midPoint(lat1,lon1,lat2,lon2)
 // https://gitlab.com/AlfonsoML/pogo-s2/blob/93cc77c1973b4978610ff25a85273d290e2754a0/s2check.user.js
 
 let regionLayer;
+var ColorCell17= '#000000';
+var ColorCell14= '#22AA22';
 
 const updateMapGrid = () => {
   regionLayer.clearLayers();
@@ -408,8 +410,6 @@ const updateMapGrid = () => {
   const bounds = map.getBounds();
   const seenCells = {};
 
-  var ColorCell17= '#000000';
-  var ColorCell14= '#22AA22';
   const levels = {
     17: {
       color: ColorCell17, 	//'#000000',
