@@ -323,15 +323,31 @@ Tabletop.init(
 	for (a = 0; a < ContMarkerNumCell14; a++)
 		{
     		let i = ListIndex[a];
+		let NumMark = ArrayMarkerNumCell14[i].ContMark;
+		let TextMark = "";
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		let itotalpg =   L.ExtraMarkers.icon
 			({
 			icon: 'fa-number',
       			shape: 'penta',
       			markerColor: 'red',
-			number: ArrayMarkerNumCell14[i].ContMark.toString(),
+			number: NumMark.toString(),
  			});
-		marker = new L.Marker(loc, {title: " Nuevo gym  2a, 6a y 20a ", icon: itotalpg} );
+		if ( NumMark < 2 ) 
+			{
+			NumMark=1;
+			} else if ( NumMark < 6 ) 
+				{
+				NumMark = 6 - NumMark;
+				} else if ( NumMark < 20 )
+					{
+					NumMark = 20 - NumMark;
+					} else { NumMark = 0; };
+		TextMark = "Faltan "+ NumMark +" Para Nuevo Gym"
+						
+		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
+		
+		marker.bindPopup("Nuevo gym  2a, 6a y 20a");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	},
