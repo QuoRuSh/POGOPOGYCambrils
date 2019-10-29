@@ -343,7 +343,10 @@ Tabletop.init(
 					{
 					NumMark = 20 - NumMark;
 					} else { NumMark = 0; };
-		TextMark = "Faltan "+ NumMark +" Para Nuevo Gym"
+		if ( NumMark > 0 ) 
+			{
+			TextMark = "Faltan "+ NumMark +" Para Nuevo Gym";
+			} else TextMarK = "Maximo Numero de Gimnasios Alcanzado";
 						
 		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
 		
