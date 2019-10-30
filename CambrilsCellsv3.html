@@ -330,7 +330,7 @@ Tabletop.init(
 			({
 			icon: 'fa-number',
       			shape: 'penta',
-      			markerColor: 'red',
+      			markerColor: 'white',
 			number: NumMark.toString(),
  			});
 		if ( NumMark < 2 ) 
@@ -350,7 +350,7 @@ Tabletop.init(
 						
 		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
 		
-		marker.bindPopup("Nuevo gym  2a, 6a y 20a");
+		marker.bindPopup(TextMark + "<br><br>info:<br> Aparece Nuevo gym  2a, 6a y 20a");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	},
