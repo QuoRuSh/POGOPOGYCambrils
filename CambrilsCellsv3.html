@@ -331,6 +331,7 @@ Tabletop.init(
 			icon: 'fa-number',
       			shape: 'penta',
       			markerColor: 'white',
+                        iconColor: 'black',
 			number: NumMark.toString(),
  			});
 		if ( NumMark < 2 ) 
@@ -345,8 +346,8 @@ Tabletop.init(
 					} else { NumMark = 0; };
 		if ( NumMark > 0 ) 
 			{
-			TextMark = "Faltan "+ NumMark +" Para Nuevo Gym";
-			} else TextMarK = "Maximo Numero de Gimnasios Alcanzado";
+			TextMark = "Faltan <strong>"+ NumMark +" </strong> Para Nuevo Gym";
+			} else TextMarK = "<strong>Maximo</strong> Numero de Gimnasios Alcanzado";
 						
 		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
 		
