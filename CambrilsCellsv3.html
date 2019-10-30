@@ -65,6 +65,7 @@
         height: 100%;
         weight: 100%;
       }
+  .NumeroCoSi {font-size: 48px;color:red}  	// Tamaño y color numero faltan para gyms
     </style>
 
   </head>
@@ -346,8 +347,8 @@ Tabletop.init(
                         };
 		if ( NumMark > 0 ) 
 			{
-			TextMark = "Falta <b style={font-size: 48px , color:RED}>"+ NumMark +" </b> Para Nuevo Gym ";
-			} else { TextMark = "<b style={font-size: 48px , color:RED}>Máximo</b><h2> Número de Gyms Alcanzado </h2>"; };
+			TextMark = "<h2>Falta <b class='NumeroCoSi'>"+ NumMark +" </b> Para Nuevo Gym </h2>";
+			} else { TextMark = "<b class='NumeroCoSi'>Máximo</b><h2> Número de Gyms Alcanzado </h2>"; };
                 
 						
 		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
