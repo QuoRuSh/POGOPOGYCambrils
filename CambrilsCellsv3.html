@@ -346,8 +346,8 @@ Tabletop.init(
                         };
 		if ( NumMark > 0 ) 
 			{
-			TextMark = "Falta <h2><b>"+ NumMark +" </b></h2> Para Nuevo Gym";
-			} else { TextMarK = "Maximo Numero de Gimnasios Alcanzado"; };
+			TextMark = "<h2>Falta <b class={font-size: 48px ; color:RED}>"+ NumMark +" </b> Para Nuevo Gym </h2>";
+			} else { TextMarK = "<b class={font-size: 48px ; color:RED}>Maximo</b><h2> Numero de Gimnasios Alcanzado </h2>"; };
 						
 		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
 		
