@@ -334,24 +334,24 @@ Tabletop.init(
                         iconColor: 'black',
 			number: NumMark.toString(),
  			});
-		if ( NumMark < 2 ) 
+		if ( NumMark > 1 ) 
 			{
-			NumMark=1;
-			} else if ( NumMark < 6 ) 
+			if ( NumMark < 6 ) 
 				{
 				NumMark = 6 - NumMark;
 				} else if ( NumMark < 20 )
 					{
 					NumMark = 20 - NumMark;
 					} else { NumMark = 0; };
+                        };
 		if ( NumMark > 0 ) 
 			{
 			TextMark = "Faltan <strong>"+ NumMark +" </strong> Para Nuevo Gym";
-			} else TextMarK = "<strong> Maximo </strong> Numero de Gimnasios Alcanzado";
+			} else TextMarK = " <strong> Maximo </strong> Numero de Gimnasios Alcanzado";
 						
 		marker = new L.Marker(loc, {title: TextMark, icon: itotalpg} );
 		
-		marker.bindPopup(TextMark + "<br><br>info:<br> Aparece Nuevo gym  2a, 6a y 20a");
+		marker.bindPopup( TextMark + "<br><br>info:<br> Aparece Nuevo gym  2a, 6a y 20a");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	},
