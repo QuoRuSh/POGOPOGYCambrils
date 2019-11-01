@@ -65,7 +65,8 @@
         height: 100%;
         weight: 100%;
       }
-  .NumeroCoSi {font-size: 36px; text-align: center; color: red}  	// Tamaño y color numero faltan para gyms
+	.NumeroCoSi {font-size: 36px; text-align: center; color: red}  	// Tamaño y color numero faltan para gyms
+	.AlignCenter { text-align: center; }
     </style>
 
   </head>
@@ -347,8 +348,8 @@ Tabletop.init(
                         };
 		if ( NumMark > 0 ) 
 			{
-			TextMark = "<b><p class='NumeroCoSi'>"+ NumMark +"</p><h3>Más   para   nuevo   Gym </h3></b>";
-			} else { TextMark = "<b><p  class='NumeroCoSi'>Máximo</p><h3>Número de Gyms Alcanzado </h3></b>"; };
+			TextMark = "<b><p class='NumeroCoSi'>"+ NumMark +"</p><p class='AlignCenter'>Más   para   nuevo   Gym </p></b>";
+			} else { TextMark = "<b><p  class='NumeroCoSi'>Máximo</p><p class='AlignCenter'>Número de Gyms Alcanzado </p></b>"; };
                 
 						
 		marker = new L.Marker(loc, {title: "Total pokeparadas y gyms celda 14", icon: itotalpg} );
