@@ -348,13 +348,13 @@ Tabletop.init(
                         };
 		if ( NumMark > 0 ) 
 			{
-			TextMark = "<b> <p class='NumeroCoSi'>"+ NumMark +" </p> <p style='font-size:small; text-align:center'> Más para nuevo Gym </p></b>";
+			TextMark = "<b> <p class='NumeroCoSi'>"+ NumMark +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
 			} else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='text-align:center'> Número de Gyms Alcanzado </p></b>"; };
                 
 						 
 		marker = new L.Marker(loc, {title: "Total pokeparadas y gyms celda 14", icon: itotalpg} );
 		
-		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  2a, 6a y 20a");
+		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	},
