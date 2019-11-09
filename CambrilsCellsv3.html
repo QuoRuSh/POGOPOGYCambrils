@@ -90,6 +90,7 @@ var LG_aceptadas = new L.LayerGroup();
 var LG_sugerencias = new L.LayerGroup();
 var LG_ContadorPG = new L.LayerGroup();
 var LG_Circle20m = new L.LayerGroup();
+var LG_Ingress = new L.LayerGroup();
 
 const map = L.map('map', {
   maxZoom: ZoomMax,
@@ -158,6 +159,7 @@ var overlayMaps =
 	"Aceptadas": LG_aceptadas,
 	"Total Po GY" : LG_ContadorPG,
 	"20 Metros" : LG_Circle20m,
+	"Ingress Portal" : LG_Ingress,
  	};
 
 L.control.layers(null, overlayMaps).addTo(map);
@@ -211,7 +213,10 @@ let iaceptada =    L.ExtraMarkers.icon ({
 let isugerencia =  L.ExtraMarkers.icon ({
 	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,   iconSize: '[48,64]',
                                      }); // Icono sugerencia
-
+let iIngress = L.ExtraMarkers.icon ({
+	icon: "fa-dice-d20",markerColor: "green-dark",shape: "circle", prefix: "fas"
+                                     }); // Icono Ingress Portal
+	  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
 
@@ -341,6 +346,20 @@ Tabletop.init(
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
 	//	map.addLayer(marker);
   		});
+	
+	$.each( tabletop.sheets("Ingress").all(), function(i, ingress)		// Marcadores Portales ingress
+		{
+		var loc = new L.latLng(ingress.latitude, ingress.longitude);
+		
+		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
+
+		marker = new L.Marker(loc, {title: ingress.nombre, icon: iIngress} );
+		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + ingress.imagen + ");'></div></div></div>");
+		marker.addTo(LG_Ingress);	// Añadimos al grupo de portales ingress
+
+		});
 		
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
 	for (a = 0; a < ContMarkerNumCell14; a++)
