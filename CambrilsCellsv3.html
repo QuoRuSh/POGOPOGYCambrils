@@ -417,7 +417,7 @@ Tabletop.init(
   	{
   	const cell = S2.S2Cell.FromLatLng(loc, 14);
   	const corners = cell.getCornerLatLngs();
-	let MarkIndex= (cell.ij[0] ^ cell.ij[1]) & AndIndex;	// Creamos un indice en la tabla de arrays
+	let MarkIndex= ((~ cell.ij[0] ) ^ cell.ij[1]) & AndIndex;	// Creamos un indice en la tabla de arrays
   	MarkerNumCell14.Lat1= corners[1].lat;
   	MarkerNumCell14.Lon1= corners[1].lng;
   	MarkerNumCell14.Lat2= corners[3].lat;
