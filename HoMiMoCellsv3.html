@@ -92,10 +92,12 @@ var LG_sugerencias = new L.LayerGroup();
 var LG_ContadorPG = new L.LayerGroup();
 var LG_Circle20m = new L.LayerGroup();
 var LG_Ingress = new L.LayerGroup();
+	  
 const map = L.map('map', {
   maxZoom: ZoomMax,
   layers: [LG_gym, LG_pokestop, LG_gymex,]
 }).locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
+	  
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,14 +117,18 @@ var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', 
 });
 https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-url
 */
+	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Mapas calles y satellite
+	  
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
+	  
 const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
+	  
 ///////////////////////////////////////////////////////////////////
 // Controles
 L.control.locate({
@@ -131,11 +137,14 @@ L.control.locate({
   drawMarker: true,
   enableHighAccuracy:true
 }).addTo(map);
+	  
 L.control.polylineMeasure({
 		//	  position: 'topright',
 		//	  showClearControl: true,        // Show a control to clear all the measurements
 			 }).addTo(map);
+	  
 L.control.scale().addTo(map);
+	  
 var overlayMaps =
 	{
 	"Gym": LG_gym,
@@ -148,7 +157,9 @@ var overlayMaps =
 	"20 Metros" : LG_Circle20m,
 	"Ingress Portal" : LG_Ingress,
  	};
+	  
 L.control.layers(null, overlayMaps).addTo(map);
+	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
 const updateTiles = () => {
@@ -163,7 +174,9 @@ const updateTiles = () => {
 			 		tileSatellite.setOpacity(0);
 			 				};
 			  };
+	  
 map.on('zoomend', updateTiles);
+	  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ICONOS
 let ipokestop = L.ExtraMarkers.icon ({
@@ -217,11 +230,14 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 	Lon2 : 0,		// Longitud esquina inferior derecha
 	ContMark : 1		// Contador de markadores misma celda
 	};
+	  
 ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
 var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
+	  
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
 var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
 //var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
+
 Tabletop.init(
   {
   key: code,
@@ -353,11 +369,13 @@ Tabletop.init(
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
   debug: true
   });
+	  
 //////////////////////////////////////////////////////////////////////////////////////////////////////
   // Contar Pokeparadas y Gyms en celdas 14
   const MaxArray = 2048-1;  // Espacio para el array de celdas (1024 ,2048,4096,8192)
   const AndIndex = 2048-1;  //
   var ListIndex = [];   // Array de indices
+	  
   function ContarPOGYC14(loc)
   	{
   	const cell = S2.S2Cell.FromLatLng(loc, 14);
@@ -389,6 +407,7 @@ Tabletop.init(
           		};
       		} while (Nuevorepe == 0);
 	};
+	  
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Calcular el medio entre 2 puntos
 function midPoint(lat1,lon1,lat2,lon2)
