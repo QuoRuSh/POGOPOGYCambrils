@@ -275,7 +275,7 @@ Tabletop.init(
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
     		});
-	ControlLayer.addOverlay(LG_pokestop,"Pokeparada ("+ (contador-1) + ")");
+	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas ("+ (contador-1) + ")");
 
 	contador=0;
 	$.each( tabletop.sheets("gym").all(), function(i, gim)		// Marcadores Gimnsasios
@@ -311,9 +311,8 @@ Tabletop.init(
 
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
-		//	map.addLayer(marker);
 		});
-	ControlLayer.addOverlay(LG_gymexd,"Gyms Ex ("+ (contador) + ")");
+	ControlLayer.addOverlay(LG_gymex,"Gyms Ex ("+ (contador) + ")");
 
 	contador=0;
 
