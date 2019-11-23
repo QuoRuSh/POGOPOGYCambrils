@@ -247,7 +247,7 @@ var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
 	color: "#000000",
 	weight: 1,
 	opacity: 0,
-	fillOpacity: 0.2,
+	fillOpacity: 0.1,
 	interactive: false,
 	fill: true,
 	clickable: false,
@@ -315,6 +315,10 @@ Tabletop.init(
 		
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+
 		});
 	ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
 
@@ -333,6 +337,10 @@ Tabletop.init(
 		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 
 		});
 	ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
@@ -401,7 +409,6 @@ Tabletop.init(
 	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
 	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
 	ControlLayer.addOverlay(LG_ContadorPG,"Contador PO GY (<b>"+ ContMarkerNumCell14 + "</b>)");
-	ControlLayer.addOverlay(LG_Celda17Fill,"Fill Celda 17");
 
 	let ContadorFaltan=0;
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
@@ -461,6 +468,7 @@ Tabletop.init(
 		};
 
 	ControlLayer.addOverlay(LG_FaltanGym,"Para Gym (<b>"+ ContadorFaltan + "</b>)");
+	ControlLayer.addOverlay(LG_Celda17Fill,"Fill Celda 17");
 	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
   debug: true
