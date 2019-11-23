@@ -94,6 +94,7 @@ var LG_sugerencias = new L.LayerGroup();
 var LG_ContadorPG = new L.LayerGroup();
 var LG_Circle20m = new L.LayerGroup();
 var LG_Ingress = new L.LayerGroup();
+var LG_FaltanGym = new L.LayerGroup();
 
 const map = L.map('map', {
   maxZoom: ZoomMax,
@@ -381,6 +382,7 @@ Tabletop.init(
 	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
 	ControlLayer.addOverlay(LG_ContadorPG,"Contador PO GY (<b>"+ ContMarkerNumCell14 + "</b>)");
 
+	let ContadorFaltan=0;
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
 	for (a = 0; a < ContMarkerNumCell14; a++)
 		{
@@ -406,15 +408,29 @@ Tabletop.init(
       			shape: 'penta',
       			markerColor: 'orange-dark',
                         iconColor: 'white',
-			number: (NumMark.toString() + "<br>" + NumFalta.toString()),
+			number: NumMark.toString(),
 			riseOnHover: true, 
-			zIndexOffset : 10000,
+			riseOffset : 10000,
  			});
 
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
-			} else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>"; };
+			let ifaltag =   L.ExtraMarkers.icon
+				({
+				icon: 'fa-number',
+      				shape: 'penta',
+      				markerColor: 'white',
+                        	iconColor: 'black',
+				number: NumFalta.toString(),
+				riseOnHover: true, 
+				riseOffset : 10000,
+ 				});
+				marker = new L.Marker(loc, {title: "Falta para nuevo gym", icon: ifaltag} );
+				marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
+				ContadorFaltan++;
+				} 
+			else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>"; };
                 
 						 
 		marker = new L.Marker(loc, {title: "Total pokeparadas y gyms celda 14", icon: itotalpg} );
@@ -422,6 +438,8 @@ Tabletop.init(
 		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
+
+	ControlLayer.addOverlay(LG_FaltanGym,"Fantan Gym (<b>"+ ContadorFaltan + "</b>)");
 	LG_ContadorPG.bringToFront();
 	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
