@@ -84,16 +84,17 @@
 let ZoomMax = 20 ;	// Zoom Maximo
 let ZoomVis = 3 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
 // Grupos de marcadores
-var LG_gym = new L.LayerGroup();
-var LG_pokestop = new L.LayerGroup();
-var LG_gymex = new L.LayerGroup();
-var LG_propuestas = new L.LayerGroup();
-var LG_aceptadas = new L.LayerGroup();
-var LG_sugerencias = new L.LayerGroup();
-var LG_ContadorPG = new L.LayerGroup();
-var LG_Circle20m = new L.LayerGroup();
-var LG_Ingress = new L.LayerGroup();
-var LG_FaltanGym = new L.LayerGroup();
+var LG_gym = new L.LayerGroup();		// Grupo gimnasios
+var LG_pokestop = new L.LayerGroup();		// Grupo Pokeparadas
+var LG_gymex = new L.LayerGroup();		// Grupo Gimnasios EX
+var LG_propuestas = new L.LayerGroup();		// Grupo Pedidas
+var LG_aceptadas = new L.LayerGroup();		// Grupo Aceptadas
+var LG_sugerencias = new L.LayerGroup();	// Grupo Sugerencias
+var LG_ContadorPG = new L.LayerGroup();		// Grupo Contador Pokeparadas y Gimnasios celda 14
+var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gimnasios
+var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
+var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
+var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
 const map = L.map('map', {
   maxZoom: ZoomMax,
   layers: [LG_gym, LG_pokestop, LG_gymex,]
@@ -208,11 +209,23 @@ var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
 	color: "#ff0000",
 	weight: 3,
 	opacity: 0.7,
-	fillOpacity: 0.2,
+	fillOpacity: 0.1,
 	interactive: false,
+	clickable: false,
 //	bubblingMouseEvents = false,
 	};
-	  
+var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
+    	{
+	fillColor: "#000000",
+	color: "#000000",
+	weight: 1,
+	opacity: 0,
+	fillOpacity: 0.1,
+	interactive: false,
+	fill: true,
+	clickable: false,
+//	bubblingMouseEvents = false,
+	};
 var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
     	{
 	Lat1 : 0,		// Latitud esquina superior izquierda
@@ -244,7 +257,12 @@ Tabletop.init(
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
 		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
-    		});
+		
+	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		});
+	
 	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador-1) + "</b>)");
 	contador=0;
 	$.each( tabletop.sheets("gym").all(), function(i, gim)		// Marcadores Gimnsasios
@@ -259,6 +277,9 @@ Tabletop.init(
 		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
 	ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
 	contador=0;
@@ -273,6 +294,9 @@ Tabletop.init(
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
 	ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
 	contador=0;
@@ -385,6 +409,7 @@ Tabletop.init(
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	ControlLayer.addOverlay(LG_FaltanGym,"Para Gym (<b>"+ ContadorFaltan + "</b>)");
+	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
 	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
   debug: true
