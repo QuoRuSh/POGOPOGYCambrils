@@ -328,7 +328,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
 		});
-	ControlLayer.addOverlay(LG_propuestas,"Pedidas (</b>"+ (contador) + "</b>)");
+	ControlLayer.addOverlay(LG_propuestas,"Pedidas (<b>"+ (contador) + "</b>)");
 
 	contador=0;
 
@@ -388,29 +388,32 @@ Tabletop.init(
 		let NumMark = ArrayMarkerNumCell14[i].ContMark;
 		let TextMark = "";
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
+		let Numfalta = NumMark;
+		if ( NumMark > 1 ) 
+			{
+			if ( NumMark < 6 ) 
+				{
+				NumFalta = 6 - NumMark;
+				} else if ( NumMark < 20 )
+					{
+					NumFalta = 20 - NumMark;
+					} else { NumFalta = 0; };
+                        };
+		
 		let itotalpg =   L.ExtraMarkers.icon
 			({
 			icon: 'fa-number',
       			shape: 'penta',
       			markerColor: 'orange-dark',
                         iconColor: 'white',
-			number: NumMark.toString(),
-			riseOnHover: true,
+			number: (NumMark.toString() + " / " + NumFalta.tostring()),
+			riseOnHover: true, 
 			zIndexOffset : 10000,
  			});
-		if ( NumMark > 1 ) 
+
+		if ( NumFalta > 0 ) 
 			{
-			if ( NumMark < 6 ) 
-				{
-				NumMark = 6 - NumMark;
-				} else if ( NumMark < 20 )
-					{
-					NumMark = 20 - NumMark;
-					} else { NumMark = 0; };
-                        };
-		if ( NumMark > 0 ) 
-			{
-			TextMark = "<b> <p class='NumeroCoSi'>"+ NumMark +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
+			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
 			} else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>"; };
                 
 						 
