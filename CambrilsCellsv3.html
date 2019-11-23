@@ -100,6 +100,8 @@ const map = L.map('map', {
   layers: [LG_gym, LG_pokestop, LG_gymex,]
 }).locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
 
+map.fitBounds([[41.104215, 0.967693],[41.057519, 1.133946]]);		// Cambrils
+	  
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
 
