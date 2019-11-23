@@ -100,7 +100,7 @@ const map = L.map('map', {
   layers: [LG_gym, LG_pokestop, LG_gymex,]
 }).locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
 
-map.fitBounds([[41.104215, 0.967693],[41.057519, 1.133946]]);		// Cambrils
+//map.fitBounds([[41.104215, 0.967693],[41.057519, 1.133946]]);		// Cambrils
 	  
 // eslint-disable-next-line no-unused-vars
 const hash = new L.Hash(map);
@@ -277,7 +277,7 @@ Tabletop.init(
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
     		});
-	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas ("+ (contador-1) + ")");
+	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas ( "+ (contador-1) + " )");
 
 	contador=0;
 	$.each( tabletop.sheets("gym").all(), function(i, gim)		// Marcadores Gimnsasios
@@ -295,7 +295,7 @@ Tabletop.init(
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
 		});
-	ControlLayer.addOverlay(LG_gym,"Gyms ("+ contador + ")");
+	ControlLayer.addOverlay(LG_gym,"Gyms ( "+ contador + " )");
 
 	contador=0;
 
@@ -314,7 +314,7 @@ Tabletop.init(
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
 		});
-	ControlLayer.addOverlay(LG_gymex,"Gyms Ex ("+ (contador) + ")");
+	ControlLayer.addOverlay(LG_gymex,"Gyms Ex ( "+ (contador) + " )");
 
 	contador=0;
 
@@ -328,7 +328,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
 		});
-	ControlLayer.addOverlay(LG_propuestas,"Pedidas ("+ (contador) + ")");
+	ControlLayer.addOverlay(LG_propuestas,"Pedidas ( "+ (contador) + " )");
 
 	contador=0;
 
@@ -345,7 +345,7 @@ Tabletop.init(
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
 		});
-	ControlLayer.addOverlay(LG_aceptadas,"Aceptadas ("+ (contador) + ")");
+	ControlLayer.addOverlay(LG_aceptadas,"Aceptadas ( "+ (contador) + " )");
 
 	contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)
@@ -359,7 +359,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
   		});
-	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias ("+ (contador-1) + ")");
+	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias ( "+ (contador-1) + " )");
 
 	contador = 0;
 	
@@ -378,8 +378,8 @@ Tabletop.init(
 
 		});
 	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
-	ControlLayer.addOverlay(LG_Ingress,"Ingress ("+ (contador) + ")");
-	ControlLayer.addOverlay(LG_ContadorPG,"Contador PO GY "+ ContMarkerNumCell14 + ")");
+	ControlLayer.addOverlay(LG_Ingress,"Ingress ( "+ (contador) + " )");
+	ControlLayer.addOverlay(LG_ContadorPG,"Contador PO GY ( "+ ContMarkerNumCell14 + " )");
 
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
 	for (a = 0; a < ContMarkerNumCell14; a++)
