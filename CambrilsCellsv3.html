@@ -86,16 +86,17 @@
 let ZoomMax = 20 ;	// Zoom Maximo
 let ZoomVis = 3 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
 // Grupos de marcadores
-var LG_gym = new L.LayerGroup();
-var LG_pokestop = new L.LayerGroup();
-var LG_gymex = new L.LayerGroup();
-var LG_propuestas = new L.LayerGroup();
-var LG_aceptadas = new L.LayerGroup();
-var LG_sugerencias = new L.LayerGroup();
-var LG_ContadorPG = new L.LayerGroup();
-var LG_Circle20m = new L.LayerGroup();
-var LG_Ingress = new L.LayerGroup();
-var LG_FaltanGym = new L.LayerGroup();
+var LG_gym = new L.LayerGroup();		// Grupo gimnasios
+var LG_pokestop = new L.LayerGroup();		// Grupo Pokeparadas
+var LG_gymex = new L.LayerGroup();		// Grupo Gimnasios EX
+var LG_propuestas = new L.LayerGroup();		// Grupo Pedidas
+var LG_aceptadas = new L.LayerGroup();		// Grupo Aceptadas
+var LG_sugerencias = new L.LayerGroup();	// Grupo Sugerencias
+var LG_ContadorPG = new L.LayerGroup();		// Grupo Contador Pokeparadas y Gimnasios celda 14
+var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gimnasios
+var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
+var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
+var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
 
 const map = L.map('map', {
   maxZoom: ZoomMax,
@@ -234,11 +235,24 @@ var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
 	color: "#ff0000",
 	weight: 3,
 	opacity: 0.7,
-	fillOpacity: 0.2,
+	fillOpacity: 0.1,
 	interactive: false,
+	clickable: false,
 //	bubblingMouseEvents = false,
 	};
-	  
+
+var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
+    	{
+	fillColor: "#000000",
+	color: "#000000",
+	weight: 1,
+	opacity: 0,
+	fillOpacity: 0.2,
+	interactive: false,
+	fill: true,
+	clickable: false,
+//	bubblingMouseEvents = false,
+	};
 var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
     	{
 	Lat1 : 0,		// Latitud esquina superior izquierda
@@ -278,8 +292,12 @@ Tabletop.init(
 		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
-
-    		});
+		
+	  	const cell = S2.S2Cell.FromLatLng(loc, 14);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		});
+	
 	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador-1) + "</b>)");
 
 	contador=0;
@@ -383,6 +401,7 @@ Tabletop.init(
 	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
 	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
 	ControlLayer.addOverlay(LG_ContadorPG,"Contador PO GY (<b>"+ ContMarkerNumCell14 + "</b>)");
+	ControlLayer.addOverlay(LG_Celda17Fill,"Fill Celda 17");
 
 	let ContadorFaltan=0;
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
