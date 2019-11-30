@@ -82,7 +82,7 @@
 ///////////////////////////////////////////////////////////////////
 // Setup the Leaflet map (declaracion variables y constantes)
 let ZoomMax = 20 ;	// Zoom Maximo
-let ZoomVis = 3 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
+let ZoomVis = 4 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
 // Grupos de marcadores
 var LG_gym = new L.LayerGroup();		// Grupo gimnasios
 var LG_pokestop = new L.LayerGroup();		// Grupo Pokeparadas
@@ -125,9 +125,13 @@ https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
-const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
-}).addTo(map);
+var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2o0OHZuY3MwMGo1cTMybGM4MTFrM2dxbCJ9.yCQe43DMRqobazKewlhi9w';
+var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
+const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1}).addTo(map);
+	  
+//const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
+//    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
+//}).addTo(map);
 ///////////////////////////////////////////////////////////////////
 // Controles
 L.control.locate({
@@ -209,7 +213,7 @@ var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
 	color: "#ff0000",
 	weight: 3,
 	opacity: 0.7,
-	fillOpacity: 0.1,
+	fillOpacity: 0.2,
 	interactive: false,
 	clickable: false,
 //	bubblingMouseEvents = false,
@@ -220,7 +224,7 @@ var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
 	color: "#000000",
 	weight: 1,
 	opacity: 0,
-	fillOpacity: 0.1,
+	fillOpacity: 0.4,
 	interactive: false,
 	fill: true,
 	clickable: false,
@@ -240,7 +244,7 @@ var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
 var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
 // var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
-//var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
+// var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
 Tabletop.init(
   {
   key: code,
@@ -473,7 +477,7 @@ function midPoint(lat1,lon1,lat2,lon2)
 // https://gitlab.com/AlfonsoML/pogo-s2/blob/93cc77c1973b4978610ff25a85273d290e2754a0/s2check.user.js
 let regionLayer;
 var ColorCell17= '#000000';
-var ColorCell14= '#22EE22';
+var ColorCell14= '#FF0000';
 const updateMapGrid = () => {
   regionLayer.clearLayers();
   const bounds = map.getBounds();
@@ -486,8 +490,8 @@ const updateMapGrid = () => {
         },
     14: {
       color: ColorCell14,	//'#22CC44',
-      opacity: 0.9,
-      weight: 3,
+      opacity: 0.7,
+      weight: 5,
         },
       };
   const drawCell = (cell, options) => {
