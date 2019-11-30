@@ -82,7 +82,7 @@
 ///////////////////////////////////////////////////////////////////
 // Setup the Leaflet map (declaracion variables y constantes)
 let ZoomMax = 20 ;	// Zoom Maximo
-let ZoomVis = 3 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
+let ZoomVis = 4 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
 // Grupos de marcadores
 var LG_gym = new L.LayerGroup();		// Grupo gimnasios
 var LG_pokestop = new L.LayerGroup();		// Grupo Pokeparadas
@@ -125,9 +125,13 @@ https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
-const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
-}).addTo(map);
+var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2o0OHZuY3MwMGo1cTMybGM4MTFrM2dxbCJ9.yCQe43DMRqobazKewlhi9w';
+var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
+const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1}).addTo(map);
+	  
+//const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
+//    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
+//}).addTo(map);
 ///////////////////////////////////////////////////////////////////
 // Controles
 L.control.locate({
@@ -473,7 +477,7 @@ function midPoint(lat1,lon1,lat2,lon2)
 // https://gitlab.com/AlfonsoML/pogo-s2/blob/93cc77c1973b4978610ff25a85273d290e2754a0/s2check.user.js
 let regionLayer;
 var ColorCell17= '#000000';
-var ColorCell14= '#22EE22';
+var ColorCell14= '#FF0000';
 const updateMapGrid = () => {
   regionLayer.clearLayers();
   const bounds = map.getBounds();
@@ -486,8 +490,8 @@ const updateMapGrid = () => {
         },
     14: {
       color: ColorCell14,	//'#22CC44',
-      opacity: 0.9,
-      weight: 3,
+      opacity: 0.7,
+      weight: 5,
         },
       };
   const drawCell = (cell, options) => {
