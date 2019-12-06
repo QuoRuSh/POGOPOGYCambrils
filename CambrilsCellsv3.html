@@ -600,19 +600,19 @@ const updateMapGrid = () => {
 
   // center cell
   const zoom = map.getZoom();
+	
+  if ( zoom => (ZoomMax-1) ) { ColorCell17= '#FFFFFF'; }	// Celda 17 color blanco
+  else  { ColorCell17= '#000000'; };				// celda 17 color negro
 
   Object.keys(levels).forEach(level => {
 	const options = levels[level];
-	if (level == 14 && zoom >= 15 ) 
+	if (level == 14 && zoom >= 14 ) 
 		{
 		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
 		drawCellAndNeighbors(cell, options);
 		}
-	else if (level == 17 && zoom >= 17 )
+	else if (level == 17 && zoom >= 16 )
 		{
-		if ( zoom == (ZoomMax-1) ) { ColorCell17= '#FFFFFF'; };
-		if ( zoom == (ZoomMax-2) ) { ColorCell17= '#000000'; };
-
 		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
 		drawCellAndNeighbors(cell, options);
 		};
