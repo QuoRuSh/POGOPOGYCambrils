@@ -451,15 +451,15 @@ Tabletop.init(
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
-			if ( NumFalta <=2 ) { MarkForm = 'star' ; MarkCol = 'green-light' ; }
-				else { MarkForm= 'square'; MarkCol = 'white'; };
+			if ( NumFalta <=2 ) { MarkForm = 'star' ; MarkCol = 'green-light' ;  MarkICol = 'white'; }
+				else { MarkForm= 'square'; MarkCol = 'white'; MarkICol = 'black'; };
 			let ifaltag =   L.ExtraMarkers.icon
 				({
 				icon: 'fa-number',
 				prefix: 'fa',
       				shape: MarkForm,
       				markerColor: MarkCol,
-                        	iconColor: 'black',
+                        	iconColor: MarkICol,
 				number: NumFalta.toString(),
 				riseOnHover: true, 
 				riseOffset : 10000,
