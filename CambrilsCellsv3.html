@@ -451,20 +451,22 @@ Tabletop.init(
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
+			if ( NumFalta <=2 ) Markstr = 'star';
+				else Markstr= 'penta';
 			let ifaltag =   L.ExtraMarkers.icon
 				({
 				icon: 'fa-number',
-      				shape: 'penta',
+      				shape: Markstr,
       				markerColor: 'white',
                         	iconColor: 'black',
 				number: NumFalta.toString(),
 				riseOnHover: true, 
 				riseOffset : 10000,
  				});
-				marker = new L.Marker(loc, {title: "Falta para nuevo gym", icon: ifaltag} );
-				marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
-				ContadorFaltan++;
-				} 
+			marker = new L.Marker(loc, {title: "Falta para nuevo gym", icon: ifaltag} );
+			marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
+			ContadorFaltan++;
+			} 
 			else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>"; };
                 
 						 
