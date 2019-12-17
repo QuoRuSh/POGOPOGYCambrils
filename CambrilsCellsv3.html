@@ -482,6 +482,8 @@ Tabletop.init(
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 
+	LG_FaltanGym.bringToFront();
+	LG_ContadorPG.bringToFront();
 	ControlLayer.addOverlay(LG_FaltanGym,"Para Gym (<b>"+ ContadorFaltan + "</b>)");
 	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
 	},
