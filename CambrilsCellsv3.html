@@ -321,7 +321,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
 
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
@@ -344,7 +344,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 
@@ -407,7 +407,7 @@ Tabletop.init(
 		contador++;
 		var loc = new L.latLng(ingress.latitude, ingress.longitude);
 		
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
 
 		marker = new L.Marker(loc, {title: ingress.nombre, icon: iIngress} );
 		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
