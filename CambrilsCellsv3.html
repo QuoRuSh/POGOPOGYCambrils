@@ -299,7 +299,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
 
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 		
