@@ -8,19 +8,28 @@
     <!-- title>Hospitalet Miami Montroig Cells</title -->
     <title>Masnou Teia Alella Cells</title>
 
-    <link rel="apple-touch-icon" href="./icons/monster.png">
-    <link rel="shortcut icon" href="./icons/monster.png">
-
+    <link rel="apple-touch-icon" href="./icons/pokestop_top.png">
+    <link rel="shortcut icon" href="./icons/pokestop_top.png">
+    <link rel="icon" type="image/png" href="./icons/pokestop_top.png" sizes="192x192">
+	  
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#fafafa" />
 
 <!-- S2 GEOMETRY -->
     <script src="https://unpkg.com/s2-geometry" crossorigin></script>
-
+<!-- script src="https://unpkg.com/s2-geometry@1.2.9/src/s2geometry.js"
+    integrity="sha384-WGDofm6Km+bZIxd/uBU2QJlwIMxX/9H5H7G9glfYtcAAR8vrm0wbzvtpIG54XhOZ"
+    crossorigin=""></script -->
+	  
 <!-- LEAFLET -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
-
+<!-- link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   -->
+<!-- script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+  integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+  ></script -->
 <!-- LEAFLET HASH -->
     <script src="https://unpkg.com/leaflet-hash" crossorigin></script>
 
@@ -71,6 +80,8 @@
       }
 	.NumeroCoSi {font-size: 36px; text-align: center; color: red}  	// Tamaño y color numero faltan para gyms
 	.AlineaCenter { text-align: center }
+	.circleimg { width: 20px; height: 20px; border-radius: 50%; margin-top: 8px; }
+	    
     </style>
 
   </head>
@@ -97,12 +108,14 @@ var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para 
 var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
 const map = L.map('map', {
   maxZoom: ZoomMax,
+  zoom: (ZoomMax/2),
+  animate: true,
   layers: [LG_gym, LG_pokestop, LG_gymex,]
-}).locate({setView: true }); //setView([22.57, 88.32403643149632], 15)
+}).locate({setView: true, enableHighAccuracy: true, }); //setView([22.57, 88.32403643149632], 15)
 //map.fitBounds([[41.104215, 0.967693],[41.057519, 1.133946]]);		// Cambrils
 	  
 // eslint-disable-next-line no-unused-vars
-const hash = new L.Hash(map);
+//const hash = new L.Hash(map);
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
 /*
@@ -176,7 +189,8 @@ map.on('zoomend', updateTiles);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ICONOS
 let ipokestop = L.ExtraMarkers.icon ({
-	icon: "fa-dice-d6",markerColor: "cyan",shape: "circle", prefix: "fas"
+	icon: "fa-chrome",	//"fa-dice-d6", 
+	markerColor: "cyan" , shape: "circle" , prefix: "fab" , //innerHTML:'<img class="circleimg" src="./icons/black pokestop.png">' ,
                                      }); // Icono Pokeparada
 let ipropuesta = L.ExtraMarkers.icon ({
 //	icon: "fa-tools",markerColor: "orange",shape: "square", prefix: "fas"
@@ -189,19 +203,19 @@ let ipropuesta = L.ExtraMarkers.icon ({
         extraClasses: 'fa-spin'
                                      }); // Icono Propuesta
 let igym =      L.ExtraMarkers.icon ({
-	icon: "fa-egg" , markerColor: "yellow" , shape: "penta" , prefix: "fas" ,  iconSize: '[48,64]',
+	icon: "fa-egg" , markerColor: "yellow" , shape: "penta" , prefix: "fas" ,
                                     }); // Icono Gimnasio
 let igymex =    L.ExtraMarkers.icon ({
-	icon: "fa-splotch" , markerColor: "yellow" , shape: "star" , prefix: "fas" , extraClasses: 'fa-pulse' ,  iconSize: '[48,64]',
+	icon: "fa-splotch" , markerColor: "yellow" , shape: "star" , prefix: "fas" , extraClasses: 'fa-pulse' ,
                                      }); // Icono Gim ex
 let iaceptada =    L.ExtraMarkers.icon ({
-	icon: "fa-thumbs-up" , markerColor: "green-light" , shape: "circle" , prefix: "fas" ,  iconSize: '[48,64]',
+	icon: "fa-thumbs-up" , markerColor: "green-light" , shape: "circle" , prefix: "fas" ,
                                      }); // Icono aceptada
 let isugerencia =  L.ExtraMarkers.icon ({
-	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,   iconSize: '[48,64]',
+	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,
                                      }); // Icono sugerencia
 let iIngress = L.ExtraMarkers.icon ({
-	icon: "fa-dice-d20",markerColor: "green-dark",shape: "circle", prefix: "fas"
+	icon: "fa-dice-d20",markerColor: "green-dark",shape: "circle", prefix: "fas" , innerHTML:'<img class="circleimg" src="./icons/ingress.png">' ,
                                      }); // Icono Ingress Portal
 	  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,11 +254,11 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 	ContMark : 1		// Contador de markadores misma celda
 	};
 ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
-var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
+// var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
-// var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
-var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
-// var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
+var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
+// var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
+var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
 Tabletop.init(
   {
   key: code,
@@ -260,7 +274,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 		
 	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
@@ -279,7 +293,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
@@ -297,7 +311,7 @@ Tabletop.init(
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
@@ -348,7 +362,7 @@ Tabletop.init(
 		contador++;
 		var loc = new L.latLng(ingress.latitude, ingress.longitude);
 		
-		marker = new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
 		marker = new L.Marker(loc, {title: ingress.nombre, icon: iIngress} );
 		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
@@ -386,25 +400,31 @@ Tabletop.init(
                         iconColor: 'white',
 			number: NumMark.toString(),
 			riseOnHover: true, 
-			riseOffset : 10000,
+			noHide: true,
+//			riseOffset : 10000,
  			});
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
+			if ( NumFalta <=2 ) { MarkForm = 'star' ; MarkCol = 'green-light' ;  MarkICol = 'white'; }
+				else { MarkForm= 'square'; MarkCol = 'white'; MarkICol = 'black'; };
 			let ifaltag =   L.ExtraMarkers.icon
 				({
 				icon: 'fa-number',
-      				shape: 'penta',
-      				markerColor: 'white',
-                        	iconColor: 'black',
+				prefix: 'fa',
+      				shape: MarkForm,
+      				markerColor: MarkCol,
+                        	iconColor: MarkICol,
 				number: NumFalta.toString(),
 				riseOnHover: true, 
-				riseOffset : 10000,
+				noHide: true,
+				zIndexOffset: 5000,
+//				riseOffset : 10000,
  				});
-				marker = new L.Marker(loc, {title: "Falta para nuevo gym", icon: ifaltag} );
-				marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
-				ContadorFaltan++;
-				} 
+			marker = new L.Marker(loc, {title: "Falta para nuevo gym", icon: ifaltag} );
+			marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
+			ContadorFaltan++;
+			} 
 			else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>"; };
                 
 						 
@@ -528,17 +548,18 @@ const updateMapGrid = () => {
   };
   // center cell
   const zoom = map.getZoom();
+	
   Object.keys(levels).forEach(level => {
 	const options = levels[level];
-	if (level == 14 && zoom >= 15 ) 
+	if (level == 14 && zoom >= 14 ) 	// nivel de zoom que sera visible celda 14
 		{
 		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
 		drawCellAndNeighbors(cell, options);
 		}
-	else if (level == 17 && zoom >= 17 )
+	else if (level == 17 && zoom >= 16 )	// nivel de zoom que sera visible celda 17
 		{
-		if ( zoom == (ZoomMax-1) ) { ColorCell17= '#FFFFFF'; };
-		if ( zoom == (ZoomMax-2) ) { ColorCell17= '#000000'; };
+  		if ( zoom >= (ZoomMax-1) ) { ColorCell17= '#FFFFFF'; }	// Celda 17 color blanco
+  		else  { ColorCell17= '#000000'; };			// celda 17 color negro
 		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
 		drawCellAndNeighbors(cell, options);
 		};
