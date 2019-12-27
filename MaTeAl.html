@@ -551,12 +551,12 @@ const updateMapGrid = () => {
 	
   Object.keys(levels).forEach(level => {
 	const options = levels[level];
-	if (level == 14 && zoom >= 14 ) 	// nivel de zoom que sera visible celda 14
+	if (level == 14 && zoom >= 15 ) 	// nivel de zoom que sera visible celda 14
 		{
 		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
 		drawCellAndNeighbors(cell, options);
 		}
-	else if (level == 17 && zoom >= 17 )	// nivel de zoom que sera visible celda 17
+	else if (level == 17 && zoom >= 16 )	// nivel de zoom que sera visible celda 17
 		{
   		if ( zoom >= (ZoomMax-1) ) { ColorCell17= '#FFFFFF'; }	// Celda 17 color blanco
   		else  { ColorCell17= '#000000'; };			// celda 17 color negro
