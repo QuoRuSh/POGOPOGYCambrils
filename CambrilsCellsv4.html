@@ -223,10 +223,10 @@ let iIngress = L.ExtraMarkers.icon ({
 
 var MCPokestopOptions = 		// CircleMarker Pokeparada
     	{
-	radius: 10,
+	radius: 50,
 	stroke: false,
 	color: "#0000ff",
-	weight: 6,
+	weight: 40,
 	opacity: 0.2,
 	fill: true,
 	fillColor: "#0000ff",
@@ -302,7 +302,7 @@ Tabletop.init(
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
 //		marker = new L.Marker(loc, {title: pokestop.nombre, icon: ipokestop} );
-		marker = new L.CircleMarker(loc, {title: pokestop.nombre, MCPokestopOptions} ).bindTooltip( pokestop.nombre );
+		marker = new L.CircleMarker(loc, MCPokestopOptions ).bindTooltip( pokestop.nombre );
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
