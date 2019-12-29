@@ -272,6 +272,20 @@ var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
 	noClip: true,
 //	bubblingMouseEvents = false,
 	};
+var MarkerPoligonOptions14 = 		// Marker Poligono sombreado celda 14.
+    	{
+	fillColor: "#FF0000",
+	color: "#FF0000",
+	weight: 5,
+	opacity: 0,
+	fillOpacity: 0.2,
+	interactive: false,
+	fill: true,
+	clickable: false,
+	noClip: true,
+//	bubblingMouseEvents = false,
+	};
+	  
 var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
     	{
 	Lat1 : 0,		// Latitud esquina superior izquierda
@@ -483,7 +497,14 @@ Tabletop.init(
 			marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
 			ContadorFaltan++;
 			} 
-			else { TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>"; };
+			else 
+			{ 
+			TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>";
+			
+			const cell = S2.S2Cell.FromLatLng(loc, 14);
+  			const corners = cell.getCornerLatLngs();
+			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions14).addTo(LG_FaltanGym);
+			};
                 
 						 
 		marker = new L.Marker(loc, {title: "Total pokeparadas y gyms celda 14", icon: itotalpg} );
