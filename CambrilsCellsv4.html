@@ -89,7 +89,7 @@
   		font-weight: bold;
   		font-size: 32px;
 		color: #F22;
-		text-shadow: 1px 1px #000, 2px 2px 10px #000, -1px -1px #000, -2px -2px 10px #000;
+		text-shadow: 1px 1px 2px #000, 2px 2px 10px #000, -1px -1px 2px #000, -2px -2px 10px #000;
 
   		}
     .leaflet-tooltip.my-labels-Falta3
@@ -100,7 +100,7 @@
   		font-weight: bold;
   		font-size: 32px;
 		color: #FFF;
-		text-shadow: 1px 1px #000, 2px 2px 10px #000, -1px -1px #000, -2px -2px 10px #000;
+		text-shadow: 1px 1px 2px #000, 2px 2px 10px #000, -1px -1px 2px #000, -2px -2px 10px #000;
   		}
     .leaflet-tooltip.my-labels-Falta2
 	    	{
@@ -110,7 +110,7 @@
   		font-weight: bold;
   		font-size: 32px;
 		color: #FF2;
-		text-shadow: 1px 1px #000, 2px 2px 10px #000, -1px -1px #000, -2px -2px 10px #000;
+		text-shadow: 1px 1px 2px #000, 2px 2px 10px #000, -1px -1px 2px #000, -2px -2px 10px #000;
 	        }
 	    
     .leaflet-tooltip.my-labels-Falta1
@@ -121,7 +121,7 @@
   		font-weight: bold;
   		font-size: 32px;
 		color: #2F2;
-		text-shadow: 1px 1px #000, 2px 2px 10px #000, -1px -1px #000, -2px -2px 10px #000;
+		text-shadow: 1px 1px 2px #000, 2px 2px 10px #000, -1px -1px 2px #000, -2px -2px 10px #000;
 	        }
 	    
     </style>
@@ -472,6 +472,7 @@ Tabletop.init(
 		marker.addTo(LG_Ingress);	// Añadimos al grupo de portales ingress
 		});
 	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
+	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
 	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
 	ControlLayer.addOverlay(LG_ContadorPG,"Pokestops + Gyms");	// (<b>"+ ContMarkerNumCell14 + "</b>)");
 		
@@ -552,7 +553,6 @@ Tabletop.init(
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	ControlLayer.addOverlay(LG_FaltanGym,"Falta Para Gym");	// (<b>"+ ContadorFaltan + "</b>)");
-	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
 	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
   debug: true
