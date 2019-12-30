@@ -322,7 +322,7 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(gim.latitude, gim.longitude);
-		marker = new L.Marker(loc, {title: '<b>'+gim.nombre+'</b>', icon: igym} );
+		marker = new L.Marker(loc, {title: gim.nombre, icon: igym} ).bindTooltip( '<b>'+gim.nombre+'</b>' );;
 		marker.bindPopup("<h2><b style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
