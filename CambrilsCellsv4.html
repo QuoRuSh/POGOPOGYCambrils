@@ -445,7 +445,7 @@ Tabletop.init(
 			fillOpacity: 0,
 			interactive: true,
 			clickable: true,
-			pane: 'markerPane',
+			pane: 'tooltipPane',
 			};
 		
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
@@ -503,7 +503,10 @@ Tabletop.init(
 			};
                 
 						 
-		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>'+ NumMark.toString() +'</b>', {sticky: true , direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
+		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>'+ NumMark.toString() +'</b>', 
+						{
+						className: "my-labels",
+						direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
 		
 		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
