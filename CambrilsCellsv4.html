@@ -90,6 +90,7 @@
     <main id="map"></main>
 
   <script>
+	  
 ///////////////////////////////////////////////////////////////////
 // Setup the Leaflet map (declaracion variables y constantes)
 let ZoomMax = 20 ;	// Zoom Maximo
@@ -106,6 +107,7 @@ var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gi
 var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
 var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
 var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
+	  
 const map = L.map('map', {
   maxZoom: ZoomMax,
   zoom: (ZoomMax/2),
@@ -133,6 +135,7 @@ var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', 
 });
 https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-url
 */
+	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Mapas calles y satellite
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
@@ -145,19 +148,23 @@ const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1,maxZ
 //const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
 //    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 //}).addTo(map);
+	  
 ///////////////////////////////////////////////////////////////////
 // Controles
 L.control.locate({
-  flyTo: true,
-  drawCircle: true,
-  drawMarker: true,
-  enableHighAccuracy:true
-}).addTo(map);
+  		flyTo: true,
+  		drawCircle: true,
+  		drawMarker: true,
+  		enableHighAccuracy:true,
+  		}).addTo(map);
+	  
 L.control.polylineMeasure({
 		//	  position: 'topright',
 		//	  showClearControl: true,        // Show a control to clear all the measurements
 			 }).addTo(map);
+	  
 L.control.scale().addTo(map);
+	  
 var overlayMaps =
 	{
 //	"Gym": LG_gym,
@@ -171,6 +178,7 @@ var overlayMaps =
 //	"Ingress Portal" : LG_Ingress,
  	};
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
+	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
 const updateTiles = () => {
@@ -229,14 +237,13 @@ var MCPokestopOptions = 		// CircleMarker Pokeparada
 	weight: 2,
 	opacity: 1,
 	fill: true,
-	fillColor: "#0088ff",
+	fillColor: "#00AAff",
 	fillOpacity: 1,
 	interactive: true,
 	clickable: true,
 	pane: 'shadowPane',
 //	bubblingMouseEvents = true,
 	};
-
 
 var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
     	{
