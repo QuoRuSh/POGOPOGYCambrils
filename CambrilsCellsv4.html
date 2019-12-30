@@ -503,7 +503,7 @@ Tabletop.init(
 			};
                 
 						 
-		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>'+ NumMark.toString() +'</b>', {sticky: true , direction: 'center', permanent: true, interactive: true , opacity: 0 ,} );
+		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>'+ NumMark.toString() +'</b>', {sticky: true , direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
 		
 		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
