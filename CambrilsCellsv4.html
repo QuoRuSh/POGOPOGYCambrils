@@ -503,7 +503,7 @@ Tabletop.init(
 			};
                 
 						 
-		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>Pokestops + Gyms celda 14</b>' );
+		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>'+ NumMark.toString() +'</b>', {direction: 'center', permanent: true, interactive: true} );
 		
 		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
