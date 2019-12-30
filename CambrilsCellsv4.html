@@ -88,11 +88,43 @@
   		box-shadow: none;
   		font-weight: bold;
   		font-size: 30px;
-		color: #F88;
-		text-shadow: 1px 1px #000, 2px 2px 6px #666, -1px -1px #000, -2px -3px 6px #666;
+		color: #F22;
+		text-shadow: 1px 1px #000, 2px 2px 6px #AAA, -1px -1px #000, -2px -3px 6px #AAA;
 
   		}
-    
+    .leaflet-tooltip.my-labels-Falta3
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 30px;
+		color: #FFF;
+		text-shadow: 1px 1px #000, 2px 2px 6px #AAA, -1px -1px #000, -2px -3px 6px #AAA;
+  		}
+    .leaflet-tooltip.my-labels-Falta2
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 30px;
+		color: #FF0;
+		text-shadow: 1px 1px #000, 2px 2px 6px #AAA, -1px -1px #000, -2px -3px 6px #AAA;
+	        }
+	    
+    .leaflet-tooltip.my-labels-Falta1
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 30px;
+		color: #0F0;
+		text-shadow: 1px 1px #000, 2px 2px 6px #AAA, -1px -1px #000, -2px -3px 6px #AAA;
+	        }
+	    
+    </style>
     </style>
 
   </head>
@@ -188,6 +220,7 @@ var overlayMaps =
 //	"20 Metros" : LG_Circle20m,
 //	"Ingress Portal" : LG_Ingress,
  	};
+	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -440,7 +473,7 @@ Tabletop.init(
 		});
 	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
 	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
-	ControlLayer.addOverlay(LG_ContadorPG,"Contador PO GY (<b>"+ ContMarkerNumCell14 + "</b>)");
+	ControlLayer.addOverlay(LG_ContadorPG,"Pokestops + Gyms");	// (<b>"+ ContMarkerNumCell14 + "</b>)");
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	let ContadorFaltan=0;
@@ -485,22 +518,18 @@ Tabletop.init(
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
-			if ( NumFalta <=2 ) { MarkForm = 'star' ; MarkCol = 'green-light' ;  MarkICol = 'white'; }
-				else { MarkForm= 'square'; MarkCol = 'white'; MarkICol = 'black'; };
-			let ifaltag =   L.ExtraMarkers.icon
-				({
-				icon: 'fa-number',
-				prefix: 'fa',
-      				shape: MarkForm,
-      				markerColor: MarkCol,
-                        	iconColor: MarkICol,
-				number: NumFalta.toString(),
-				riseOnHover: true, 
-				noHide: true,
-				zIndexOffset: 5000,
-//				riseOffset : 10000,
- 				});
-			marker = new L.Marker(loc, {title: "Falta para nuevo gym", icon: ifaltag} );
+			
+			
+			if  (NumFalta >=3 ) { ClsName = "my-labels-Falta3" };
+			else if (NumFalta == 2 ) { ClsName = "my-labels-Falta2" };
+			     else { ClsName = "my-labels-Falta1" };
+				
+			marker = new L.CircleMarker(loc, itotalpg);.bindTooltip( NumFalta.toString(), 
+						{
+						className: ClsName,
+						direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
+						};
+			
 			marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
 			ContadorFaltan++;
 			} 
@@ -508,7 +537,7 @@ Tabletop.init(
 			{ 
 			TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>";
 			
-			const cell = S2.S2Cell.FromLatLng(loc, 14);
+			const cell = S2.S2Cell.FromLatLng(loc, 14);		// Celda 14 al maximo de gyms, la sombreamos
   			const corners = cell.getCornerLatLngs();
 			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions14).addTo(LG_FaltanGym);
 			};
@@ -522,7 +551,7 @@ Tabletop.init(
 		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
-	ControlLayer.addOverlay(LG_FaltanGym,"Para Gym (<b>"+ ContadorFaltan + "</b>)");
+	ControlLayer.addOverlay(LG_FaltanGym,"Falta Para Gym");	// (<b>"+ ContadorFaltan + "</b>)");
 	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
 	},
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
