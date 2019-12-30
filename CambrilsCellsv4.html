@@ -433,6 +433,21 @@ Tabletop.init(
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	let ContadorFaltan=0;
+
+	var itotalpg =  {				// Circle Marker Total gyms y pokeparadas
+			radius: 20,
+			stroke: true,
+			color: "black",
+			weight: 4,
+			opacity: 1,
+			fill: true,
+			fillColor: 'orange-dark',
+			fillOpacity: 1,
+			interactive: true,
+			clickable: true,
+			pane: 'tooltipPane',
+			};
+		
 // Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
 	for (a = 0; a < ContMarkerNumCell14; a++)
 		{
@@ -452,17 +467,10 @@ Tabletop.init(
 					} else { NumFalta = 0; };
                         };
 		
-		let itotalpg =   L.ExtraMarkers.icon
-			({
-			icon: 'fa-number',
-      			shape: 'penta',
-      			markerColor: 'orange-dark',
-                        iconColor: 'white',
-			number: NumMark.toString(),
-			riseOnHover: true, 
-			noHide: true,
-//			riseOffset : 10000,
- 			});
+
+//			L.ExtraMarkers.icon
+//			({ icon: 'fa-number', shape: 'penta', markerColor: 'orange-dark', iconColor: 'white', number: NumMark.toString(), riseOnHover: true, noHide: true, });
+
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
@@ -495,7 +503,7 @@ Tabletop.init(
 			};
                 
 						 
-		marker = new L.Marker(loc, {title: "Total pokeparadas y gyms celda 14", icon: itotalpg} );
+		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>Pokestops + Gyms celda 14</b>' );
 		
 		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
