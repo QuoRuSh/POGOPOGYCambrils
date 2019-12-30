@@ -524,7 +524,7 @@ Tabletop.init(
 			else if (NumFalta == 2 ) { ClsName = "my-labels-Falta2" }
 			     else { ClsName = "my-labels-Falta1" };
 				
-			marker = new L.CircleMarker(loc, itotalpg);.bindTooltip( NumFalta.toString(), 
+			marker = new L.CircleMarker(loc, itotalpg).bindTooltip( NumFalta.toString(), 
 						{
 						className: ClsName,
 						direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
