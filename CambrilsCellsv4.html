@@ -199,6 +199,7 @@ L.control.locate({
   		drawCircle: true,
   		drawMarker: true,
   		enableHighAccuracy:true,
+		circleStyle: { color:'#ffffff' , fillColor: '#ffffff',},
   		}).addTo(map);
 	  
 L.control.polylineMeasure({
@@ -207,7 +208,7 @@ L.control.polylineMeasure({
 			 }).addTo(map);
 	  
 L.control.scale().addTo(map);
-	  
+
 var overlayMaps =
 	{
 //	"Gym": LG_gym,
