@@ -90,6 +90,7 @@
   		font-size: 32px;
 		color: #F22;
  		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
+
   		}
     .leaflet-tooltip.my-labels-Falta3
 	    	{
@@ -198,6 +199,7 @@ L.control.locate({
   		drawCircle: true,
   		drawMarker: true,
   		enableHighAccuracy:true,
+		showCompass: true,
 		markerStyle: { color:'#ffffff' , fillColor: '#444444', },
   		}).addTo(map);
 	  
@@ -207,7 +209,7 @@ L.control.polylineMeasure({
 			 }).addTo(map);
 	  
 L.control.scale().addTo(map);
-	  
+
 var overlayMaps =
 	{
 //	"Gym": LG_gym,
@@ -272,6 +274,7 @@ let iIngress = L.ExtraMarkers.icon ({
 	  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Cargar pokeparadas y gyms
+
 var MCPokestopOptions = 		// CircleMarker Pokeparada
     	{
 	radius: 8,
@@ -287,6 +290,7 @@ var MCPokestopOptions = 		// CircleMarker Pokeparada
 	pane: 'shadowPane',
 //	bubblingMouseEvents = true,
 	};
+
 var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
     	{
 	radius: 20,
@@ -346,6 +350,7 @@ Tabletop.init(
   key: code,
   callback: function(sheet, tabletop)
 	{
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
@@ -368,6 +373,7 @@ Tabletop.init(
 	
 	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador-1) + "</b>)");
 	contador=0;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$.each( tabletop.sheets("gym").all(), function(i, gim)		               // Marcadores Gimnsasios
 		{
@@ -387,6 +393,7 @@ Tabletop.init(
 		});
 	ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
 	contador=0;
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		     // Marcadores Gimnasios EX
 		{
@@ -451,6 +458,7 @@ Tabletop.init(
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
   		});
 	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias (<b>"+ (contador-1) + "</b>)");
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	contador = 0;
 	$.each( tabletop.sheets("Ingress").all(), function(i, ingress)	         // Marcadores Portales ingress
@@ -472,6 +480,7 @@ Tabletop.init(
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	let ContadorFaltan=0;
+
 	var itotalpg =  {				// Circle Marker Total gyms y pokeparadas
 			radius: 20,
 			stroke: true,
@@ -505,8 +514,10 @@ Tabletop.init(
 					} else { NumFalta = 0; };
                         };
 		
+
 //			L.ExtraMarkers.icon
 //			({ icon: 'fa-number', shape: 'penta', markerColor: 'orange-dark', iconColor: 'white', number: NumMark.toString(), riseOnHover: true, noHide: true, });
+
 		if ( NumFalta > 0 ) 
 			{
 			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
