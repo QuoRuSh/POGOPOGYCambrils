@@ -368,7 +368,7 @@ Tabletop.init(
 		
 	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
-		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).bindTooltip( '<b>'+corners[0]+'</b>' ).addTo(LG_Celda17Fill);
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).bindTooltip( '<b>'+corners[0].lat+'</b>' ).addTo(LG_Celda17Fill);
 		});
 	
 	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador-1) + "</b>)");
