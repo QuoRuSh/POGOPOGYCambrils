@@ -230,18 +230,23 @@ var controlSearch = new L.Control.Search
   ({
   position:'topleft',
   //layer: masnou,
-  layer: L.featureGroup([ LG_pokestop ]),
+  layer: L.featureGroup([ LG_pokestop , LG_gym ]),
   //propertyName: 'nombre',
   initial: false,
   zoom: 16,
   marker: {
           circle: {
                   radius: 60,
-                  color: "#FF0000",
-                  opacity: 0.5
+	          stroke: true,
+	          color: "#000000",
+	          weight: 1,
+	          opacity: 1,
+	          fill: true,
+	          fillColor: "#00ff00",
+	          fillOpacity: 0.5,
                   }
           },
-  textPlaceholder: 'Pokeparada...'
+  textPlaceholder: '...',
   });
   
 map.addControl(controlSearch);
