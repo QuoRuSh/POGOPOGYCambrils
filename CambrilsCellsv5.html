@@ -225,7 +225,26 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
-
+// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////7
+var controlSearch = new L.Control.Search
+  ({
+  position:'topleft',
+  //layer: masnou,
+  layer: L.featureGroup([ LG_pokestop ]),
+  //propertyName: 'nombre',
+  initial: false,
+  zoom: 16,
+  marker: {
+          circle: {
+                  radius: 60,
+                  color: "#FF0000",
+                  opacity: 0.5
+                  }
+          },
+  textPlaceholder: 'Pokeparada...'
+  });
+  
+map.addControl(controlSearch);
 
 	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -563,27 +582,6 @@ Tabletop.init(
   debug: true
   });
 	  
-	  
-// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////7
-var controlSearch = new L.Control.Search
-  ({
-  position:'topleft',
-  //layer: masnou,
-  layer: L.featureGroup([ gym , pokestop , gymex , Ingress ]),
-  //propertyName: 'nombre',
-  initial: false,
-  zoom: 16,
-  marker: {
-          circle: {
-                  radius: 60,
-                  color: "#FF0000",
-                  opacity: 0.5
-                  }
-          },
-  textPlaceholder: 'Pokeparada...'
-  });
-  
-map.addControl(controlSearch);
 	  
 //////////////////////////////////////////////////////////////////////////////////////////////////////
   // Contar Pokeparadas y Gyms en celdas 14
