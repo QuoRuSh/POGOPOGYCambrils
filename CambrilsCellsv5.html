@@ -225,39 +225,7 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
-// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////7
-var controlSearch = new L.Control.Search
-  ({
-  position:'topleft',
-  layer: L.featureGroup([ LG_pokestop ]),
-  initial: false,
-  zoom: ZoomMax/2,
-  marker: {
-          circle: {
-                  radius: 40,
-	          stroke: true,
-	          color: "#000000",
-	          weight: 1,
-	          opacity: 1,
-	          fill: true,
-	          fillColor: "#00ff00",
-	          fillOpacity: 0.5,
-                  },
-	  circle: {
-                  radius: 80,
-	          stroke: true,
-	          color: "#000000",
-	          weight: 1,
-	          opacity: 1,
-	          fill: true,
-	          fillColor: "#FFff00",
-	          fillOpacity: 0.5,
-                  }
-          },
-  textPlaceholder: '...',
-  });
-  
-map.addControl(controlSearch);
+
 
 	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -722,6 +690,40 @@ const updateMapGrid = () => {
 		};
 	});
       };
+	  
+// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////7
+var controlSearch = new L.Control.Search
+  ({
+  position:'topleft',
+  layer: L.featureGroup([ LG_pokestop ]),
+  initial: false,
+  zoom: ZoomMax/2,
+  marker: {
+          circle: {
+                  radius: 40,
+	          stroke: true,
+	          color: "#000000",
+	          weight: 1,
+	          opacity: 1,
+	          fill: true,
+	          fillColor: "#00ff00",
+	          fillOpacity: 0.5,
+                  },
+	  circle: {
+                  radius: 80,
+	          stroke: true,
+	          color: "#000000",
+	          weight: 1,
+	          opacity: 1,
+	          fill: true,
+	          fillColor: "#FFff00",
+	          fillOpacity: 0.5,
+                  }
+          },
+  textPlaceholder: '...',
+  });
+  
+map.addControl(controlSearch);
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
 map.on('moveend', updateMapGrid);
