@@ -698,7 +698,7 @@ const updateMapGrid = () => {
 var controlSearch = new L.Control.Search
   ({
   position:'topleft',
-  layer: LG_pokestop, // L.featureGroup([ LG_pokestop ]),
+  layer: L.featureGroup([ LG_pokestop ,LG_gym , LG_gymex , LG_Ingress ]),
   initial: false,
   zoom: ZoomMax/2,
   marker: {
@@ -712,16 +712,6 @@ var controlSearch = new L.Control.Search
 	          fillColor: "#00ff00",
 	          fillOpacity: 0.5,
                   },
-	  circle: {
-                  radius: 80,
-	          stroke: true,
-	          color: "#000000",
-	          weight: 1,
-	          opacity: 1,
-	          fill: true,
-	          fillColor: "#FFff00",
-	          fillOpacity: 0.5,
-                  }
           },
   textPlaceholder: '...',
   });
