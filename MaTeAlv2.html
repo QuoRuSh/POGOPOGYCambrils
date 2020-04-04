@@ -186,11 +186,10 @@ const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z
 }).addTo(map);
 var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2o0OHZuY3MwMGo1cTMybGM4MTFrM2dxbCJ9.yCQe43DMRqobazKewlhi9w';
 var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
-const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1,maxZoom: ZoomMax}).addTo(map);
+//const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1,maxZoom: ZoomMax}).addTo(map);
 	  
-//const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
-//    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
-//}).addTo(map);
+const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,}).addTo(map);
 	  
 ///////////////////////////////////////////////////////////////////
 // Controles
