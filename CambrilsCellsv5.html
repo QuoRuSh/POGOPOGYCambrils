@@ -164,8 +164,8 @@ var Circle40m = new L.circle ([0,0], 		// Radio alcance jugador 40m
 	        weight: 1,
 	        opacity: 1,
 	        fill: true,
-	        fillColor: "#ffff00",
-	        fillOpacity: 0.4,
+	        fillColor: "#ff8800",
+	        fillOpacity: 0.2,
 		interactive: false,
 		clickable: false,
 		});
@@ -177,8 +177,8 @@ var Circle80m = new L.circle ([0,0], 		// Radio ampliado Covid alcance solo gyms
 	        weight: 1,
 	        opacity: 1,
 	        fill: false,
-	        // fillColor: "#ffff00",
-	        // fillOpacity: 0.4,
+	        fillColor: "#ff4400",
+	        fillOpacity: 0.1,
 		interactive: false,
 		clickable: false,
 		});
@@ -195,6 +195,7 @@ var CircleMJ = new L.CircleMarker([0,0],		// Circle jugador
 		draggable: true,
 		interactive: true, 
 		dragEnabled:true,
+		clickable: true,
 		});
 	  
 const map = L.map('map', {
