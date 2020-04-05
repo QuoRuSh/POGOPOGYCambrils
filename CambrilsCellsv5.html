@@ -127,7 +127,8 @@
  		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
 	        }
 
-   .shadow 	{
+   .shadowCircle
+	    	{
   		filter: drop-shadow( 5px 2px 5px #000 );
 		}
 
@@ -248,6 +249,7 @@ var controlSearch = new L.Control.Search
 	          fill: true,
 	          fillColor: "#00ff00",
 	          fillOpacity: 0.4,
+		  className: 'shadowCircle',
                   },
           },
   textPlaceholder: '...',
@@ -321,7 +323,7 @@ var MCPokestopOptions = 		// CircleMarker Pokeparada
 	interactive: true,
 	clickable: true,
 	pane: 'shadowPane',
-	className: 'shadow',
+	className: 'shadowCircle',
 //	bubblingMouseEvents = true,
 	};
 
@@ -349,8 +351,10 @@ var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
 	fill: true,
 	clickable: false,
 	noClip: true,
+	className: 'shadowCircle',
 //	bubblingMouseEvents = false,
 	};
+	  
 var MarkerPoligonOptions14 = 		// Marker Poligono sombreado celda 14.
     	{
 	fillColor: "#FF0000",
