@@ -694,13 +694,13 @@ const updateMapGrid = () => {
       };
 	  
 // Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
-var JS_pokestop = new L.geoJSON(LG_pokestop);
+var FE_pokestops = new L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress]);
 
 
 var controlSearch = new L.Control.Search
   ({
   position:'topleft',
-  layer: JS_pokestop, //, LG_gym, LG_gymex, LG_Ingress]),
+  layer: FE_pokestops,
   initial: false,
   zoom: ZoomMax/2,
   marker: {
