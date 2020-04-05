@@ -385,7 +385,7 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(gim.latitude, gim.longitude);
-		marker = new L.Marker(loc, {icon: igym} ).bindTooltip( '<b>'+gim.nombre+'</b>' );;
+		marker = new L.Marker(loc, {icon: igym, title: gim.nombre,} ).bindTooltip( '<b>'+gim.nombre+'</b>' );;
 		marker.bindPopup("<h2><b style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
@@ -405,7 +405,7 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(gymex.latitude, gymex.longitude);
-		marker = new L.Marker(loc, {icon: igymex} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: igymex, title: gymex.nombre,} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
@@ -424,7 +424,7 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = [propuesta.latitude, propuesta.longitude];
-		marker = new L.Marker(loc, {icon: ipropuesta} ).bindTooltip( '<b>'+propuesta.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: ipropuesta, title: propuesta.nombre,} ).bindTooltip( '<b>'+propuesta.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
@@ -438,7 +438,7 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(aceptada.latitude, aceptada.longitude);
-		marker = new L.Marker( loc , {icon: iaceptada} ).bindTooltip( '<b>'+aceptada.nombre+'</b>' );
+		marker = new L.Marker( loc , {icon: iaceptada, title: aceptada.nombre,} ).bindTooltip( '<b>'+aceptada.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
@@ -457,7 +457,7 @@ Tabletop.init(
 		{
 		contador ++;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = [sugerencia.latitude, sugerencia.longitude];
-		marker = new L.Marker(loc, {icon: isugerencia} ).bindTooltip( '<b>'+sugerencia.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: isugerencia, title: sugerencia.nombre,} ).bindTooltip( '<b>'+sugerencia.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
@@ -473,7 +473,7 @@ Tabletop.init(
 		var loc = new L.latLng(ingress.latitude, ingress.longitude);
 		
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
-		marker = new L.Marker(loc, {icon: iIngress} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: iIngress, title: ingress.nombre,} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + ingress.imagen + ");'></div></div></div>");
@@ -695,15 +695,15 @@ const updateMapGrid = () => {
       };
 	  
 // Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
-var FE_pokestops = new L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress]);
+//var FE_pokestops = new 
 
 
 var controlSearch = new L.Control.Search
   ({
   position:'topleft',
-  layer: LG_pokestop,
+  layer: L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress]),
   initial: false,
-  zoom: (ZoomMax/2),
+  zoom: (ZoomMax-2),
   marker: {
           circle: {
                   radius: 40,
