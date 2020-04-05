@@ -227,7 +227,30 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
-
+// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
+var controlSearch = new L.Control.Search
+  ({
+  position:'topleft',
+  layer: L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress]),
+  initial: false,
+  zoom: (ZoomMax-2),
+  marker: {
+          circle: {
+                  radius: 30,
+	          stroke: true,
+	          color: "#000000",
+	          weight: 2,
+	          opacity: 1,
+	          fill: true,
+	          fillColor: "#00ff00",
+	          fillOpacity: 0.4,
+                  },
+          },
+  textPlaceholder: '...',
+  hideMarkerOnCollapse: true
+  });
+  
+map.addControl(controlSearch);
 
 	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -694,32 +717,7 @@ const updateMapGrid = () => {
 	});
       };
 	  
-// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
-//var FE_pokestops = new 
 
-
-var controlSearch = new L.Control.Search
-  ({
-  position:'topleft',
-  layer: L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress]),
-  initial: false,
-  zoom: (ZoomMax-2),
-  marker: {
-          circle: {
-                  radius: 40,
-	          stroke: true,
-	          color: "#000000",
-	          weight: 1,
-	          opacity: 1,
-	          fill: true,
-	          fillColor: "#00ff00",
-	          fillOpacity: 0.5,
-                  },
-          },
-  textPlaceholder: '...',
-  });
-  
-map.addControl(controlSearch);
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
 map.on('moveend', updateMapGrid);
