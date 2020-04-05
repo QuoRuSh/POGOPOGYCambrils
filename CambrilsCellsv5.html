@@ -320,10 +320,32 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		CircleMJ.removeFrom(map);
 		};
 	});
-				       
+	  
+CircleMJ.on
+	({
+        mousedown: function ()
+		{
+          	map.dragging.disable();
+          	map.on('mousemove', function (e) 
+			{
+			CircleMJ.setLatLng(e.latlng);
+			Circle40m.setLatLng(e.latlng);
+			Circle80m.setLatLng(e.latlng);
+            		});
+          	}
+	}); 
+	  
+map.on('mouseup',function(e)
+       {
+       map.dragging.enable();
+       map.removeEventListener('mousemove');
+       });
+	  
 map.addControl(ButtonJDControl);
 map.addControl(controlSearch);	  
+
 	  
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
 const updateTiles = () => {
