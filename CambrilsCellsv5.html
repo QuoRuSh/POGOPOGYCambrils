@@ -231,10 +231,11 @@ ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 var controlSearch = new L.Control.Search
   ({
   position:'topleft',
-  layer: L.featureGroup([LG_pokestop, LG_gym, LG_gymex ]),
+  layer: LG_Ingress,	//L.featureGroup([LG_pokestop, LG_gym, LG_gymex ]),
   initial: false,
   zoom: (ZoomMax-2),
   marker: {
+	  icon: false,
           circle: {
                   radius: 30,
 	          stroke: true,
@@ -249,7 +250,6 @@ var controlSearch = new L.Control.Search
   textPlaceholder: '...',
   hideMarkerOnCollapse: true,
   minLength: 2,
-  markericon:	false,
   });
   
 map.addControl(controlSearch);
