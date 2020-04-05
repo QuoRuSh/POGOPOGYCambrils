@@ -497,7 +497,10 @@ Tabletop.init(
 		contador++;
 		var loc = new L.latLng(ingress.latitude, ingress.longitude);
 		
-		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
+		marker = new L.circle ( loc , MarkerCirclerOptions );
+		marker.options.title= "..";
+		marker.addTo(LG_Ingress);	// radio 20 metros
+		
 		marker = new L.Marker(loc, {icon: iIngress, title: ingress.nombre,} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
