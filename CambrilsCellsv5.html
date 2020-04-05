@@ -68,6 +68,10 @@
 <!-- LEAFLET POLILINEMEASURE -->
 <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
 <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+	  
+<!-- EASY BUTTON -->	  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
     <style>
       * {
@@ -151,6 +155,45 @@ var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gi
 var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
 var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
 var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
+
+var Circle40m = new L.circle ([0,0], 		// Radio alcance jugador 40m
+		{                  
+		radius: 40,
+	        stroke: true,
+	        color: "#000000",
+	        weight: 1,
+	        opacity: 1,
+	        fill: true,
+	        fillColor: "#ffff00",
+	        fillOpacity: 0.4,
+		interactive: false,
+		clickable: false,
+		});
+var Circle80m = new L.circle ([0,0], 		// Radio ampliado Covid alcance solo gyms 80m
+		{                  
+		radius: 80,
+	        stroke: true,
+	        color: "#000000",
+	        weight: 1,
+	        opacity: 1,
+	        fill: false,
+	        // fillColor: "#ffff00",
+	        // fillOpacity: 0.4,
+		interactive: false,
+		clickable: false,
+		});
+var CircleMJ = new L.CircleMarker([0,0],		// Circle jugador
+		{
+		radius: 5,
+		stroke: true,
+		color: "#000000",
+		weight: 2,
+		opacity: 1,
+		fill: true,
+		fillColor: "#FFFF00",
+		fillOpacity: 1,
+		draggable: true,
+		});
 	  
 const map = L.map('map', {
   maxZoom: ZoomMax,
@@ -252,6 +295,32 @@ var controlSearch = new L.Control.Search
   
 map.addControl(controlSearch);
 
+	  
+// Control boton simula jugador con su radio de alcance ///////////////////////////////////////
+var ButState = 0; // 1= activo 0 = inactivo	  
+var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
+	{
+	if (ButState == 0 )
+		{
+		ButState = 1;	//Activamos judador
+		var Loc = map.getCenter();
+		Circle40m.setLatLng(Loc);
+		Circle80m.setLatLng(Loc);
+    		CircleMJ.setLatLng(Loc);
+		Circle40m.addTo(map);
+		Circle80M.addTo(map);
+		CircleMJ.addTo(map);
+		}
+		else
+		{
+		BuState = 0; // Desactivamos jugador
+		Circle40m.removeFrom(map);
+		Circle80m.removeFrom(map);
+		CircleMJ.removeFrom(map);
+		};
+	};
+				       
+map.addControl(ButtonJDControl);
 	  
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
