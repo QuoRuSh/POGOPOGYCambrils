@@ -341,7 +341,7 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.dragging.disable();
           	map.on('mousemove', function (e) 
 			{
-			Loc = e.latlng:
+			var Loc = e.latlng;
 			CircleMJ.setLatLng(Loc);
 			Circle40m.setLatLng(Loc);
 			Circle80m.setLatLng(Loc);
