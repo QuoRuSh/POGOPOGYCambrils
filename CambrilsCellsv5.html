@@ -326,12 +326,11 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		{
 		ButState = 1;	//Activamos judador
 		let Loc = map.getCenter();
-		CircleMJ.setLatLng(Loc);
-		Circle40m.setLatLng(Loc);
-		Circle80m.setLatLng(Loc);
-		let Loc1 = Loc;
-		Loc1.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
-		Label40m.setLatLng(Loc1);	
+		CircleMJ.setLatLng(map.getCenter());
+		Circle40m.setLatLng(map.getCenter());
+		Circle80m.setLatLng(map.getCenter());
+		Loc.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+		Label40m.setLatLng(Loc);	
 		Circle80m.addTo(map);
 		Circle40m.addTo(map);
 		CircleMJ.addTo(map);
@@ -356,12 +355,11 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.on('mousemove', function (e) 
 			{
 			let Loc = e.latlng;
-			Circle80m.setLatLng(Loc);
-			Circle40m.setLatLng(Loc);
-			CircleMJ.setLatLng(Loc);
-			let Loc1 = Loc;
-			Loc1.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
-			Label40m.setLatLng(Loc1);	
+			Circle80m.setLatLng(e.latlng);
+			Circle40m.setLatLng(e.latlng);
+			CircleMJ.setLatLng(e.latlng);
+			Loc.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+			Label40m.setLatLng(Loc);	
             		});
           	}
 	}); 
