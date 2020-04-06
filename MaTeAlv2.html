@@ -38,11 +38,14 @@
     <!-- script src="./leaflet panel layers/leaflet-panel-layers.js"></script -->
 
 <!-- LEAFLET SEARCH -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin />
-    <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script>
-
+    <!--link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin / -->
+	
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.8/dist/leaflet-search.min.css" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.8/dist/leaflet-search.src.min.js"></script>
+    <!--script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script-->
+    
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+  
     <link rel="stylesheet" href="./css/style.css" />
 
 <!-- JQUERY -->
@@ -52,8 +55,9 @@
     <script src='https://cdn.jsdelivr.net/npm/tabletop@1.6.2/src/tabletop.min.js'></script>
 
 <!-- LEAFLET EXTRA MARKERS -->
-    <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/src/assets/js/leaflet.extra-markers.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/dist/css/leaflet.extra-markers.min.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.2.1/dist/js/leaflet.extra-markers.min.js" integrity="sha256-nm8fKiOVLndTf7KD5YEPuMSb0kv9IH7fDyZ+zlF8s/0=" crossorigin="anonymous"></script>
+<!-- link rel="stylesheet" href="https://github.com/coryasilva/Leaflet.ExtraMarkers/blob/master/src/assets/css/leaflet.extra-markers.css" -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.0.6/dist/css/leaflet.extra-markers.min.css">
 
 <!-- FONT AWESOME -->
 <!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" -->
@@ -65,6 +69,10 @@
 <!-- LEAFLET POLILINEMEASURE -->
 <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
 <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+	  
+<!-- EASY BUTTON -->	  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 
     <style>
       * {
@@ -123,10 +131,8 @@
 		color: #2F2;
  		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
 	        }
-	    
-    </style>
-    </style>
 
+  </style>
   </head>
 
   <body>
@@ -150,6 +156,48 @@ var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gi
 var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
 var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
 var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
+
+var Circle40m = new L.circle ([0,0], 		// Radio alcance jugador 40m
+		{                  
+		radius: 40,
+	        stroke: true,
+	        color: "#000000",
+	        weight: 1,
+	        opacity: 1,
+	        fill: true,
+	        fillColor: "#ffff00",
+	        fillOpacity: 0.2,
+		interactive: false,
+		clickable: false,
+		});
+var Circle80m = new L.circle ([0,0], 		// Radio ampliado Covid alcance solo gyms 80m
+		{                  
+		radius: 80,
+	        stroke: true,
+	        color: "#000000",
+	        weight: 1,
+	        opacity: 1,
+	        fill: true,
+	        fillColor: "#ffff00",
+	        fillOpacity: 0.1,
+		interactive: false,
+		clickable: false,
+		});
+var CircleMJ = new L.CircleMarker([0,0],		// Circle jugador
+		{
+		radius: 6,
+		stroke: true,
+		color: "#000000",
+		weight: 2,
+		opacity: 1,
+		fill: true,
+		fillColor: "#FFFF00",
+		fillOpacity: 1,
+		draggable: true,
+		interactive: true, 
+		dragEnabled:true,
+		clickable: true,
+		});
 	  
 const map = L.map('map', {
   maxZoom: ZoomMax,
@@ -184,12 +232,12 @@ https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-
 const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
 }).addTo(map);
-// var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2o0OHZuY3MwMGo1cTMybGM4MTFrM2dxbCJ9.yCQe43DMRqobazKewlhi9w';
-// var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
-// const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1,maxZoom: ZoomMax}).addTo(map);
+//var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2o0OHZuY3MwMGo1cTMybGM4MTFrM2dxbCJ9.yCQe43DMRqobazKewlhi9w';
+//var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
+//const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1,maxZoom: ZoomMax}).addTo(map);
 	  
 const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
-    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,}).addTo(map);
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax }).addTo(map);
 	  
 ///////////////////////////////////////////////////////////////////
 // Controles
@@ -223,7 +271,83 @@ var overlayMaps =
  	};
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
+
+// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
+var controlSearch = new L.Control.Search
+  ({
+  position:'topleft',
+  layer: L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress, ]),
+  initial: false,
+  zoom: (ZoomMax-2),
+  marker: {
+	  icon: false,
+          circle: {
+                  radius: 30,
+	          stroke: true,
+	          color: "#000000",
+	          weight: 1,
+	          opacity: 1,
+	          fill: true,
+	          fillColor: "#00ff00",
+	          fillOpacity: 0.4,
+	          },
+          },
+  textPlaceholder: '...',
+  hideMarkerOnCollapse: true,
+  minLength: 2,
+  });
+  
+
+// Control boton simula jugador con su radio de alcance ///////////////////////////////////////
+var ButState = 0; // 1= activo 0 = inactivo	  
+var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
+	{
+	if (ButState == 0 )
+		{
+		ButState = 1;	//Activamos judador
+		var Loc = map.getCenter();
+		Circle40m.setLatLng(Loc);
+		Circle80m.setLatLng(Loc);
+    		CircleMJ.setLatLng(Loc);
+		Circle40m.addTo(map);
+		Circle80m.addTo(map);
+		CircleMJ.addTo(map);
+		}
+		else
+		{
+		ButState = 0; // Desactivamos jugador
+		Circle40m.removeFrom(map);
+		Circle80m.removeFrom(map);
+		CircleMJ.removeFrom(map);
+		};
+	});
 	  
+CircleMJ.on				// Funccion mover jugador en mapa.
+	({
+        mousedown: function ()
+		{
+          	map.dragging.disable();
+          	map.on('mousemove', function (e) 
+			{
+			CircleMJ.setLatLng(e.latlng);
+			Circle40m.setLatLng(e.latlng);
+			Circle80m.setLatLng(e.latlng);
+            		});
+          	}
+	}); 
+	  
+map.on('mouseup',function(e)		// Funcion soltar raton recuperamos movimiento mapa
+       {
+       map.dragging.enable();
+       map.removeEventListener('mousemove');
+       });
+	  
+//ButtonJDControl.bindTooltip( '<b>Alcance jugador 40m(+80m gyms)</b>' );
+map.addControl(ButtonJDControl);
+map.addControl(controlSearch);	  
+
+	  
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Visusalizacion de mapa segun zoom
 const updateTiles = () => {
@@ -316,6 +440,7 @@ var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
 	noClip: true,
 //	bubblingMouseEvents = false,
 	};
+	  
 var MarkerPoligonOptions14 = 		// Marker Poligono sombreado celda 14.
     	{
 	fillColor: "#FF0000",
@@ -336,10 +461,13 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 	Lon1 : 0,	    	// Longitud esquina superior izquierda
 	Lat2 : 0,		// Latitud esquina inferior derecha
 	Lon2 : 0,		// Longitud esquina inferior derecha
-	ContMark : 1		// Contador de markadores misma celda
+	ContMark : 1,		// Contador de markadores misma celda
+	ContGym : 0,		// Contador de gyms en Celda
 	};
+	  
 ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
 var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
+	  
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
 // var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
 var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
@@ -357,13 +485,14 @@ Tabletop.init(
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
 //		marker = new L.Marker(loc, {title: pokestop.nombre, icon: ipokestop} );
-		marker = new L.CircleMarker(loc, MCPokestopOptions ).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
+		marker = new L.CircleMarker(loc, MCPokestopOptions).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
+		marker.options.title= pokestop.nombre;
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,0);	//Contador de Pokeparadas en celda14
 		
 	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
@@ -378,14 +507,14 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(gim.latitude, gim.longitude);
-		marker = new L.Marker(loc, {icon: igym} ).bindTooltip( '<b>'+gim.nombre+'</b>' );;
+		marker = new L.Marker(loc, {icon: igym, title: gim.nombre,} ).bindTooltip( '<b>'+gim.nombre+'</b>' );;
 		marker.bindPopup("<h2><b style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
@@ -398,13 +527,13 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(gymex.latitude, gymex.longitude);
-		marker = new L.Marker(loc, {icon: igymex} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: igymex, title: gymex.nombre,} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
@@ -417,7 +546,7 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = [propuesta.latitude, propuesta.longitude];
-		marker = new L.Marker(loc, {icon: ipropuesta} ).bindTooltip( '<b>'+propuesta.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: ipropuesta, title: propuesta.nombre,} ).bindTooltip( '<b>'+propuesta.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
@@ -431,13 +560,13 @@ Tabletop.init(
 		{
 		contador++;
 		var loc = new L.latLng(aceptada.latitude, aceptada.longitude);
-		marker = new L.Marker( loc , {icon: iaceptada} ).bindTooltip( '<b>'+aceptada.nombre+'</b>' );
+		marker = new L.Marker( loc , {icon: iaceptada, title: aceptada.nombre,} ).bindTooltip( '<b>'+aceptada.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
 		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,0);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
@@ -450,7 +579,7 @@ Tabletop.init(
 		{
 		contador ++;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = [sugerencia.latitude, sugerencia.longitude];
-		marker = new L.Marker(loc, {icon: isugerencia} ).bindTooltip( '<b>'+sugerencia.nombre+'</b>' );
+		marker = new L.Marker(loc, {icon: isugerencia, title: sugerencia.nombre,} ).bindTooltip( '<b>'+sugerencia.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
@@ -465,8 +594,11 @@ Tabletop.init(
 		contador++;
 		var loc = new L.latLng(ingress.latitude, ingress.longitude);
 		
-		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Ingress);	// radio 20 metros
-		marker = new L.Marker(loc, {icon: iIngress} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
+		marker = new L.circle ( loc , MarkerCirclerOptions );
+		marker.options.title= "..";
+		marker.addTo(LG_Ingress);	// radio 20 metros
+		
+		marker = new L.Marker(loc, {icon: iIngress, title: ingress.nombre,} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
   " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + ingress.imagen + ");'></div></div></div>");
@@ -499,15 +631,16 @@ Tabletop.init(
 		{
     		let i = ListIndex[a];
 		let NumMark = ArrayMarkerNumCell14[i].ContMark;
+		let NumGyms = ArrayMarkerNumCell14[i].ContGym;
 		let TextMark = "";
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		let NumFalta = NumMark;
-		if ( NumMark > 1 ) 
+		if (( NumMark > 1 ) && (NumGyms > 0))
 			{
-			if ( NumMark < 6 ) 
+			if (( NumMark < 6 ) && ( NumGyms == 1))
 				{
 				NumFalta = 6 - NumMark;
-				} else if ( NumMark < 20 )
+				} else if (( NumMark < 20 ) && (NumGyms < 3))
 					{
 					NumFalta = 20 - NumMark;
 					} else { NumFalta = 0; };
@@ -558,12 +691,14 @@ Tabletop.init(
   wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
   debug: true
   });
+	  
+	  
 //////////////////////////////////////////////////////////////////////////////////////////////////////
   // Contar Pokeparadas y Gyms en celdas 14
   const MaxArray = 2048-1;  // Espacio para el array de celdas (1024 ,2048,4096,8192)
   const AndIndex = 2048-1;  //
   var ListIndex = [];   // Array de indices
-  function ContarPOGYC14(loc)
+  function ContarPOGYC14(loc,EsGym)
   	{
   	const cell = S2.S2Cell.FromLatLng(loc, 14);
   	const corners = cell.getCornerLatLngs();
@@ -572,12 +707,13 @@ Tabletop.init(
   	MarkerNumCell14.Lon1= corners[1].lng;
   	MarkerNumCell14.Lat2= corners[3].lat;
   	MarkerNumCell14.Lon2= corners[3].lng;
+	MarkerNumCell14.ContGym= EsGym;
   	var Nuevorepe=0;	// 1 = Nuevo o Repe
     	do
       		{
-        	if ( ArrayMarkerNumCell14[MarkIndex] == undefined )
+        	if ( ArrayMarkerNumCell14[MarkIndex] == undefined )		//Comprobamos si esta celda array ocupada.
           		{
-            		ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));
+            		ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));	//Celda array no ocupada
             		ListIndex[ContMarkerNumCell14]=MarkIndex;
             		ContMarkerNumCell14++;
             		Nuevorepe = 1;
@@ -587,6 +723,7 @@ Tabletop.init(
         			{
         			Nuevorepe=1;                     		//Celda repetida
         			ArrayMarkerNumCell14[MarkIndex].ContMark++	// Incrementamos contador de marcador en celda
+				ArrayMarkerNumCell14[MarkIndex].ContGym += EsGym;	//Contador de gyms en celda.
               			} else
               			{
               			MarkIndex= (MarkIndex+1) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
@@ -594,6 +731,7 @@ Tabletop.init(
           		};
       		} while (Nuevorepe == 0);
 	};
+	  
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Calcular el medio entre 2 puntos
 function midPoint(lat1,lon1,lat2,lon2)
@@ -684,6 +822,8 @@ const updateMapGrid = () => {
 		};
 	});
       };
+	  
+
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
 map.on('moveend', updateMapGrid);
