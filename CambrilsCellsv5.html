@@ -326,7 +326,8 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 	if (ButState == 0 )
 		{
 		ButState = 1;	//Activamos judador
-		LocBuCo = map.getCenter();
+		LocBuCo.lat = map.getCenter().lat;
+		LocBuCo.lng = map.getCenter().lng;
 		CircleMJ.setLatLng(map.getCenter());
 		Circle40m.setLatLng(map.getCenter());
 		Circle80m.setLatLng(map.getCenter());
@@ -355,7 +356,8 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.dragging.disable();
           	map.on('mousemove', function (e) 
 			{
-			LocBuCo = e.latlng;
+			LocBuCo.lat = e.latlng.lat;
+			LocBuCo.lng = e.latlng.lng;
 			Circle80m.setLatLng(e.latlng);
 			Circle40m.setLatLng(e.latlng);
 			CircleMJ.setLatLng(e.latlng);
@@ -371,7 +373,6 @@ map.on('mouseup',function(e)		// Funcion soltar raton recuperamos movimiento map
        map.removeEventListener('mousemove');
        });
 	  
-//ButtonJDControl.bindTooltip( '<b>Alcance jugador 40m(+80m gyms)</b>' );
 map.addControl(ButtonJDControl);
 map.addControl(controlSearch);	  
 
