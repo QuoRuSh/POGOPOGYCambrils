@@ -316,12 +316,12 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		{
 		ButState = 1;	//Activamos judador
 		let Loc = map.getCenter();
+		CircleMJ.setLatLng(Loc);
 		Circle40m.setLatLng(Loc);
 		Circle80m.setLatLng(Loc);
-    		CircleMJ.setLatLng(Loc);
 		let Loc1 = Loc;
 		Loc1.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
-		Label40m.setLatLng(Loc1);
+		Label40m.setLatLng(Loc1);	
 		Circle40m.addTo(map);
 		Circle80m.addTo(map);
 		CircleMJ.addTo(map);
@@ -656,7 +656,7 @@ Tabletop.init(
 		let TextMark = "";
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		let NumFalta = NumMark;
-		if (( NumMark > 1 ) && (NumGyms > 0))
+		if (( NumMark > 1 ) || (NumGyms > 0))
 			{
 			if (( NumMark < 6 ) && ( NumGyms == 1))
 				{
