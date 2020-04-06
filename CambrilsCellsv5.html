@@ -138,7 +138,7 @@
   		border: transparent;
   		box-shadow: none;
   		font-weight: bold;
-  		font-size: 10px;
+  		font-size: 12px;
 		color: #FFF;
  		text-shadow:  1px 1px #000 , -1px -1px #000 ;
 	        }
@@ -332,8 +332,8 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		let Loc1 = Loc;
 		Loc1.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 		Label40m.setLatLng(Loc1);	
-		Circle40m.addTo(map);
 		Circle80m.addTo(map);
+		Circle40m.addTo(map);
 		CircleMJ.addTo(map);
 		Label40m.addTo(map);
 		}
@@ -356,9 +356,9 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.on('mousemove', function (e) 
 			{
 			let Loc = e.latlng;
-			CircleMJ.setLatLng(Loc);
-			Circle40m.setLatLng(Loc);
 			Circle80m.setLatLng(Loc);
+			Circle40m.setLatLng(Loc);
+			CircleMJ.setLatLng(Loc);
 			let Loc1 = Loc;
 			Loc1.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 			Label40m.setLatLng(Loc1);	
