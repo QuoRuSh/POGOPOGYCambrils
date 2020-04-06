@@ -300,6 +300,8 @@ var controlSearch = new L.Control.Search
 
 // Control boton simula jugador con su radio de alcance ///////////////////////////////////////
 var ButState = 0; // 1= activo 0 = inactivo
+const Add40m = ((40/6378137) * (180/MAth.PI)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+const Add80m = ((80/6378137) * (180/MAth.PI)); //Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
 var Label40m = new L.polyline([0.0],
 			{
 			opacity: 0,
@@ -316,7 +318,7 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		Circle40m.setLatLng(Loc);
 		Circle80m.setLatLng(Loc);
     		CircleMJ.setLatLng(Loc);
-		Loc.Lat = Loc.lat + ((40/6378137) * (180/3.14159265359)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+		Loc.Lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 		Label40m.setLatLng(Loc);
 		Circle40m.addTo(map);
 		Circle80m.addTo(map);
@@ -345,7 +347,7 @@ CircleMJ.on				// Funccion mover jugador en mapa.
 			CircleMJ.setLatLng(Loc);
 			Circle40m.setLatLng(Loc);
 			Circle80m.setLatLng(Loc);
-			Loc.Lat = Loc.lat + ((40/6378137) * (180/3.14159265359)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+			Loc.Lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 			Label40m.setLatLng(Loc);		
             		});
           	}
@@ -378,6 +380,7 @@ const updateTiles = () => {
 			 				};
 			  };
 map.on('zoomend', updateTiles);
+	  
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ICONOS
 let ipokestop = L.ExtraMarkers.icon ({
@@ -751,17 +754,18 @@ Tabletop.init(
 // Calcular el medio entre 2 puntos
 function midPoint(lat1,lon1,lat2,lon2)
 	{
-	let dLon = (lon2 - lon1) * Math.PI / 180;
+	const PI180 = Math.PI / 180;
+	let dLon = (lon2 - lon1) * PI180;
 	//convert to radians
-	lat1 = lat1 * Math.PI / 180;
-	lat2 = lat2 * Math.PI / 180;
-	lon1 = lon1 * Math.PI / 180;
+	lat1 = lat1 * PI180;
+	lat2 = lat2 * PI180;
+	lon1 = lon1 * PI180;
 	let Bx = Math.cos(lat2) * Math.cos(dLon);
 	let By = Math.cos(lat2) * Math.sin(dLon);
 	let lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
 	let lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
-	return new L.latLng ((lat3 * 180 / Math.PI),(lon3 * 180 / Math.PI));  // Devolvemos valores a grados
-};
+	return new L.latLng ((lat3 * PI180),(lon3 * PI180));  // Devolvemos valores a grados
+	};
 	  
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Overlay the S2 cells
