@@ -316,7 +316,7 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		Circle40m.setLatLng(Loc);
 		Circle80m.setLatLng(Loc);
     		CircleMJ.setLatLng(Loc);
-		Loc.Lat = Loc.lat + ((40/6378137) * (180/Pi)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+		Loc.Lat = Loc.lat + ((40/6378137) * (180/3.14159265359)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 		Label40m.setLatLng(Loc);
 		Circle40m.addTo(map);
 		Circle80m.addTo(map);
@@ -345,7 +345,7 @@ CircleMJ.on				// Funccion mover jugador en mapa.
 			CircleMJ.setLatLng(Loc);
 			Circle40m.setLatLng(Loc);
 			Circle80m.setLatLng(Loc);
-			Loc.Lat = Loc.lat + ((40/6378137) * (180/Pi)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+			Loc.Lat = Loc.lat + ((40/6378137) * (180/3.14159265359)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 			Label40m.setLatLng(Loc);		
             		});
           	}
