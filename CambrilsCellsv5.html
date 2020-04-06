@@ -300,8 +300,8 @@ var controlSearch = new L.Control.Search
 
 // Control boton simula jugador con su radio de alcance ///////////////////////////////////////
 var ButState = 0; // 1= activo 0 = inactivo
-const Add40m = ((40/6378137) * (180/MAth.PI)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
-const Add80m = ((80/6378137) * (180/MAth.PI)); //Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
+var Add40m = ((40/6378137) * (180/Math.PI)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+var Add80m = ((80/6378137) * (180/Math.PI)); //Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
 var Label40m = new L.polyline([0.0],
 			{
 			opacity: 0,
@@ -311,6 +311,7 @@ var Label40m = new L.polyline([0.0],
 	  
 var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 	{
+	
 	if (ButState == 0 )
 		{
 		ButState = 1;	//Activamos judador
