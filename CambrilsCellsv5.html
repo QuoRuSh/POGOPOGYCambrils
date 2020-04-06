@@ -305,10 +305,10 @@ var Add80m = ((80/6378137) * (180/Math.PI)); //Sumamos 80 metros a latitude . 63
 var Label40m = new L.Circle([0.0],
 			{
 			radius: 1,
-			opacity: 0,
+			opacity: 1,
 			interactive: false, 
 			clickable: false,
-			}).bindTooltip( "40m", { direction: 'center', permanent: true, interactive: false , opacity: 0 , });
+			}).bindTooltip( "40m", { direction: 'center', permanent: true, interactive: false , opacity: 1 , });
 	  
 var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 	{
