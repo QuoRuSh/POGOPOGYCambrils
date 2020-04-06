@@ -321,7 +321,7 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		};
 	});
 	  
-CircleMJ.on
+CircleMJ.on				// Funccion mover jugador en mapa.
 	({
         mousedown: function ()
 		{
@@ -335,7 +335,7 @@ CircleMJ.on
           	}
 	}); 
 	  
-map.on('mouseup',function(e)
+map.on('mouseup',function(e)		// Funcion soltar raton recuperamos movimiento mapa
        {
        map.dragging.enable();
        map.removeEventListener('mousemove');
@@ -459,10 +459,13 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 	Lon1 : 0,	    	// Longitud esquina superior izquierda
 	Lat2 : 0,		// Latitud esquina inferior derecha
 	Lon2 : 0,		// Longitud esquina inferior derecha
-	ContMark : 1		// Contador de markadores misma celda
+	ContMark : 1,		// Contador de markadores misma celda
+	ContGym : 0,		// Contador de gyms en Celda
 	};
+	  
 ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
 var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
+	  
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
 // var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
 // var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
@@ -487,7 +490,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,0);	//Contador de Pokeparadas en celda14
 		
 	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
@@ -509,7 +512,7 @@ Tabletop.init(
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
@@ -528,7 +531,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
@@ -561,7 +564,7 @@ Tabletop.init(
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
 		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
-		ContarPOGYC14(loc);	//Contador de Pokeparadas en celda14
+		ContarPOGYC14(loc,0);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
@@ -626,15 +629,16 @@ Tabletop.init(
 		{
     		let i = ListIndex[a];
 		let NumMark = ArrayMarkerNumCell14[i].ContMark;
+		let NumGyms = ArrayMarkerNumCell14[i].ContGym;
 		let TextMark = "";
 		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
 		let NumFalta = NumMark;
-		if ( NumMark > 1 ) 
+		if (( NumMark > 1 ) && (NumGyms > 0))
 			{
-			if ( NumMark < 6 ) 
+			if (( NumMark < 6 ) && ( NumGyms == 1))
 				{
 				NumFalta = 6 - NumMark;
-				} else if ( NumMark < 20 )
+				} else if (( NumMark < 20 ) && (NumGyms < 3))
 					{
 					NumFalta = 20 - NumMark;
 					} else { NumFalta = 0; };
@@ -692,7 +696,7 @@ Tabletop.init(
   const MaxArray = 2048-1;  // Espacio para el array de celdas (1024 ,2048,4096,8192)
   const AndIndex = 2048-1;  //
   var ListIndex = [];   // Array de indices
-  function ContarPOGYC14(loc)
+  function ContarPOGYC14(loc,EsGym)
   	{
   	const cell = S2.S2Cell.FromLatLng(loc, 14);
   	const corners = cell.getCornerLatLngs();
@@ -701,12 +705,13 @@ Tabletop.init(
   	MarkerNumCell14.Lon1= corners[1].lng;
   	MarkerNumCell14.Lat2= corners[3].lat;
   	MarkerNumCell14.Lon2= corners[3].lng;
+	MarkerNumCell14.ContGym= EsGym;
   	var Nuevorepe=0;	// 1 = Nuevo o Repe
     	do
       		{
-        	if ( ArrayMarkerNumCell14[MarkIndex] == undefined )
+        	if ( ArrayMarkerNumCell14[MarkIndex] == undefined )		//Comprobamos si esta celda array ocupada.
           		{
-            		ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));
+            		ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));	//Celda array no ocupada
             		ListIndex[ContMarkerNumCell14]=MarkIndex;
             		ContMarkerNumCell14++;
             		Nuevorepe = 1;
@@ -716,6 +721,7 @@ Tabletop.init(
         			{
         			Nuevorepe=1;                     		//Celda repetida
         			ArrayMarkerNumCell14[MarkIndex].ContMark++	// Incrementamos contador de marcador en celda
+				ArrayMarkerNumCell14[MarkIndex].ContGym += EsGym;	//Contador de gyms en celda.
               			} else
               			{
               			MarkIndex= (MarkIndex+1) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
@@ -723,6 +729,7 @@ Tabletop.init(
           		};
       		} while (Nuevorepe == 0);
 	};
+	  
 ////////////////////////////////////////////////////////////////////////////////////////////////
 // Calcular el medio entre 2 puntos
 function midPoint(lat1,lon1,lat2,lon2)
