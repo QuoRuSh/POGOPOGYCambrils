@@ -315,7 +315,7 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 	if (ButState == 0 )
 		{
 		ButState = 1;	//Activamos judador
-		var Loc = map.getCenter();
+		let Loc = map.getCenter();
 		Circle40m.setLatLng(Loc);
 		Circle80m.setLatLng(Loc);
     		CircleMJ.setLatLng(Loc);
@@ -344,7 +344,7 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.dragging.disable();
           	map.on('mousemove', function (e) 
 			{
-			var Loc = e.latlng;
+			let Loc = e.latlng;
 			CircleMJ.setLatLng(Loc);
 			Circle40m.setLatLng(Loc);
 			Circle80m.setLatLng(Loc);
