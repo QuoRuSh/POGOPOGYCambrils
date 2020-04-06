@@ -299,7 +299,14 @@ var controlSearch = new L.Control.Search
   
 
 // Control boton simula jugador con su radio de alcance ///////////////////////////////////////
-var ButState = 0; // 1= activo 0 = inactivo	  
+var ButState = 0; // 1= activo 0 = inactivo
+var Label40m = new L.polyline([0.0],
+			{
+			opacity: 0,
+			interactive: false, 
+			clickable: false,
+			}).bindTooltip( "40m", { direction: 'center', permanent: true, interactive: false , opacity: 0 , });
+	  
 var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 	{
 	if (ButState == 0 )
@@ -309,9 +316,12 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		Circle40m.setLatLng(Loc);
 		Circle80m.setLatLng(Loc);
     		CircleMJ.setLatLng(Loc);
+		loc.Lat=loc.lat + ((40/6378137) * (180/Pi)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+		Label40m.setLatLng(Loc);
 		Circle40m.addTo(map);
 		Circle80m.addTo(map);
 		CircleMJ.addTo(map);
+		Label40m.addTo(map);
 		}
 		else
 		{
@@ -319,19 +329,10 @@ var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 		Circle40m.removeFrom(map);
 		Circle80m.removeFrom(map);
 		CircleMJ.removeFrom(map);
+		Label40m.removeFrom(map);
 		};
 	});
 
-Circle40m.bindTooltip( "40m", 
-	{
-	//className: ClsName40m,
-	direction: 'bottom', permanent: true, interactive: false , opacity: 1 ,
-	});
-Circle80m.bindTooltip( "80m", 
-	{
-	//className: ClsName40m,
-	direction: 'top', permanent: true, interactive: false , opacity: 1 ,
-	});
 	  
 CircleMJ.on				// Funccion mover jugador en mapa.
 	({
@@ -340,9 +341,12 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.dragging.disable();
           	map.on('mousemove', function (e) 
 			{
-			CircleMJ.setLatLng(e.latlng);
-			Circle40m.setLatLng(e.latlng);
-			Circle80m.setLatLng(e.latlng);
+			Loc = e.latlng:
+			CircleMJ.setLatLng(Loc);
+			Circle40m.setLatLng(Loc);
+			Circle80m.setLatLng(Loc);
+			loc.Lat=loc.lat + ((40/6378137) * (180/Pi)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+			Label40m.setLatLng(Loc);		
             		});
           	}
 	}); 
