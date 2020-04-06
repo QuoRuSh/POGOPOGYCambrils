@@ -302,8 +302,9 @@ var controlSearch = new L.Control.Search
 var ButState = 0; // 1= activo 0 = inactivo
 var Add40m = ((40/6378137) * (180/Math.PI)); //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
 var Add80m = ((80/6378137) * (180/Math.PI)); //Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
-var Label40m = new L.polyline([0.0],
+var Label40m = new L.Circle([0.0],
 			{
+			radius: 1,
 			opacity: 0,
 			interactive: false, 
 			clickable: false,
