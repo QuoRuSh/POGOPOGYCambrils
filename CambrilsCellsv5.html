@@ -319,18 +319,19 @@ var Label40m = new L.Circle([0.0],
 			interactive: false, 
 			clickable: false,
 			}).bindTooltip( "40m", { className: "Label_40m" , direction: 'center' , permanent: true , interactive: false , opacity: 1 , });
+var LocBuCo = new L.latLng (0,0);
 	  
 var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
 	{
 	if (ButState == 0 )
 		{
 		ButState = 1;	//Activamos judador
-		let Loc = map.getCenter();
+		LocBuCo = map.getCenter();
 		CircleMJ.setLatLng(map.getCenter());
 		Circle40m.setLatLng(map.getCenter());
 		Circle80m.setLatLng(map.getCenter());
-		Loc.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
-		Label40m.setLatLng(Loc);	
+		LocBuCo.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+		Label40m.setLatLng(LocBuCo);	
 		Circle80m.addTo(map);
 		Circle40m.addTo(map);
 		CircleMJ.addTo(map);
@@ -354,12 +355,12 @@ CircleMJ.on				// Funccion mover jugador en mapa.
           	map.dragging.disable();
           	map.on('mousemove', function (e) 
 			{
-			let Loc = e.latlng;
+			LocBuCo = e.latlng;
 			Circle80m.setLatLng(e.latlng);
 			Circle40m.setLatLng(e.latlng);
 			CircleMJ.setLatLng(e.latlng);
-			Loc.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
-			Label40m.setLatLng(Loc);	
+			LocBuCo.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+			Label40m.setLatLng(LocBuCo);	
             		});
           	}
 	}); 
