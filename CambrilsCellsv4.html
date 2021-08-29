@@ -518,12 +518,13 @@ var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
 // var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
 // var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
-var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
+// var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
 Tabletop.init(
   {
-  key: code,
-  callback: function(sheet, tabletop)
-	{
+    key: 'https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pubhtml',
+    simpleSheet: true,
+    callback: function(sheet, tabletop)
+  	{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
