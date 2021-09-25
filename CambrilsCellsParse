@@ -49,8 +49,11 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     <!-- script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script -->
 
-<!-- TABLETOP --
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.6.3/tabletop.min.js'></script>
+<!-- TABLETOP -->
+    <!-- script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.6.3/tabletop.min.js'></script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js" integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.js" integrity="sha512-YxkN22rlXL1kQXIh4Py4u7O6BrxxuR0yKcnT3myFJGdibXfoSHPFBs9ap8Xowi25YRwHv38DoLf2T6nAc5w/Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
+
 <!-- LEAFLET EXTRA MARKERS -->
 <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.2.1/dist/js/leaflet.extra-markers.min.js" integrity="sha256-nm8fKiOVLndTf7KD5YEPuMSb0kv9IH7fDyZ+zlF8s/0=" crossorigin="anonymous"></script>
 <!-- link rel="stylesheet" href="https://github.com/coryasilva/Leaflet.ExtraMarkers/blob/master/src/assets/css/leaflet.extra-markers.css" -->
@@ -515,13 +518,20 @@ var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 // var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
 // var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
 // var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
-var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
+// var code = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"	// Key Code Excel datos Cambrils
 //   var tabletop;  
-Tabletop.init(
-  {
-  key: code,
-  callback: function(sheet, tabletop)
-	{
+// Tabletop.init(
+//  {
+//  key: code,
+//  callback: function(sheet, tabletop)
+    Papa.parse('https://docs.google.com/spreadsheets/d/e/2PACX-1vTGTwJS0C_yq_CHsLpakRMQ7k5WWK1YfxEXqupGOgvpFUWl03ZjtFP-sFYJs52JdthGZ0doXhA9YL_y/pub?output=csv', {
+          download: true,
+          header: true,
+          complete: function(results) {
+            var tabletop = results.data
+//            console.log(data)
+//            setCollections(data)
+//	{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
