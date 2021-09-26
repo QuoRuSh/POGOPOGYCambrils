@@ -751,7 +751,7 @@ function ReadGoogleSheet ( Key , Gid )
    Papa.parse( UrlSheet , { download: true, 
 				   header: true, 
 				   complete: function(results) { 
-					                        Tabla = results.data; 
+					                        this.Tabla = results.data; 
 				                                 } 
 				  });
    return Tabla;
