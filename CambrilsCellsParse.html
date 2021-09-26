@@ -748,7 +748,12 @@ function ReadGoogleSheet ( Key , Gid )
    {
    var Tabla;
    let UrlSheet = "https://docs.google.com/spreadsheets/d/"+ Key +"/pub?gid="+ Gid +"&single=true&output=csv";
-   Tabla = Papa.parse( UrlSheet , { download: true, header: true, complete: function(results) { return results.data; } });
+   Papa.parse( UrlSheet , { download: true, 
+				   header: true, 
+				   complete: function(results) { 
+					                        Tabla = results.data; 
+				                                 } 
+				  });
    return Tabla;
    };
 	      
