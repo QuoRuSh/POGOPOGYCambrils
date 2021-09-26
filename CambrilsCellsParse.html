@@ -522,9 +522,11 @@ var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 /////////////////////////////////////////////////////////////////////////////////////////////////
 var KeySheet = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss";	// Key Code Excel datos Cambrils
 var GidSheet = ["0","2141075471","738675477","1343097660","708344939","1023025232","1602307742"];  // pokestops , gym , gymex , Aceptadas , Propuesta , Ingres , Sugerencia , 
-
+PutMapMarkers();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function PutMapMarkers () 
+	{
         tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
@@ -734,10 +736,10 @@ var GidSheet = ["0","2141075471","738675477","1343097660","708344939","102302523
 		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
 		};
 	ControlLayer.addOverlay(LG_FaltanGym,"Falta Para Gym");	// (<b>"+ ContadorFaltan + "</b>)");
-	},
-  wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
-  debug: true
-  });
+	};
+//  wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
+//  debug: true
+//  });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Leer Pagina Hoja excel 
