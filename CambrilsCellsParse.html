@@ -527,7 +527,7 @@ PutMapMarkers();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function PutMapMarkers () 
 	{
-        tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
+        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
@@ -746,10 +746,10 @@ function PutMapMarkers ()
 
 function ReadGoogleSheet ( Key , Gid )
    {
-   var Tabla;
+  // var Tabla;
    let UrlSheet = "https://docs.google.com/spreadsheets/d/"+ Key +"/pub?gid="+ Gid +"&single=true&output=csv";
-   Papa.parse( UrlSheet , { download: true, header: true, complete: function(results) { Tabla = results.data; } });
-   return Tabla;
+   return new Papa.parse( UrlSheet , { download: true, header: true, complete: function(results) { return results.data; } });
+//   return Tabla;
    };
 	      
 //////////////////////////////////////////////////////////////////////////////////////////////////////
