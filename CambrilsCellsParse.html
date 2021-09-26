@@ -747,7 +747,7 @@ function PutMapMarkers ()
 function ReadGoogleSheet ( Key , Gid )
    {
    let UrlSheet = "https://docs.google.com/spreadsheets/d/"+ Key +"/pub?gid="+ Gid +"&single=true&output=csv";
-   Papa.parse( UrlSheet , { download: true, header: true, complete: function(results) });
+   Papa.parse( UrlSheet , { download: true, header: true, complete: function(results) {} });
    return new results.data;
    };
 	      
