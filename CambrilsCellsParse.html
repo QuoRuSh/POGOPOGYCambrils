@@ -746,15 +746,15 @@ function PutMapMarkers ()
 
 function ReadGoogleSheet ( Key , Gid )
    {
-   var Tabla;
-   let UrlSheet = "https://docs.google.com/spreadsheets/d/"+ Key +"/pub?gid="+ Gid +"&single=true&output=csv";
+   var RSheet;
+//   let UrlSheet = "https://docs.google.com/spreadsheets/d/"+ Key +"/pub?gid="+ Gid +"&single=true&output=csv";
    Papa.parse( "https://docs.google.com/spreadsheets/d/"+ Key +"/pub?gid="+ Gid +"&single=true&output=csv" , { download: true, 
 				   header: true, 
 				   complete: function(results) { 
-					                        Tabla = results.data; 
+					                        RSheet = results.data; 
 				                                } 
 				  });
-   return Tabla;
+   return Rsheet;
    };
 	      
 //////////////////////////////////////////////////////////////////////////////////////////////////////
