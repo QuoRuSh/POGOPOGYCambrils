@@ -537,7 +537,7 @@ function PutMapMarkers ()
 //				   complete: function(results) { 
 //					                        tabletop = results.data; 
 //				                                } 
-				  });
+				  }).data;
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
