@@ -529,7 +529,7 @@ function PutMapMarkers ()
 	{
 //        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
    var tabletop ;
-   var Gid = GitSheet[0];
+   var Gid = GidSheet[0];
    let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ KeySheet +'/pub?gid='+ Gid +'&single=true&output=csv';
    Papa.parse( UrlSheet , { download: true, 
 				   header: true, 
