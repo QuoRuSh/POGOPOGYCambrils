@@ -531,7 +531,7 @@ function PutMapMarkers ()
 //   var tabletop ;
    var Gid = GidSheet[0];
    let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ KeySheet +'/pub?gid='+ Gid +'&output=csv';
-   $.getJSON(url1, function(data) {
+   $.getJSON(UrlSheet, function(data) {
   
            console.log(data.values);
 
