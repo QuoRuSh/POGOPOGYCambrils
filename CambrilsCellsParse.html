@@ -527,7 +527,16 @@ PutMapMarkers();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function PutMapMarkers () 
 	{
-        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
+//        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
+   var tabletop ;
+   var Gid = GitSheet[0];
+   let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ KeySheet +'/pub?gid='+ Gid +'&single=true&output=csv';
+   Papa.parse( UrlSheet , { download: true, 
+				   header: true, 
+				   complete: function(results) { 
+					                        tabletop = results.data; 
+				                                } 
+				  });
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
