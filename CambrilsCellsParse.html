@@ -531,16 +531,12 @@ function PutMapMarkers ()
 //   var tabletop ;
    var Gid = GidSheet[0];
    let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ KeySheet +'/pub?gid='+ Gid +'&output=csv';
-   $.getJSON(UrlSheet, function(data) {
-  
-           console.log(data.values);
 
-               });
-   var tabletop = Papa.parse( "https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pub?gid=0&output=csv" , { download: true, 
+   var tabletop = Papa.parse( 'https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pub?gid=0&output=csv' , { download: true, 
                                        header: true,
 	          complete: function(results) {
                                               var data = results.data;
-                                              console.log(data)	
+                                              console.log(data)	;
 		  }
 //				   complete: function(results) { 
 //					                        tabletop = results.data; 
