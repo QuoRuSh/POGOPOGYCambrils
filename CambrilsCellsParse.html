@@ -536,8 +536,10 @@ function PutMapMarkers ()
 		
 
    var tabletop ;
-   Papa.parse( 'https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pub?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc&gid=0&output=csv' , 
-	          {
+ //  Papa.parse( 'https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pub?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc&gid=0&output=csv' , 
+   Papa.parse( 'https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pub?gid=0&output=csv' , 
+
+	      {
 	          download: true, 
                   header: true,
 	          complete: function(results) {
