@@ -538,8 +538,9 @@ function PutMapMarkers ()
 //	
    var url1 = "https://docs.google.com/spreadsheets/d/"+KeySheet+"/gviz/tq?tqx=out:json&gid="+GidSheet[0];
 
-   var tabletop = fetch(url1);
-   tabletop = substr(tabletop, 47,-2);
+   var tabletop;
+   fetch(url1).then((tabletop) => tabletop.json());
+//   tabletop = substr(tabletop, 47,-2);
 			
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
