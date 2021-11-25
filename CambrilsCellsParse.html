@@ -539,7 +539,7 @@ function PutMapMarkers ()
    var url1 = "https://docs.google.com/spreadsheets/d/"+KeySheet+"/gviz/tq?tqx=out:json&gid="+GidSheet[0];
 
    var tabletop;
-   fetch(url1).then((tabletop) => tabletop.json());
+   fetch(url1).then(function(data){ tabletop => data.json()});
 //   tabletop = substr(tabletop, 47,-2);
 			
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
