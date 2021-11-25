@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
 
     <title>Cambrils Cells</title>
-    <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
+//    <meta http-equiv="Permissions-Policy" content="interest-cohort=()"></meta>
 //    Permissions-Policy: interest-cohort=()
     <!-- title>Vilafranca del Penedes Cells</title --> 
     <!-- title>Hospitalet Miami Montroig Cells</title -->
@@ -53,8 +53,7 @@
 
 <!-- TABLETOP -->
     <!-- script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.6.3/tabletop.min.js'></script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js" integrity="sha512-EbdJQSugx0nVWrtyK3JdQQ/03mS3Q1UiAhRtErbwl1YL/+e2hZdlIcSURxxh7WXHTzn83sjlh2rysACoJGfb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.js" integrity="sha512-YxkN22rlXL1kQXIh4Py4u7O6BrxxuR0yKcnT3myFJGdibXfoSHPFBs9ap8Xowi25YRwHv38DoLf2T6nAc5w/Cw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
+    <script src="https://cdn.jsdelivr.net/gh/datasketch/gsheetreader@2/dist/gsheetreader.umd.js"></script>
 
 <!-- LEAFLET EXTRA MARKERS -->
 <script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.2.1/dist/js/leaflet.extra-markers.min.js" integrity="sha256-nm8fKiOVLndTf7KD5YEPuMSb0kv9IH7fDyZ+zlF8s/0=" crossorigin="anonymous"></script>
@@ -531,28 +530,16 @@ function PutMapMarkers ()
 	{
 //        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
 //   var tabletop ;
-   var Gid = GidSheet[0];
-   let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ KeySheet +'/pub?gid='+ Gid +'&output=csv';
+//   var Gid = GidSheet[0];
+//   let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ KeySheet +'/pub?gid='+ Gid +'&output=csv';
 		
 
-   var tabletop ;
- //  Papa.parse( 'https://docs.google.com/spreadsheets/d/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pub?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc&gid=0&output=csv' , 
-  Papa.parse( 'https: //sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc&output=csv' , 
-
-	      {
-	          download: true, 
-                  header: true,
-	          complete: function(results) {
-                                              tabletop = results.data;
-            //                                  console.log(data)	;
-		                              }
-   });
+   
 //	
-           var url1 = "https: //sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc";
-
-           $.getJSON(url1, function(data) 
-		     { tabletop = data.values ; });
-  
+   var url1 = "https: //sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc";
+   const Readtabletop = new GSheetReader();
+   var tabletop = ReadTabletop.getJSON(id);
+ 
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
