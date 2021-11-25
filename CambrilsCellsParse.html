@@ -538,7 +538,7 @@ function PutMapMarkers ()
 //	
    var url1 = "https: //sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/?key=AIzaSyD9xO8rhrGld4NnBGPT8U5TjjEzIrcmsqc";
    const Readtabletop = new GSheetReader();
-   var tabletop = Readtabletop.getJSON(KeySheet).then(console.log);
+   var tabletop = Readtabletop.getJSON(KeySheet , 2).then(console.log);
  
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
