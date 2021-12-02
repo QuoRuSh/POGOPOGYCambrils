@@ -539,8 +539,8 @@ function PutMapMarkers ()
 //   var url1 = "https://docs.google.com/spreadsheets/d/"+KeySheet+"/gviz/tq?tqx=out:json&gid="+GidSheet[0];
    var url1 = "https://opensheet.vercel.app/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pokestop";
    var tabletop;
-   var Response = fetch(url1).then ( 
-	            resp => resp.json()).then( 
+   var Response = await fetch(url1).then ( 
+	            resp => await resp.json()).then( 
 	                                      data => { tabletop = data }
                     );
 //	            function(data){ 
