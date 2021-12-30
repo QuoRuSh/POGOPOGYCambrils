@@ -540,7 +540,7 @@ function PutMapMarkers ()
    var url1 = "https://opensheet.elk.sh/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pokestop";
    var tabletop;
    var Response = fetch(url1).then ( 
-	            resp => await resp.json()).then( 
+	            resp =>  resp.json()).then( 
 	                                      data => { tabletop = data }
                     );
 //	            function(data){ 
