@@ -526,6 +526,11 @@ var GidSheet = ["0","2141075471","738675477","1343097660","708344939","102302523
 PutMapMarkers();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const fetchP = async (url) => {
+       let response = await fetch(url)
+       let data = await response.json()
+       return data
+    };
 function PutMapMarkers () 
 	{
 //        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
@@ -540,12 +545,8 @@ function PutMapMarkers ()
    var url1 = "https://opensheet.elk.sh/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pokestop";
 //   var tabletop;
 		
-    const fetchP = async () => {
-       let response = await fetch(url1)
-       let data = await response.json()
-       return data
-    };
-   var tabletop = await fetchP();
+
+   var tabletop = await fetchP(url1);
    
    
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
