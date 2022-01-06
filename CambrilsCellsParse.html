@@ -527,9 +527,10 @@ PutMapMarkers();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 async function fetchP(url) {
-       let response = await fetch(url);
-       let data = await response.json();
-       return data
+//       let response = await fetch(url);
+//       let data = await response.json();
+//       return data
+	return (await fetch(url)).json();
     };
 function PutMapMarkers () 
 	{
@@ -547,8 +548,8 @@ function PutMapMarkers ()
 		
 
    var tabletop = fetchP(url1);
-   
-   
+   for (let c=0 ; c < 50000 ; c++);
+	
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
