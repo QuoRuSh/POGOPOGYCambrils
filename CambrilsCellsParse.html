@@ -543,12 +543,15 @@ function PutMapMarkers ()
    
 //	
 //   var url1 = "https://docs.google.com/spreadsheets/d/"+KeySheet+"/gviz/tq?tqx=out:json&gid="+GidSheet[0];
-   var url1 = "https://opensheet.elk.sh/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/pokestop";
+   var url1 = "https://opensheet.elk.sh/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/1";
 //   var tabletop;
 		
-
-   var tabletop = fetchP(url1);
-   for (let c=0 ; c < 500000000 ; c++);
+	fetch(url1).then((res) => res.json()).then((data) => {data.forEach((row) => {
+      // Do something with each row here.
+    });
+  });
+   //var tabletop = fetch(url1);
+   //for (let c=0 ; c < 500000000 ; c++);
 	
 	let contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
