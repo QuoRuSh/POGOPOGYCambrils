@@ -546,12 +546,12 @@ function PutMapMarkers ()
    var url1 = "https://opensheet.elk.sh/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/1";
 //   var tabletop;
 		
-	fetch(url1)
-		.then((res) => res.json())
-		.then((data) => {data.forEach((row) => { 
-		// Do something with each row here. 
-	        });
-                });
+var tabletop = await ( await fetch( utl1 ) ).json();
+	      
+ //       `https://sheets.googleapis.com/v4/spreadsheets/${id}?key=${GOOGLE_API_KEY}`
+
+   
+
    //var tabletop = fetch(url1);
    //for (let c=0 ; c < 500000000 ; c++);
 	
