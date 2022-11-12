@@ -526,13 +526,13 @@ var GidSheet = ["0","2141075471","738675477","1343097660","708344939","102302523
 PutMapMarkers();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-async function fetchP(url) {
+//async function fetchP(url) {
 //       let response = await fetch(url);
 //       let data = await response.json();
 //       return data
-	return (await fetch(url)).json();
-    };
-function PutMapMarkers () 
+//	return (await fetch(url)).json();
+//    };
+async function PutMapMarkers () 
 	{
 //        var tabletop = ReadGoogleSheet ( KeySheet , GidSheet[0]);
 //   var tabletop ;
@@ -543,10 +543,10 @@ function PutMapMarkers ()
    
 //	
 //   var url1 = "https://docs.google.com/spreadsheets/d/"+KeySheet+"/gviz/tq?tqx=out:json&gid="+GidSheet[0];
-   var url1 = "https://opensheet.elk.sh/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/1";
+   var url1 = "https://sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/values/pokestop?key=AIzaSyDEX5pO8FhHLzn52h9Ben0UiLWIFOEjOr8";
 //   var tabletop;
 		
-var tabletop = await ( await fetch( url1 ) ).json();
+var tabletop = await ( await fetch( url1 ).json());
 	      
  //       `https://sheets.googleapis.com/v4/spreadsheets/${id}?key=${GOOGLE_API_KEY}`
 
