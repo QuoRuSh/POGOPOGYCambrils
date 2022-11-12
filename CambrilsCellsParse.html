@@ -538,7 +538,7 @@ async function PutMapMarkers ()
         var url1 = "https://sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/values/pokestop?key=AIzaSyDEX5pO8FhHLzn52h9Ben0UiLWIFOEjOr8";
 		
         var tabletop = await ( await fetch( url1 )).json();
-	var rawRows = result.values || [];
+	var rawRows = tableyop.values || [];
         var headers = rawRows.shift();
 	      
 	let contador = 0;		// Para saber en que linea de la hoja de datos se encuentra el marcador
