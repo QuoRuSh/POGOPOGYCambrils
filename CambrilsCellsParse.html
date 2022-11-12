@@ -542,10 +542,10 @@ PutMapMarkers();
 	  
 async function PutMapMarkers () 
 	{
-        var url1 = "https://sheets."+GoAp+"is.com/v4/" + SpSh + "eets/" + Identificador + "/values/pokestop?key="+ KUno + KDos;
+        var url1 = "https://sheets." + GoAp + "is.com/v4/" + SpSh + "eets/" + Identificador + "/values/pokestop?key="+ KUno + KDos;
 		
-        var DatosHoja = await ( await fetch( url1 )).json();
-	var rawRows = DatosHoja.values || [];
+        var DataHoja = await ( await fetch( url1 )).json();
+	var rawRows = DataHoja.values || [];
         var headers = rawRows.shift();
 	const tabletop = [];
 	rawRows.forEach((row) => {
