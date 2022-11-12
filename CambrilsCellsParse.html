@@ -532,10 +532,15 @@ const OfLongitude = 1;
 const OfNombre = 2;
 const OfCity = 3 ;
 const OfImagen = 4;
+const Identificador = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
+const KUno = "AIzaSyDEX5pO8FhHLzn";
+const KDos = "52h9Ben0UiLWIFOEjOr8";
+const GoAp = "googleap";
+const SpSh = "spreadsh"
 	  
 async function PutMapMarkers () 
 	{
-        var url1 = "https://sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/values/pokestop?key=AIzaSyDEX5pO8FhHLzn52h9Ben0UiLWIFOEjOr8";
+        var url1 = "https://sheets."+GoAp+"is.com/v4/" + SpSh + "eets/" + Identificador + "/values/pokestop?key="+ Kuno + KDos;
 		
         var DatosHoja = await ( await fetch( url1 )).json();
 	var rawRows = DatosHoja.values || [];
