@@ -546,7 +546,7 @@ async function PutMapMarkers ()
    var url1 = "https://sheets.googleapis.com/v4/spreadsheets/1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss/values/pokestop?key=AIzaSyDEX5pO8FhHLzn52h9Ben0UiLWIFOEjOr8";
 //   var tabletop;
 		
-var tabletop = await ( await fetch( url1 ).json());
+var tabletop = await ( await fetch( url1 )).json();
 	      
  //       `https://sheets.googleapis.com/v4/spreadsheets/${id}?key=${GOOGLE_API_KEY}`
 
