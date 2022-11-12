@@ -540,6 +540,14 @@ async function PutMapMarkers ()
         var tabletop = await ( await fetch( url1 )).json();
 	var rawRows = tabletop.values || [];
         var headers = rawRows.shift();
+	const rows = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		rows.push(rowData);
+  		});
 	      
 	let contador = 0;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	// while ( contador < tabletop.length )
