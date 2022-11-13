@@ -557,8 +557,8 @@ async function PutMapMarkers ()
   		});
 	      
 	let contador = 0;		// Para saber en que linea de la hoja de datos se encuentra el marcador
-	// while ( contador < tabletop.length )
-	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
+	tabletop.forEach( pokestop =>  
+//	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
@@ -770,21 +770,6 @@ async function PutMapMarkers ()
 //  debug: true
 //  });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////
-// Leer Pagina Hoja excel 
-
-function ReadGoogleSheet ( Key , Gid )
-   {
-   var RSheet;
-   let UrlSheet = 'https://docs.google.com/spreadsheets/d/'+ Key +'/pub?gid='+ Gid +'&single=true&output=csv';
-   Papa.parse( UrlSheet , { download: true, 
-				   header: true, 
-				   complete: function(results) { 
-					                        RSheet = results.data; 
-				                                } 
-				  });
-   return Rsheet;
-   };
 	      
 //////////////////////////////////////////////////////////////////////////////////////////////////////
   // Contar Pokeparadas y Gyms en celdas 14
