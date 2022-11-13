@@ -531,7 +531,7 @@ const OfImagen = 4;
 const Identificador = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss";
 const KUno = "AIzaSyDEX5pO8FhHLzn";
 const KDos = "52h9Ben0UiLWIFOEjOr8";
-const GoAp = "googleap";
+const GoAp = "ets.googleap";
 const SpSh = "spreadsh";
 	  
 PutMapMarkers();
@@ -542,9 +542,10 @@ PutMapMarkers();
 	  
 async function PutMapMarkers () 
 	{
-        var url1 = "https://sheets." + GoAp + "is.com/v4/" + SpSh + "eets/" + Identificador + "/values/pokestop?key="+ KUno + KDos;
+        var urlSheet = "https://she" + GoAp + "is.com/v4/" + SpSh + "eets/" + Identificador + "/values/";
+	var urlKay = "?key="+ KUno + KDos;
 		
-        var DataHoja = await ( await fetch( url1 )).json();
+        var DataHoja = await ( await fetch( urlSheet + "pokestop" + urlKay )).json();
 	var rawRows = DataHoja.values || [];
         var headers = rawRows.shift();
 	const tabletop = [];
@@ -577,18 +578,33 @@ async function PutMapMarkers ()
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
 	
-	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador-1) + "</b>)");
-	contador=0;
+	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador) + "</b>)");
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	$.each( tabletop.sheets("gym").all(), function(i, gim)		               // Marcadores Gimnsasios
+
+        DataHoja = await ( await fetch( urlSheet + "gym" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( gym =>  
+//	$.each( tabletop.sheets("gym").all(), function(i, gim)		               // Marcadores Gimnsasios
 		{
 		contador++;
-		var loc = new L.latLng(gim.latitude, gim.longitude);
-		marker = new L.Marker(loc, {icon: igym, title: gim.nombre,} ).bindTooltip( '<b>'+gim.nombre+'</b>' );;
-		marker.bindPopup("<h2><b style='color: #ff8800'>" + gim.nombre + "<br>" + "</h2>" + gim.city + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +gim.latitude+","+gim.longitude+ "'>" + gim.latitude +", "+ gim.longitude + "</a></h3>" +
-  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gim.imagen + ");'></div></div></div>");
+		var loc = new L.latLng(gym.latitude, gym.longitude);
+		marker = new L.Marker(loc, {icon: igym, title: gym.nombre,} ).bindTooltip( '<b>'+gym.nombre+'</b>' );;
+		marker.bindPopup("<h2><b style='color: #ff8800'>" + gym.nombre + "<br>" + "</h2>" + gym.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gym.latitude+","+gym.longitude+ "'>" + gym.latitude +", "+ gym.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gym.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
 		
@@ -598,9 +614,24 @@ async function PutMapMarkers ()
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
 	ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
-	contador=0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "gymex" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( gymex =>  
+
 	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		     // Marcadores Gimnasios EX
 		{
 		contador++;
@@ -617,10 +648,26 @@ async function PutMapMarkers ()
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
 	ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
-	contador=0;
+
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		  // Marcadores Pedidos
+
+        DataHoja = await ( await fetch( urlSheet + "Propuesta" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( propuesta =>  
+
+//	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		  // Marcadores Pedidos
 		{
 		contador++;
 		var loc = [propuesta.latitude, propuesta.longitude];
@@ -631,10 +678,24 @@ async function PutMapMarkers ()
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
 		});
 	ControlLayer.addOverlay(LG_propuestas,"Pedidas (<b>"+ (contador) + "</b>)");
-		
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "Aceptadas" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
 	contador=0;
-	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)	        // Marcadores Aceptadas
+
+	tabletop.forEach( aceptada =>  
+//	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)	        // Marcadores Aceptadas
 		{
 		contador++;
 		var loc = new L.latLng(aceptada.latitude, aceptada.longitude);
@@ -652,8 +713,22 @@ async function PutMapMarkers ()
 	ControlLayer.addOverlay(LG_aceptadas,"Aceptadas (<b>"+ (contador) + "</b>)");
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	contador = 1;		// Para saber en que linea de la hoja de datos se encuentra el marcador
-	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)         // Marcadores SSugerencias
+
+        DataHoja = await ( await fetch( urlSheet + "Sugerencia" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( sugerencia =>  
+//	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)         // Marcadores SSugerencias
 		{
 		contador ++;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = [sugerencia.latitude, sugerencia.longitude];
@@ -663,11 +738,25 @@ async function PutMapMarkers ()
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
   		});
-	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias (<b>"+ (contador-1) + "</b>)");
+	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias (<b>"+ (contador) + "</b>)");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	contador = 0;
-	$.each( tabletop.sheets("Ingress").all(), function(i, ingress)	         // Marcadores Portales ingress
+
+        DataHoja = await ( await fetch( urlSheet + "Ingress" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( ingress =>  
+//	$.each( tabletop.sheets("Ingress").all(), function(i, ingress)	         // Marcadores Portales ingress
 		{
 		contador++;
 		var loc = new L.latLng(ingress.latitude, ingress.longitude);
