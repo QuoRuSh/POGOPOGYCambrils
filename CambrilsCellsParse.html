@@ -631,8 +631,7 @@ async function PutMapMarkers ()
 	contador=0;
 
 	tabletop.forEach( gymex =>  
-
-	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		     // Marcadores Gimnasios EX
+//	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		     // Marcadores Gimnasios EX
 		{
 		contador++;
 		var loc = new L.latLng(gymex.latitude, gymex.longitude);
@@ -666,7 +665,6 @@ async function PutMapMarkers ()
 	contador=0;
 
 	tabletop.forEach( propuesta =>  
-
 //	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		  // Marcadores Pedidos
 		{
 		contador++;
