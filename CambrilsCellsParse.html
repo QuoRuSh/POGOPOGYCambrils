@@ -586,7 +586,7 @@ async function PutMapMarkers ()
         DataHoja = await ( await fetch( urlSheet + "gym" + urlKay )).json();
 	rawRows = DataHoja.values || [];
         headers = rawRows.shift();
-	const tabletop = [];
+	tabletop.length = 0;
 	rawRows.forEach((row) => {
     			const rowData = {};
     			row.forEach((item, index) => {
@@ -620,7 +620,7 @@ async function PutMapMarkers ()
         DataHoja = await ( await fetch( urlSheet + "gymex" + urlKay )).json();
 	rawRows = DataHoja.values || [];
         headers = rawRows.shift();
-	const tabletop = [];
+	tabletop.length = 0;
 	rawRows.forEach((row) => {
     			const rowData = {};
     			row.forEach((item, index) => {
@@ -654,7 +654,7 @@ async function PutMapMarkers ()
         DataHoja = await ( await fetch( urlSheet + "Propuesta" + urlKay )).json();
 	rawRows = DataHoja.values || [];
         headers = rawRows.shift();
-	const tabletop = [];
+	tabletop.length = 0;
 	rawRows.forEach((row) => {
     			const rowData = {};
     			row.forEach((item, index) => {
@@ -682,7 +682,7 @@ async function PutMapMarkers ()
         DataHoja = await ( await fetch( urlSheet + "Aceptadas" + urlKay )).json();
 	rawRows = DataHoja.values || [];
         headers = rawRows.shift();
-	const tabletop = [];
+	tabletop.length = 0;
 	rawRows.forEach((row) => {
     			const rowData = {};
     			row.forEach((item, index) => {
@@ -715,7 +715,7 @@ async function PutMapMarkers ()
         DataHoja = await ( await fetch( urlSheet + "Sugerencia" + urlKay )).json();
 	rawRows = DataHoja.values || [];
         headers = rawRows.shift();
-	const tabletop = [];
+	tabletop.length = 0;
 	rawRows.forEach((row) => {
     			const rowData = {};
     			row.forEach((item, index) => {
@@ -743,7 +743,7 @@ async function PutMapMarkers ()
         DataHoja = await ( await fetch( urlSheet + "Ingress" + urlKay )).json();
 	rawRows = DataHoja.values || [];
         headers = rawRows.shift();
-	const tabletop = [];
+	tabletop.length = 0;
 	rawRows.forEach((row) => {
     			const rowData = {};
     			row.forEach((item, index) => {
