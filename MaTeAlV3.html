@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Cambrils Cells</title>
+
+    <!-- title>Vilafranca del Penedes Cells</title --> 
+    <!-- title>Hospitalet Miami Montroig Cells</title -->
+    <!-- title>Masnou Teia Alella Cells</title -->
+
+    <link rel="apple-touch-icon" href="./icons/pokestop_top.png">
+    <link rel="shortcut icon" href="./icons/pokestop_top.png">
+    <link rel="icon" type="image/png" href="./icons/pokestop_top.png" sizes="192x192">
+	  
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fafafa" />
+
+<!-- S2 GEOMETRY -->
+    <script src="https://unpkg.com/s2-geometry@1.2.10" crossorigin></script>
+<!-- script src="https://unpkg.com/s2-geometry@1.2.9/src/s2geometry.js"
+    integrity="sha384-WGDofm6Km+bZIxd/uBU2QJlwIMxX/9H5H7G9glfYtcAAR8vrm0wbzvtpIG54XhOZ"
+    crossorigin=""></script -->
+	  
+<!-- LEAFLET -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css" / -->
+    <!-- script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script -->
+
+<!-- LEAFLET HASH -->
+    <script src="https://unpkg.com/leaflet-hash" crossorigin></script>
+
+<!-- LEAFLET PANEL LAYERS -->
+    <!-- link rel="stylesheet" href="./leaflet panel layers/leaflet-panel-layers.css" / -->
+    <!-- script src="./leaflet panel layers/leaflet-panel-layers.js"></script -->
+
+<!-- LEAFLET SEARCH -->
+    <!--link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.src.css" crossorigin / -->
+	
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.8/dist/leaflet-search.min.css" crossorigin />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.8/dist/leaflet-search.src.min.js"></script>
+    <!--script src="https://unpkg.com/leaflet-search/dist/leaflet-search.src.js" crossorigin ></script-->
+    
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  
+    <link rel="stylesheet" href="./css/style.css" />
+
+<!-- JQUERY -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <!-- script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script -->
+
+<!-- TABLETOP -->
+    <!-- script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.6.3/tabletop.min.js'></script -->
+    <!--script src="https://cdn.jsdelivr.net/gh/datasketch/gsheetreader@2/dist/gsheetreader.umd.js"></script-->
+
+<!-- LEAFLET EXTRA MARKERS -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.2.1/dist/js/leaflet.extra-markers.min.js" integrity="sha256-nm8fKiOVLndTf7KD5YEPuMSb0kv9IH7fDyZ+zlF8s/0=" crossorigin="anonymous"></script>
+<!-- link rel="stylesheet" href="https://github.com/coryasilva/Leaflet.ExtraMarkers/blob/master/src/assets/css/leaflet.extra-markers.css" -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-extra-markers@1.2.1/dist/css/leaflet.extra-markers.min.css">
+
+<!-- FONT AWESOME -->
+<!-- link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+	  
+<!-- LEAFLET CONTROL LOCATE -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+<!-- LEAFLET POLILINEMEASURE -->
+<link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+<script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+	  
+<!-- EASY BUTTON -->	  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body,
+      main {
+        height: 100%;
+        weight: 100%;
+      }
+	.NumeroCoSi {font-size: 36px; text-align: center; color: red}  	// Tamaño y color numero faltan para gyms
+	.AlineaCenter { text-align: center }
+	.circleimg { width: 20px; height: 20px; border-radius: 50%; margin-top: 8px; }
+	.leaflet-tooltip.my-labels
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 32px;
+		color: #F22;
+ 		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
+
+  		}
+    .leaflet-tooltip.my-labels-Falta3
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 32px;
+		color: #FFF;
+ 		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
+  		}
+    .leaflet-tooltip.my-labels-Falta2
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 32px;
+		color: #FF2;
+ 		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
+	        }
+	    
+    .leaflet-tooltip.my-labels-Falta1
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 32px;
+		color: #2F2;
+ 		text-shadow:  1px 1px #000 , 5px 5px 7px #000 ,  -1px -1px #000 , -7px -7px 6px #FFF;
+	        }
+
+    .leaflet-tooltip.Label_40m			
+	    	{
+		background-color: transparent;
+  		border: transparent;
+  		box-shadow: none;
+  		font-weight: bold;
+  		font-size: 12px;
+		color: #FFF;
+ 		text-shadow:  1px 1px #000 , -1px -1px #000 ;
+	        }
+  </style>
+  </head>
+
+  <body>
+    <main id="map"></main>
+
+  <script>
+	  
+///////////////////////////////////////////////////////////////////
+// Setup the Leaflet map (declaracion variables y constantes)
+let ZoomMax = 20 ;	// Zoom Maximo
+let ZoomVis = 4 ;	// A partir de que zoom se empieza ver mapa satelite (ZoomMax - ZoomVis)
+// Grupos de marcadores
+var LG_gym = new L.LayerGroup();		// Grupo gimnasios
+var LG_pokestop = new L.LayerGroup();		// Grupo Pokeparadas
+var LG_gymex = new L.LayerGroup();		// Grupo Gimnasios EX
+var LG_propuestas = new L.LayerGroup();		// Grupo Pedidas
+var LG_aceptadas = new L.LayerGroup();		// Grupo Aceptadas
+var LG_sugerencias = new L.LayerGroup();	// Grupo Sugerencias
+var LG_ContadorPG = new L.LayerGroup();		// Grupo Contador Pokeparadas y Gimnasios celda 14
+var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gimnasios
+var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
+var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
+var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
+
+var Circle40m = new L.circle ([0,0], 		// Radio alcance jugador 40m
+		{                  
+		radius: 40,
+	        stroke: true,
+	        color: "#000000",
+	        weight: 1,
+	        opacity: 1,
+	        fill: true,
+	        fillColor: "#ffff00",
+	        fillOpacity: 0.2,
+		interactive: false,
+		clickable: false,
+		});
+var Circle80m = new L.circle ([0,0], 		// Radio ampliado Covid alcance solo gyms 80m
+		{                  
+		radius: 80,
+	        stroke: true,
+	        color: "#000000",
+	        weight: 1,
+	        opacity: 1,
+	        fill: true,
+	        fillColor: "#ffff00",
+	        fillOpacity: 0.1,
+		interactive: false,
+		clickable: false,
+		});
+var CircleMJ = new L.CircleMarker([0,0],		// Circle jugador
+		{
+		radius: 6,
+		stroke: true,
+		color: "#000000",
+		weight: 2,
+		opacity: 1,
+		fill: true,
+		fillColor: "#FFFF00",
+		fillOpacity: 1,
+		draggable: true,
+		interactive: true, 
+		dragEnabled:true,
+		clickable: true,
+		});
+	  
+const map = L.map('map', {
+  maxZoom: ZoomMax,
+  zoom: (ZoomMax/2),
+  animate: true,
+  layers: [LG_gym, LG_pokestop, LG_gymex,]
+}).locate({setView: true, enableHighAccuracy: true, }); //setView([22.57, 88.32403643149632], 15)
+//map.fitBounds([[41.104215, 0.967693],[41.057519, 1.133946]]);		// Cambrils
+	  
+// eslint-disable-next-line no-unused-vars
+//const hash = new L.Hash(map);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// The fabled Google Maps satellite layer :angelic choir:
+/*
+var Mcalles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+var Mhibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+var Msatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
+});
+https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-url
+*/
+	  
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Mapas calles y satellite
+const tileSatellite = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax ,
+}).addTo(map);
+//var token = 'pk.eyJ1IjoiZG9tb3JpdHoiLCJhIjoiY2o0OHZuY3MwMGo1cTMybGM4MTFrM2dxbCJ9.yCQe43DMRqobazKewlhi9w';
+//var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
+//const tileStreet = new L.TileLayer(mapboxUrl, {tileSize: 512,zoomOffset: -1,maxZoom: ZoomMax}).addTo(map);
+	  
+const tileStreet = L.tileLayer('https://mts0.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&apistyle=s.t%3A33|s.e%3Al|p.v%3Aoff', {
+    subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: ZoomMax }).addTo(map);
+	  
+///////////////////////////////////////////////////////////////////
+// Controles
+L.control.locate({
+  		flyTo: true,
+  		drawCircle: true,
+  		drawMarker: true,
+  		enableHighAccuracy:true,
+		showCompass: true,
+		markerStyle: { color:'#ffffff' , fillColor: '#444444', },
+  		}).addTo(map);
+	  
+L.control.polylineMeasure({
+		//	  position: 'topright',
+		//	  showClearControl: true,        // Show a control to clear all the measurements
+			 }).addTo(map);
+	  
+L.control.scale().addTo(map);
+
+var overlayMaps =
+	{
+//	"Gym": LG_gym,
+//	"Pokeparada": LG_pokestop,
+//	"Gym EX": LG_gymex,
+//	"Pedidas": LG_propuestas,
+//	"Sugerencias": LG_sugerencias,
+//	"Aceptadas": LG_aceptadas,
+//	"Total Po GY" : LG_ContadorPG,
+//	"20 Metros" : LG_Circle20m,
+//	"Ingress Portal" : LG_Ingress,
+ 	};
+	  
+ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
+
+// Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
+var controlSearch = new L.Control.Search
+  ({
+  position:'topleft',
+  layer: L.featureGroup([LG_pokestop, LG_gym, LG_gymex, LG_Ingress, ]),
+  initial: false,
+  zoom: (ZoomMax-2),
+  marker: {
+	  icon: false,
+          circle: {
+                  radius: 30,
+	          stroke: true,
+	          color: "#000000",
+	          weight: 1,
+	          opacity: 1,
+	          fill: true,
+	          fillColor: "#00ff00",
+	          fillOpacity: 0.4,
+	          },
+          },
+  textPlaceholder: '...',
+  hideMarkerOnCollapse: true,
+  minLength: 2,
+  });
+  
+
+// Control boton simula jugador con su radio de alcance ///////////////////////////////////////
+var ButState = 0; // 1= activo 0 = inactivo
+var Add40m = ((41/6378137) * (180/Math.PI)); 	//Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+var Add80m = (((81-41)/6378137) * (180/Math.PI)); 	//Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
+var Label40m = new L.Circle([0.0],		//Etiqueta 40 metros
+			{
+			radius: 1,
+			opacity: 0,
+			interactive: false, 
+			clickable: false,
+			}).bindTooltip( "40m", { className: "Label_40m" , direction: 'center' , permanent: true , interactive: false , opacity: 1 , });
+
+var Label80m = new L.Circle([0.0],		//Etiqueta 80 metros
+			{
+			radius: 1,
+			opacity: 0,
+			interactive: false, 
+			clickable: false,
+			}).bindTooltip( "80m", { className: "Label_40m" , direction: 'center' , permanent: true , interactive: false , opacity: 1 , });
+
+var LocBuCo = new L.latLng (0,0);
+	  
+var ButtonJDControl = new L.easyButton('fa-street-view', function(btn, map)
+	{
+	if (ButState == 0 )
+		{
+		ButState = 1;	//Activamos judador con radios
+		LocBuCo.lat = map.getCenter().lat;
+		LocBuCo.lng = map.getCenter().lng;
+		CircleMJ.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+		Circle40m.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+		Circle80m.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+		LocBuCo.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+		Label40m.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+		LocBuCo.lat += Add80m; //Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
+		Label80m.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+		Circle80m.addTo(map);
+		Circle40m.addTo(map);
+		CircleMJ.addTo(map);
+		Label40m.addTo(map);
+		Label80m.addTo(map);
+		}
+		else
+		{
+		ButState = 0; // Desactivamos jugador
+		Circle40m.removeFrom(map);
+		Circle80m.removeFrom(map);
+		CircleMJ.removeFrom(map);
+		Label40m.removeFrom(map);
+		Label80m.removeFrom(map);
+		};
+	});
+
+	  
+CircleMJ.on				// Funccion mover jugador y radios en mapa.
+	({
+        mousedown: function ()
+		{
+          	map.dragging.disable();
+          	map.on('mousemove', function (e) 
+			{
+			LocBuCo.lat = e.latlng.lat;
+			LocBuCo.lng = e.latlng.lng;
+			Circle80m.setLatLng(e.latlng);
+			Circle40m.setLatLng(e.latlng);
+			CircleMJ.setLatLng(e.latlng);
+			LocBuCo.lat += Add40m; //Sumamos 40 metros a latitude . 6378137 Earth’s radius, sphere
+			Label40m.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+			LocBuCo.lat += Add80m; //Sumamos 80 metros a latitude . 6378137 Earth’s radius, sphere
+			Label80m.setLatLng([LocBuCo.lat,LocBuCo.lng]);
+            		});
+          	}
+	}); 
+	  
+map.on('mouseup',function(e)		// Funcion soltar raton recuperamos movimiento mapa
+       {
+       map.dragging.enable();
+       map.removeEventListener('mousemove');
+       });
+	  
+map.addControl(ButtonJDControl);
+map.addControl(controlSearch);	  
+
+	  
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Visusalizacion de mapa segun zoom
+const updateTiles = () => {
+  			const zoom = map.getZoom();
+  			if (zoom >(ZoomMax- ZoomVis)) {
+	  		 		tileStreet.setOpacity(1 - (zoom - (ZoomMax-ZoomVis)) / ZoomVis) ;
+	  				tileSatellite.setOpacity(0 + (zoom - (ZoomMax-ZoomVis)) /ZoomVis);
+  							}
+  							else
+			 				{
+		         		tileStreet.setOpacity(1);
+			 		tileSatellite.setOpacity(0);
+			 				};
+			  };
+map.on('zoomend', updateTiles);
+	  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ICONOS
+let ipokestop = L.ExtraMarkers.icon ({
+	icon: "fa-chrome",	//"fa-dice-d6", 
+	markerColor: "cyan" , shape: "circle" , prefix: "fab" , //innerHTML:'<img class="circleimg" src="./icons/black pokestop.png">' ,
+                                     }); // Icono Pokeparada
+let ipropuesta = L.ExtraMarkers.icon ({
+//	icon: "fa-tools",markerColor: "orange",shape: "square", prefix: "fas"
+//	icon: 'fa-spinner',
+	icon: 'fa-tools',
+        iconSize: '[48,64]',
+        shape: 'square',
+        markerColor: 'violet',
+        prefix: 'fa',
+        extraClasses: 'fa-spin'
+                                     }); // Icono Propuesta
+let igym =      L.ExtraMarkers.icon ({
+	icon: "fa-egg" , markerColor: "yellow" , shape: "penta" , prefix: "fas" ,
+                                    }); // Icono Gimnasio
+let igymex =    L.ExtraMarkers.icon ({
+	icon: "fa-splotch" , markerColor: "orange" , shape: "star" , prefix: "fas" , extraClasses: 'fa-pulse' ,
+                                     }); // Icono Gim ex
+let iaceptada =    L.ExtraMarkers.icon ({
+	icon: "fa-thumbs-up" , markerColor: "green-light" , shape: "circle" , prefix: "fas" ,
+                                     }); // Icono aceptada
+let isugerencia =  L.ExtraMarkers.icon ({
+	icon: "fa-question" , markerColor: "black" , shape: "circle" , prefix: "fas" ,
+                                     }); // Icono sugerencia
+let iIngress = L.ExtraMarkers.icon ({
+	icon: "fa-dice-d20",markerColor: "green-dark",shape: "circle", prefix: "fas" , innerHTML:'<img class="circleimg" src="./icons/ingress.png">' ,
+                                     }); // Icono Ingress Portal
+	  
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Cargar pokeparadas y gyms
+
+var MCPokestopOptions = 		// CircleMarker Pokeparada
+    	{
+	radius: 8,
+	stroke: true,
+	color: "#000000",
+	weight: 2,
+	opacity: 1,
+	fill: true,
+	fillColor: "#00AAff",
+	fillOpacity: 1,
+	interactive: true,
+	clickable: true,
+	pane: 'shadowPane',
+//	bubblingMouseEvents = true,
+	};
+
+var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
+    	{
+	radius: 20,
+	fillColor: "#ff0000",
+	color: "#ff0000",
+	weight: 4,
+	opacity: 0.7,
+	fillOpacity: 0.2,
+	interactive: false,
+	clickable: false,
+//	bubblingMouseEvents = false,
+	};
+	  
+var MarkerPoligonOptions = 		// Marker Poligono sombreado celda 17.
+    	{
+	fillColor: "#000000",
+	color: "#000000",
+	weight: 1,
+	opacity: 0,
+	fillOpacity: 0.2,
+	interactive: false,
+	fill: true,
+	clickable: false,
+	noClip: true,
+//	bubblingMouseEvents = false,
+	};
+	  
+var MarkerPoligonOptions14 = 		// Marker Poligono sombreado celda 14.
+    	{
+	fillColor: "#FF0000",
+	color: "#FF0000",
+	weight: 5,
+	opacity: 0,
+	fillOpacity: 0.2,
+	interactive: false,
+	fill: true,
+	clickable: false,
+	noClip: true,
+//	bubblingMouseEvents = false,
+	};
+	  
+var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
+    	{
+	Lat1 : 0,		// Latitud esquina superior izquierda
+	Lon1 : 0,	    	// Longitud esquina superior izquierda
+	Lat2 : 0,		// Latitud esquina inferior derecha
+	Lon2 : 0,		// Longitud esquina inferior derecha
+	ContMark : 1,		// Contador de markadores misma celda
+	ContGym : 0,		// Contador de gyms en Celda
+	};
+	  
+ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
+var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//const Identificador = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Kcode Excel datos vilafranca
+//const Identificador = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// KCode Excel Hospi Miami Montroig
+const Identificador = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // KCode Excel datos  Mas Tei Ale
+//const Identificador = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss";	// KCode Excel datos Cambrils
+//const Identificador = "17wxWsy9h_o8HxaP8rR4X0ybcnZxjTtrUL0-vO1OvZ-o";	 // KCode Excel datos Cambrils Salou Pineda
+
+const KUno = "AIzaSyDEX5pO8FhHLzn";
+const KDos = "52h9Ben0UiLWIFOEjOr8";
+const GoAp = "ets.googleap";
+const SpSh = "readsh";
+	  
+PutMapMarkers();
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+
+	  
+async function PutMapMarkers () 
+	{
+        var urlSheet = "https://she" + GoAp + "is.com/v4/sp" + SpSh + "eets/" + Identificador + "/values/";
+	var urlKay = "?key="+ KUno + KDos;
+		
+        var DataHoja = await ( await fetch( urlSheet + "pokestop" + urlKay )).json();
+	var rawRows = DataHoja.values || [];
+        var headers = rawRows.shift();
+	const tabletop = [];
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	      
+	let contador = 0;		// Para saber en que linea de la hoja de datos se encuentra el marcador
+	tabletop.forEach( pokestop =>  
+//	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
+	       {
+		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
+		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
+//		marker = new L.Marker(loc, {title: pokestop.nombre, icon: ipokestop} );
+		marker = new L.CircleMarker(loc, MCPokestopOptions).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
+		marker.options.title= pokestop.nombre;
+		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
+  		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		ContarPOGYC14(loc,0);	//Contador de Pokeparadas en celda14
+		
+	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		});
+	
+	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador) + "</b>)");
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "gym" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop.length = 0;
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( gym =>  
+//	$.each( tabletop.sheets("gym").all(), function(i, gim)		               // Marcadores Gimnsasios
+		{
+		contador++;
+		var loc = new L.latLng(gym.latitude, gym.longitude);
+		marker = new L.Marker(loc, {icon: igym, title: gym.nombre,} ).bindTooltip( '<b>'+gym.nombre+'</b>' );;
+		marker.bindPopup("<h2><b style='color: #ff8800'>" + gym.nombre + "<br>" + "</h2>" + gym.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gym.latitude+","+gym.longitude+ "'>" + gym.latitude +", "+ gym.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gym.imagen + ");'></div></div></div>");
+		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		
+		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		});
+	ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "gymex" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop.length = 0;
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( gymex =>  
+//	$.each( tabletop.sheets("gymex").all(), function(i, gymex)		     // Marcadores Gimnasios EX
+		{
+		contador++;
+		var loc = new L.latLng(gymex.latitude, gymex.longitude);
+		marker = new L.Marker(loc, {icon: igymex, title: gymex.nombre,} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
+		marker.bindPopup("<h2><b style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
+		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		});
+	ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
+
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "Propuesta" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop.length = 0;
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( propuesta =>  
+//	$.each( tabletop.sheets("Propuesta").all(), function(i, propuesta)		  // Marcadores Pedidos
+		{
+		contador++;
+		var loc = [propuesta.latitude, propuesta.longitude];
+		marker = new L.Marker(loc, {icon: ipropuesta, title: propuesta.nombre,} ).bindTooltip( '<b>'+propuesta.nombre+'</b>' );
+		marker.bindPopup("<h2><b style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
+		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
+		});
+	ControlLayer.addOverlay(LG_propuestas,"Pedidas (<b>"+ (contador) + "</b>)");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "Aceptadas" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop.length = 0;
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( aceptada =>  
+//	$.each( tabletop.sheets("Aceptadas").all(), function(i, aceptada)	        // Marcadores Aceptadas
+		{
+		contador++;
+		var loc = new L.latLng(aceptada.latitude, aceptada.longitude);
+		marker = new L.Marker( loc , {icon: iaceptada, title: aceptada.nombre,} ).bindTooltip( '<b>'+aceptada.nombre+'</b>' );
+		marker.bindPopup("<h2><b style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
+		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas
+		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
+		ContarPOGYC14(loc,0);	//Contador de Pokeparadas en celda14
+		const cell = S2.S2Cell.FromLatLng(loc, 17);
+  		const corners = cell.getCornerLatLngs();
+		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		});
+	ControlLayer.addOverlay(LG_aceptadas,"Aceptadas (<b>"+ (contador) + "</b>)");
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+
+        DataHoja = await ( await fetch( urlSheet + "Sugerencia" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop.length = 0;
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( sugerencia =>  
+//	$.each( tabletop.sheets("Sugerencia").all(), function(i, sugerencia)         // Marcadores SSugerencias
+		{
+		contador ++;		// Para saber en que linea de la hoja de datos se encuentra el marcador
+		var loc = [sugerencia.latitude, sugerencia.longitude];
+		marker = new L.Marker(loc, {icon: isugerencia, title: sugerencia.nombre,} ).bindTooltip( '<b>'+sugerencia.nombre+'</b>' );
+		marker.bindPopup("<h2><b style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
+		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
+  		});
+	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias (<b>"+ (contador) + "</b>)");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        DataHoja = await ( await fetch( urlSheet + "Ingress" + urlKay )).json();
+	rawRows = DataHoja.values || [];
+        headers = rawRows.shift();
+	tabletop.length = 0;
+	rawRows.forEach((row) => {
+    			const rowData = {};
+    			row.forEach((item, index) => {
+      			rowData[headers[index]] = item;
+    			});
+    		tabletop.push(rowData);
+  		});
+	contador=0;
+
+	tabletop.forEach( ingress =>  
+//	$.each( tabletop.sheets("Ingress").all(), function(i, ingress)	         // Marcadores Portales ingress
+		{
+		contador++;
+		var loc = new L.latLng(ingress.latitude, ingress.longitude);
+		
+		marker = new L.circle ( loc , MarkerCirclerOptions );
+		marker.options.title= "..";
+		marker.addTo(LG_Ingress);	// radio 20 metros
+		
+		marker = new L.Marker(loc, {icon: iIngress, title: ingress.nombre,} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
+		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
+  " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
+  "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + ingress.imagen + ");'></div></div></div>");
+		marker.addTo(LG_Ingress);	// Añadimos al grupo de portales ingress
+		});
+	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
+	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
+	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
+	ControlLayer.addOverlay(LG_ContadorPG,"Pokestops + Gyms");	// (<b>"+ ContMarkerNumCell14 + "</b>)");
+		
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	let ContadorFaltan=0;
+
+	var itotalpg =  {				// Circle Marker Total gyms y pokeparadas
+			radius: 20,
+			stroke: true,
+			color: "#000000",
+			weight: 4,
+			opacity: 1,
+			fill: false,
+			fillColor: "#AA4444",
+			fillOpacity: 0.8,
+			interactive: true,
+			clickable: true,
+			pane: 'tooltipPane',		//'markerPane',	'tooltipPane',
+			};
+		
+// Ponemos Marcadores con numero de pokeparadas y gyms en celda 14
+	for (a = 0; a < ContMarkerNumCell14; a++)
+		{
+    		let i = ListIndex[a];
+		let NumMark = ArrayMarkerNumCell14[i].ContMark;
+		let NumGyms = ArrayMarkerNumCell14[i].ContGym;
+		let TextMark = "";
+		var loc= midPoint(ArrayMarkerNumCell14[i].Lat1,ArrayMarkerNumCell14[i].Lon1,ArrayMarkerNumCell14[i].Lat2,ArrayMarkerNumCell14[i].Lon2);
+		let NumFalta = NumMark;
+		if (( NumMark > 1 ) || (NumGyms > 0))
+			{
+			if (( NumMark < 6 ) && ( NumGyms < 2))
+				{
+				NumFalta = 6 - NumMark;
+				} else if (( NumMark < 20 ) && (NumGyms < 3))
+					{
+					NumFalta = 20 - NumMark;
+					} else { NumFalta = 0; };
+                        };
+		
+
+//			L.ExtraMarkers.icon
+//			({ icon: 'fa-number', shape: 'penta', markerColor: 'orange-dark', iconColor: 'white', number: NumMark.toString(), riseOnHover: true, noHide: true, });
+
+		if ( NumFalta > 0 ) 
+			{
+			TextMark = "<b> <p class='NumeroCoSi'>"+ NumFalta +" </p> <p style='font-size:large; text-align:center'> Más para nuevo Gym </p></b>";
+			
+			
+			if  (NumFalta >=3 ) { ClsName = "my-labels-Falta3" }
+			else if (NumFalta == 2 ) { ClsName = "my-labels-Falta2" }
+			     else { ClsName = "my-labels-Falta1" };
+				
+			marker = new L.CircleMarker(loc, itotalpg).bindTooltip( NumFalta.toString(), 
+						{
+						className: ClsName,
+						direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
+			
+			
+			marker.addTo(LG_FaltanGym);	// Añadimos al grupo de Faltan para gym
+			ContadorFaltan++;
+			} 
+			else 
+			{ 
+			TextMark = "<b> <p class='NumeroCoSi'> Máximo </p> <p style='font-size:large; text-align:center'> Número de Gyms Alcanzado </p></b>";
+			
+			const cell = S2.S2Cell.FromLatLng(loc, 14);		// Celda 14 al maximo de gyms, la sombreamos
+  			const corners = cell.getCornerLatLngs();
+			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions14).addTo(LG_FaltanGym);
+			};
+                
+						 
+		marker = new L.CircleMarker(loc, itotalpg ).bindTooltip( '<b>'+ NumMark.toString() +'</b>', 
+						{
+						className: "my-labels",
+						direction: 'center', permanent: true, interactive: true , opacity: 1 ,} );
+		
+		marker.bindPopup( TextMark + "info:<br> Aparece Nuevo gym  <b> 2a | 6a | 20a</b>");
+		marker.addTo(LG_ContadorPG);	// Añadimos al grupo de totales PO GY
+		};
+	ControlLayer.addOverlay(LG_FaltanGym,"Falta Para Gym");	// (<b>"+ ContadorFaltan + "</b>)");
+	};
+//  wanted: [ "gym" , "pokestop" , "gymex" , "Propuesta" , "Aceptadas" , "Sugerencia" , "Ingress" ],
+//  debug: true
+//  });
+
+	      
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Contar Pokeparadas y Gyms en celdas 14
+  const MaxArray = 2048-1;  // Espacio para el array de celdas (1024 ,2048,4096,8192)
+  const AndIndex = 2048-1;  //
+  var ListIndex = [];   // Array de indices
+  function ContarPOGYC14(loc,EsGym)
+  	{
+  	const cell = S2.S2Cell.FromLatLng(loc, 14);
+  	const corners = cell.getCornerLatLngs();
+	let MarkIndex= ((~ cell.ij[0] ) ^ cell.ij[1]) & AndIndex;	// Creamos un indice en la tabla de arrays
+  	MarkerNumCell14.Lat1= corners[1].lat;
+  	MarkerNumCell14.Lon1= corners[1].lng;
+  	MarkerNumCell14.Lat2= corners[3].lat;
+  	MarkerNumCell14.Lon2= corners[3].lng;
+	MarkerNumCell14.ContGym= EsGym;
+  	var Nuevorepe=0;	// 1 = Nuevo o Repe
+    	do
+      		{
+        	if ( ArrayMarkerNumCell14[MarkIndex] == undefined )		//Comprobamos si esta celda array ocupada.
+          		{
+            		ArrayMarkerNumCell14[MarkIndex]= JSON.parse(JSON.stringify(MarkerNumCell14));	//Celda array no ocupada
+            		ListIndex[ContMarkerNumCell14]=MarkIndex;
+            		ContMarkerNumCell14++;
+            		Nuevorepe = 1;
+         		} else
+          		{
+           		if( (ArrayMarkerNumCell14[MarkIndex].Lat1 == MarkerNumCell14.Lat1) && (ArrayMarkerNumCell14[MarkIndex].Lon1 == MarkerNumCell14.Lon1))
+        			{
+        			Nuevorepe=1;                     		//Celda repetida
+        			ArrayMarkerNumCell14[MarkIndex].ContMark++	// Incrementamos contador de marcador en celda
+				ArrayMarkerNumCell14[MarkIndex].ContGym += EsGym;	//Contador de gyms en celda.
+              			} else
+              			{
+              			MarkIndex= (MarkIndex+1) & MaxArray;  // si array ocupado no igual, cogemos siguiente array
+              			};
+          		};
+      		} while (Nuevorepe == 0);
+	};
+	  
+////////////////////////////////////////////////////////////////////////////////////////////////
+// Calcular el medio entre 2 puntos
+function midPoint(lat1,lon1,lat2,lon2)
+	{
+	const PI180 = Math.PI / 180;
+	let dLon = (lon2 - lon1) * PI180;
+	//convert to radians
+	lat1 = lat1 * PI180;
+	lat2 = lat2 * PI180;
+	lon1 = lon1 * PI180;
+	let Bx = Math.cos(lat2) * Math.cos(dLon);
+	let By = Math.cos(lat2) * Math.sin(dLon);
+	let lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + Bx) * (Math.cos(lat1) + Bx) + By * By));
+	let lon3 = lon1 + Math.atan2(By, Math.cos(lat1) + Bx);
+	return new L.latLng ((lat3 * 180 / Math.PI),(lon3 * 180 / Math.PI));  // Devolvemos valores a grados
+	};
+	  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Overlay the S2 cells
+// CREDIT: S2 cell drawing pretty much borrowed directly from
+// https://gitlab.com/AlfonsoML/pogo-s2/blob/93cc77c1973b4978610ff25a85273d290e2754a0/s2check.user.js
+let regionLayer;
+var ColorCell17= '#000000';
+var ColorCell14= '#FF0000';
+const updateMapGrid = () => {
+  regionLayer.clearLayers();
+  const bounds = map.getBounds();
+  const seenCells = {};
+  const levels = {
+    17: {
+      color: ColorCell17, 	//'#000000',
+      opacity: 1,
+      weight: 1,
+        },
+    14: {
+      color: ColorCell14,	//'#22CC44',
+      opacity: 0.6,
+      weight: 5,
+        },
+      };
+  const drawCell = (cell, options) => {
+    // corner points
+    const corners = cell.getCornerLatLngs();
+    // the level 6 cells have noticible errors with non-geodesic lines - and the larger level 4 cells are worse
+    // NOTE: we only draw two of the edges. as we draw all cells on screen, the other two edges will either be drawn
+    // from the other cell, or be off screen so we don't care
+    const region = L.polyline([corners[0], corners[1], corners[2]], {
+      fill: false,
+      clickable: false,
+      ...options,
+    });
+    regionLayer.addLayer(region);
+  };
+  const drawCellAndNeighbors = (cell, options) => {
+    const cellStr = cell.toString();
+    if (!seenCells[cellStr]) {
+      // cell not visited - flag it as visited now
+      seenCells[cellStr] = true;
+      // is it on the screen?
+      const corners = cell.getCornerLatLngs();
+      const cellBounds = L.latLngBounds([corners[0], corners[1]]).extend(corners[2]).extend(corners[3]);
+      if (cellBounds.intersects(bounds)) {
+        // on screen - draw it
+        drawCell(cell, options);
+        // and recurse to our neighbors
+        const neighbors = cell.getNeighbors();
+        for (let i = 0; i < neighbors.length; i++) {
+          drawCellAndNeighbors(neighbors[i], options);
+        };
+      };
+    };
+  };
+  // center cell
+  const zoom = map.getZoom();
+	
+  Object.keys(levels).forEach(level => {
+	const options = levels[level];
+	if (level == 14 && zoom >= 15 ) 	// nivel de zoom que sera visible celda 14
+		{
+		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+		drawCellAndNeighbors(cell, options);
+		}
+	else if (level == 17 && zoom >= 16 )	// nivel de zoom que sera visible celda 17
+		{
+  		if ( zoom >= (ZoomMax-1) ) { ColorCell17= '#FFFFFF'; }	// Celda 17 color blanco
+  		else  { ColorCell17= '#000000'; };			// celda 17 color negro
+		const cell = S2.S2Cell.FromLatLng(map.getCenter(), level);
+		drawCellAndNeighbors(cell, options);
+		};
+	});
+      };
+	  
+
+regionLayer = L.layerGroup();
+map.addLayer(regionLayer);
+map.on('moveend', updateMapGrid);
+updateTiles();
+updateMapGrid();
+</script>
+</body>
+</html>
