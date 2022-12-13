@@ -571,7 +571,7 @@ async function PutMapMarkers ()
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
 	
-	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador) + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador) + "</b>)");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -606,7 +606,7 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
-	ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -639,7 +639,7 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
-	ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
 
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -668,7 +668,7 @@ async function PutMapMarkers ()
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
 		});
-	ControlLayer.addOverlay(LG_propuestas,"Pedidas (<b>"+ (contador) + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_propuestas,"Pedidas (<b>"+ (contador) + "</b>)");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -701,7 +701,7 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 		});
-	ControlLayer.addOverlay(LG_aceptadas,"Aceptadas (<b>"+ (contador) + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_aceptadas,"Aceptadas (<b>"+ (contador) + "</b>)");
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 
@@ -729,7 +729,7 @@ async function PutMapMarkers ()
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
   		});
-	ControlLayer.addOverlay(LG_sugerencias,"Sugerencias (<b>"+ (contador) + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_sugerencias,"Sugerencias (<b>"+ (contador) + "</b>)");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -764,7 +764,7 @@ async function PutMapMarkers ()
 		});
 	ControlLayer.addOverlay(LG_Circle20m,"20 Metros");
 	ControlLayer.addOverlay(LG_Celda17Fill,"Celda 17 Ocupada");
-	ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
+	if ( contador > 0 ) ControlLayer.addOverlay(LG_Ingress,"Ingress (<b>"+ (contador) + "</b>)");
 	ControlLayer.addOverlay(LG_ContadorPG,"Pokestops + Gyms");	// (<b>"+ ContMarkerNumCell14 + "</b>)");
 		
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
