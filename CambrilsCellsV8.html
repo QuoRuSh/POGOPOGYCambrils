@@ -454,6 +454,19 @@ var MCPokestopOptions = 		// CircleMarker Pokeparada
 	pane: 'shadowPane',
 //	bubblingMouseEvents = true,
 	};
+	  
+var MCPokestopShadowOptions = 		// CircleMarker Pokeparada Shadow
+    	{
+	radius: 8,
+	stroke: true,
+	color: "#000000",
+	weight: 3,
+	opacity: 7,
+	fill: false,
+	interactive: true,
+	clickable: true,
+	pane: 'shadowPane',
+	};
 
 var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
     	{
@@ -516,11 +529,11 @@ var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //var KeySheet = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss";	// Key Code Excel datos Cambrils
 //var GidSheet = ["0","2141075471","738675477","1343097660","708344939","1023025232","1602307742"];  // pokestops , gym , gymex , Aceptadas , Propuesta , Ingres , Sugerencia , 
-const OfLatitude =  0;
-const OfLongitude = 1;
-const OfNombre = 2;
-const OfCity = 3 ;
-const OfImagen = 4;
+//const OfLatitude =  0;
+//const OfLongitude = 1;
+//const OfNombre = 2;
+//const OfCity = 3 ;
+//const OfImagen = 4;
 const Identificador = "17wxWsy9h_o8HxaP8rR4X0ybcnZxjTtrUL0-vO1OvZ-o";	// Cambrils Vilafortuny "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
 const KUno = "AIzaSyDEX5pO8FhHLzn";
 const KDos = "52h9Ben0UiLWIFOEjOr8";
@@ -552,11 +565,11 @@ async function PutMapMarkers ()
 	      
 	let contador = 0;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	tabletop.forEach( pokestop =>  
-//	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
-//		marker = new L.Marker(loc, {title: pokestop.nombre, icon: ipokestop} );
+		var locshadow = new L.LatLng( pokestop.latitude + 0,0003, pokestop.longitude + 0,0003 );
+		new L.circle ( locshadow , MCPokestopShadowOptions ).addto(LG_pokestop);
 		marker = new L.CircleMarker(loc, MCPokestopOptions).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
 		marker.options.title= pokestop.nombre;
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
