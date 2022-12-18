@@ -570,7 +570,7 @@ async function PutMapMarkers ()
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
 		var locshadow = new L.LatLng( (loc.lat + 0.0003) , (loc.lng + 0.0003) );
-		new L.circle ( locshadow , MCPokestopShadowOptions ).addto(LG_pokestop);
+		new L.circle ( locshadow , MCPokestopShadowOptions ).addTo(LG_pokestop);
 		marker = new L.CircleMarker(loc, MCPokestopOptions).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
 		marker.options.title= pokestop.nombre;
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
