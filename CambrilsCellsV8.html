@@ -592,7 +592,8 @@ async function PutMapMarkers ()
 			{
 			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
 				{
-				if ( Celda17Ocupada[e] == Corner ) Corner = 0 ;
+				if ( Celda17Ocupada[e].lat == Corner.lat && Celda17Ocupada[e].lng == Corner.lng) 
+					Corner = 0 ;
 				}
 			}
 		if ( Corner )
