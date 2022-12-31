@@ -586,16 +586,16 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		
 		// Comprobamos que la celda 17 no este ya marcada
-		const Corner = corners[0] ;
+		const Corner = corners[0].lat ;
 		if ( Celda17Ocupada.length )
 			{
-			for ( let e = 0 ; e < Celda17Ocupada.length && Corner.lat > 0 ; e++ )
+			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
 				{
-				if ( Celda17Ocupada[e].lat == Corner.lat && Celda17Ocupada[e].lng == Corner.lng) 
-					Corner.lat = 0 ;
+				if ( Celda17Ocupada[e] == Corner )  
+					Corner = 0 ;
 				}
 			}
-		if ( Corner.lat )
+		if ( Corner )
 			{
 			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 			Celda17Ocupada[Celda17Ocupada.length]= Corner ;
@@ -637,16 +637,16 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		
 		// Comprobamos que la celda 17 no este ya marcada
-		const Corner = corners[0] ;
+		const Corner = corners[0].lat ;
 		if ( Celda17Ocupada.length )
 			{
-			for ( let e = 0 ; e < Celda17Ocupada.length && Corner.lat > 0 ; e++ )
+			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
 				{
-				if ( Celda17Ocupada[e].lat == Corner.lat && Celda17Ocupada[e].lng == Corner.lng) 
-					Corner.lat = 0 ;
+				// if ( Celda17Ocupada[e].lat == Corner.lat && Celda17Ocupada[e].lng == Corner.lng) 
+				if ( Celda17Ocupada[e] == Corner ) Corner = 0 ;
 				}
 			}
-		if ( Corner.lat )
+		if ( Corner )
 			{
 			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 			Celda17Ocupada[Celda17Ocupada.length]= Corner ;
@@ -686,16 +686,15 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		
 		// Comprobamos que la celda 17 no este ya marcada
-		const Corner = corners[0] ;
+		const Corner = corners[0].lat ;
 		if ( Celda17Ocupada.length )
 			{
-			for ( let e = 0 ; e < Celda17Ocupada.length && Corner.lat > 0 ; e++ )
+			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
 				{
-				if ( Celda17Ocupada[e].lat == Corner.lat && Celda17Ocupada[e].lng == Corner.lng) 
-					Corner.lat = 0 ;
+				if ( Celda17Ocupada[e] == Corner ) Corner = 0 ;
 				}
 			}
-		if ( Corner.lat )
+		if ( Corner )
 			{
 			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
 			Celda17Ocupada[Celda17Ocupada.length]= Corner ;
