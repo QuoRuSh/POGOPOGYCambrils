@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
 
-    <!-- title>Cambrils Cells</title -->
+    <-- title>Cambrils Cells</title -->
 
     <!-- title>Vilafranca del Penedes Cells</title --> 
     <!-- title>Hospitalet Miami Montroig Cells</title -->
@@ -69,7 +69,6 @@
 <!-- EASY BUTTON -->	  
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@latest/src/easy-button.css">
 <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@latest/src/easy-button.js"></script>
-
 
     <style>
       * {
@@ -456,6 +455,19 @@ var MCPokestopOptions = 		// CircleMarker Pokeparada
 	pane: 'shadowPane',
 //	bubblingMouseEvents = true,
 	};
+	  
+var MCPokestopShadowOptions = 		// CircleMarker Pokeparada Shadow
+    	{
+	radius: 8,
+	stroke: true,
+	color: "#000000",
+	weight: 3,
+	opacity: 7,
+	fill: false,
+	interactive: false,
+	clickable: false,
+	pane: 'shadowPane',
+	};
 
 var MarkerCirclerOptions = 		// Marker Circulo de 20 metros
     	{
@@ -510,19 +522,25 @@ var MarkerNumCell14 =				// Para contar pokestops y gyms en celdas 14
 	  
 ArrayMarkerNumCell14 = [];	// Array de celdas 14 con numero de pokeparadas y gyms
 var ContMarkerNumCell14 = 0;	// Contador de celdas con marcadores
-	
+	  
+// var code = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets"	// Key code Excel datos vilafranca
+// var code = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak"	// Key Code Excel Hospi Miami Montroig
+// var code = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM"     // Key Code Excel datos  Mas Tei Ale
+	  
 /////////////////////////////////////////////////////////////////////////////////////////////////
-//const Identificador = "1MBo6bA7aHIf4h-I0EkhDQB2YRAH9qijjnueobVfaets";	// Kcode Excel datos vilafranca
-//const Identificador = "1i7XMmyJ3maDAGr8PdeNo9FzLwQc_1e_pbjy3DYepjak";	// KCode Excel Hospi Miami Montroig
-const Identificador = "1mraiEi1XUT8HPpa27DpbBla2V0XQRQUw73DEgRd7GaE"; // Masnou Teia Alella Premia Montgat
-//const Identificador = "1dfnZeHb7kD660uazTuxgRH87qGXOA8Nf366n-hYMSFM";     // KCode Excel datos  Mas Tei Ale
-//const Identificador = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss";	// KCode Excel datos Cambrils
-//const Identificador = "17wxWsy9h_o8HxaP8rR4X0ybcnZxjTtrUL0-vO1OvZ-o";	 // KCode Excel datos Cambrils Salou Pineda
-
+//var KeySheet = "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss";	// Key Code Excel datos Cambrils
+//var GidSheet = ["0","2141075471","738675477","1343097660","708344939","1023025232","1602307742"];  // pokestops , gym , gymex , Aceptadas , Propuesta , Ingres , Sugerencia , 
+//const OfLatitude =  0;
+//const OfLongitude = 1;
+//const OfNombre = 2;
+//const OfCity = 3 ;
+//const OfImagen = 4;
+//const Identificador = "17wxWsy9h_o8HxaP8rR4X0ybcnZxjTtrUL0-vO1OvZ-o";	// Cambrils Vilafortuny "1rRcKbQqjrIVVVFO1smLvdVg-UrYrQ88ck0chL-I0Fss"
+const Identificador = "1mraiEi1XUT8HPpa27DpbBla2V0XQRQUw73DEgRd7GaE";	// Masnou Alella Teia Premia Montgat
 const KUno = "AIzaSyDEX5pO8FhHLzn";
 const KDos = "52h9Ben0UiLWIFOEjOr8";
 const GoAp = "ets.googleap";
-const SpSh = "readsh";
+const SpSh = "spreadsh";
 	  
 PutMapMarkers();
 
@@ -532,7 +550,7 @@ PutMapMarkers();
 	  
 async function PutMapMarkers () 
 	{
-        var urlSheet = "https://she" + GoAp + "is.com/v4/sp" + SpSh + "eets/" + Identificador + "/values/";
+        var urlSheet = "https://she" + GoAp + "is.com/v4/" + SpSh + "eets/" + Identificador + "/values/";
 	var urlKay = "?key="+ KUno + KDos;
 		
         var DataHoja = await ( await fetch( urlSheet + "pokestop" + urlKay )).json();
@@ -546,14 +564,16 @@ async function PutMapMarkers ()
     			});
     		tabletop.push(rowData);
   		});
-	      
+	
+	const Celda17Ocupada = [];	// Array para no repetir Sombreado celda 17 
+	
 	let contador = 0;		// Para saber en que linea de la hoja de datos se encuentra el marcador
 	tabletop.forEach( pokestop =>  
-//	$.each( tabletop.sheets("pokestop").all(), function(i, pokestop)              // Marcadores Pokeparadas
 	       {
 		contador ++;	// Para saber en que linea de la hoja de datos se encuentra el marcador
 		var loc = new L.latLng(pokestop.latitude, pokestop.longitude);
-//		marker = new L.Marker(loc, {title: pokestop.nombre, icon: ipokestop} );
+//		var locshadow = new L.LatLng( (loc.lat + 0.00003) , (loc.lng + 0.00003) );
+//		new L.CircleMarker ( locshadow , MCPokestopShadowOptions ).addTo(LG_pokestop);
 		marker = new L.CircleMarker(loc, MCPokestopOptions).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
 		marker.options.title= pokestop.nombre;
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
@@ -565,10 +585,24 @@ async function PutMapMarkers ()
 		
 	  	const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
-		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		
+		// Comprobamos que la celda 17 no este ya marcada
+		var Corner = corners[0].lat ;
+		if ( Celda17Ocupada.length )
+			{
+			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
+				{
+				if ( Celda17Ocupada[e] == Corner ) Corner = 0 ;
+				}
+			}
+		if ( Corner )
+			{
+			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+			Celda17Ocupada[Celda17Ocupada.length]= Corner ;
+			}
 		});
 	
-	if ( contador > 0 ) ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador) + "</b>)");
+	ControlLayer.addOverlay(LG_pokestop,"Pokeparadas (<b>"+ (contador) + "</b>)");
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -601,8 +635,23 @@ async function PutMapMarkers ()
 		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
-		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
-		});
+		
+		// Comprobamos que la celda 17 no este ya marcada
+		var Corner = corners[0].lat ;
+		if ( Celda17Ocupada.length )
+			{
+			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
+				{
+				if ( Celda17Ocupada[e] == Corner ) Corner = 0 ;
+				}
+			}
+		if ( Corner )
+			{
+			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+			Celda17Ocupada[Celda17Ocupada.length]= Corner ;
+			}
+		});		
+		
 	if ( contador > 0 ) ControlLayer.addOverlay(LG_gym,"Gyms (<b>"+ contador + "</b>)");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -634,8 +683,23 @@ async function PutMapMarkers ()
 		ContarPOGYC14(loc,1);	//Contador de Pokeparadas en celda14
 		const cell = S2.S2Cell.FromLatLng(loc, 17);
   		const corners = cell.getCornerLatLngs();
-		new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+		
+		// Comprobamos que la celda 17 no este ya marcada
+		var Corner = corners[0].lat ;
+		if ( Celda17Ocupada.length )
+			{
+			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
+				{
+				if ( Celda17Ocupada[e] == Corner ) Corner = 0 ;
+				}
+			}
+		if ( Corner )
+			{
+			new L.polyline([corners[0], corners[1], corners[2] , corners[3]], MarkerPoligonOptions).addTo(LG_Celda17Fill);
+			Celda17Ocupada[Celda17Ocupada.length]= Corner ;
+			}
 		});
+		
 	if ( contador > 0 ) ControlLayer.addOverlay(LG_gymex,"Gyms Ex (<b>"+ (contador) + "</b>)");
 
 		
