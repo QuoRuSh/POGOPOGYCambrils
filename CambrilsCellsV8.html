@@ -586,7 +586,7 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		
 		// Comprobamos que la celda 17 no este ya marcada
-		const Corner = corners[0].lat ;
+		var Corner = corners[0].lat ;
 		if ( Celda17Ocupada.length )
 			{
 			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
@@ -636,7 +636,7 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		
 		// Comprobamos que la celda 17 no este ya marcada
-		const Corner = corners[0].lat ;
+		var Corner = corners[0].lat ;
 		if ( Celda17Ocupada.length )
 			{
 			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
@@ -684,7 +684,7 @@ async function PutMapMarkers ()
   		const corners = cell.getCornerLatLngs();
 		
 		// Comprobamos que la celda 17 no este ya marcada
-		const Corner = corners[0].lat ;
+		var Corner = corners[0].lat ;
 		if ( Celda17Ocupada.length )
 			{
 			for ( let e = 0 ; e < Celda17Ocupada.length && Corner > 0 ; e++ )
