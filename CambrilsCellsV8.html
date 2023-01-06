@@ -278,12 +278,11 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
-
-map.on('overlayadd overlayremove', function (e) {
+// Comprobar que no se activen a la vez Falta para Gyms y Contador de pokeparadas y gyms
+map.on('overlayadd', function (e) {
     if (ControlLayer._handlingClick) {
-	a = e.Name;
-        // Executes only on input toggle, not on
-        // map.addLayer(marker) or map.removeLayer(marker)
+	if ( e.Name == "Pokestops + Gyms" && (map.hasLayer(LG_FaltanGym)) LG_FaltanGym.remove();
+	else if ( e.Name == "Falta Para Gym" && (map.hasLayer(LG_ContadorPG)) LG_ContadorPG.remove();
     }});
 
 	
