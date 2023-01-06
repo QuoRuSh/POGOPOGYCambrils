@@ -160,7 +160,7 @@ var LG_sugerencias = new L.LayerGroup();	// Grupo Sugerencias
 var LG_ContadorPG = new L.LayerGroup();		// Grupo Contador Pokeparadas y Gimnasios celda 14
 var LG_Circle20m = new L.LayerGroup();		// Grupo Area 20 metros pokeparadas y gimnasios
 var LG_Ingress = new L.LayerGroup();		// Grupo portales ingress con su area 20 metros
-var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas faltal para que salte gimnasio.
+var LG_FaltanGym = new L.LayerGroup();		// Grupo numero pokeparadas falta para que salte gimnasio.
 var LG_Celda17Fill = new L.LayerGroup();	// Grupo sombreado de celdas 17 ocupadas.
 
 var Circle40m = new L.circle ([0,0], 		// Radio alcance jugador 40m
@@ -1050,8 +1050,8 @@ map.on('moveend', updateMapGrid);
 // Comprobar que no se activen a la vez Falta para Gyms y Contador de pokeparadas y gyms
 map.on('overlayadd', function (e) {
     if (ControlLayer._handlingClick) {
-	if ( e.Name == "Pokestops + Gyms" && (map.hasLayer(LG_FaltanGym)) LG_FaltanGym.remove();
-	else if ( e.Name == "Falta Para Gym" && (map.hasLayer(LG_ContadorPG)) LG_ContadorPG.remove();
+	if ( e.Name == "Pokestops + Gyms" && (map.hasLayer(LG_FaltanGym))) LG_FaltanGym.remove();
+	else if ( e.Name == "Falta Para Gym" && (map.hasLayer(LG_ContadorPG))) LG_ContadorPG.remove();
     }});
 	  
 updateTiles();
