@@ -278,6 +278,11 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
+ControlLayer.on('add', function(e) 
+	{
+  	var a = e.name
+	});
+
 // Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
 var controlSearch = new L.Control.Search
   ({
