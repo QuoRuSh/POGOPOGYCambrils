@@ -278,14 +278,6 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
-// Comprobar que no se activen a la vez Falta para Gyms y Contador de pokeparadas y gyms
-map.on('overlayadd', function (e) {
-    if (ControlLayer._handlingClick) {
-	if ( e.Name == "Pokestops + Gyms" && (map.hasLayer(LG_FaltanGym)) LG_FaltanGym.remove();
-	else if ( e.Name == "Falta Para Gym" && (map.hasLayer(LG_ContadorPG)) LG_ContadorPG.remove();
-    }});
-
-	
 // Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
 var controlSearch = new L.Control.Search
   ({
@@ -1054,6 +1046,14 @@ const updateMapGrid = () => {
 regionLayer = L.layerGroup();
 map.addLayer(regionLayer);
 map.on('moveend', updateMapGrid);
+	  
+// Comprobar que no se activen a la vez Falta para Gyms y Contador de pokeparadas y gyms
+map.on('overlayadd', function (e) {
+    if (ControlLayer._handlingClick) {
+	if ( e.Name == "Pokestops + Gyms" && (map.hasLayer(LG_FaltanGym)) LG_FaltanGym.remove();
+	else if ( e.Name == "Falta Para Gym" && (map.hasLayer(LG_ContadorPG)) LG_ContadorPG.remove();
+    }});
+	  
 updateTiles();
 updateMapGrid();
 </script>
