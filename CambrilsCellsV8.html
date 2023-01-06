@@ -1050,8 +1050,8 @@ map.on('moveend', updateMapGrid);
 // Comprobar que no se activen a la vez Falta para Gyms y Contador de pokeparadas y gyms
 map.on('overlayadd', function (EventLayer) {
     if (ControlLayer._handlingClick) {
-	if ( EventLayer.name == "Pokestops + Gyms" ) ControlLayer.uncheckLayer(LG_FaltanGym);  //&& (map.hasLayer(LG_FaltanGym))) LG_FaltanGym.remove();
-	else if ( EventLayer.name == "Falta Para Gym" ) ControlLayer.uncheckLayer(LG_ContadorPG);  // && (map.hasLayer(LG_ContadorPG))) LG_ContadorPG.remove();
+	if ( EventLayer.name == "Pokestops + Gyms" ) ControlLayer.uncheck("Pokestops + Gyms");  //&& (map.hasLayer(LG_FaltanGym))) LG_FaltanGym.remove();
+	else if ( EventLayer.name == "Falta Para Gym" ) ControlLayer.uncheck("Falta Para Gym");  // && (map.hasLayer(LG_ContadorPG))) LG_ContadorPG.remove();
     }});
 	  
 updateTiles();
