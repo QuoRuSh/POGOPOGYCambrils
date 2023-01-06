@@ -278,11 +278,14 @@ var overlayMaps =
 	  
 ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
-ControlLayer.on('add', function(e) 
-	{
-  	tmp = e.name ;
-	});
 
+map.on('overlayadd overlayremove', function (e) {
+    if (ControlLayer._handlingClick) {
+	a = e.name;
+        // Executes only on input toggle, not on
+        // map.addLayer(marker) or map.removeLayer(marker)
+    }
+	
 // Control Busqueda pokeparadas ////////////////////////////////////////////////////////////////////////////////////////
 var controlSearch = new L.Control.Search
   ({
