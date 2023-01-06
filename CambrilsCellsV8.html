@@ -281,7 +281,7 @@ ControlLayer=L.control.layers(null, overlayMaps).addTo(map);
 
 map.on('overlayadd overlayremove', function (e) {
     if (ControlLayer._handlingClick) {
-	a = e.name;
+	a = e.Name;
         // Executes only on input toggle, not on
         // map.addLayer(marker) or map.removeLayer(marker)
     }
