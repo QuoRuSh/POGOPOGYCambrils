@@ -218,16 +218,16 @@ const map = L.map('map', {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // The fabled Google Maps satellite layer :angelic choir:
 /*
-var Mcalles = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+var Mcalles = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
-var Mhibrido = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+var Mhibrido = L.tileLayer('https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
-var Msatelit = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+var Msatelit = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
-var Mterreno = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
+var Mterreno = L.tileLayer('https://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}', {
     subdomains:['mt0','mt1','mt2','mt3'] , maxZoom: 25
 });
 https://stackoverflow.com/questions/29692737/customizing-google-map-tile-server-url
@@ -576,7 +576,7 @@ async function PutMapMarkers ()
 		marker = new L.CircleMarker(loc, MCPokestopOptions).bindTooltip( '<b>'+pokestop.nombre+'</b>' );
 		marker.options.title= pokestop.nombre;
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + pokestop.nombre + "<br>" + "</h2>" + pokestop.city + "     (" + contador + ")" + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
+  " <h3><a href='https://maps.google.com/maps?q=" +pokestop.latitude+","+pokestop.longitude+ "'>" + pokestop.latitude+", "+pokestop.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + pokestop.imagen + ");'></div></div></div>");
   		marker.addTo(LG_pokestop);	// Añadimos al grupo de pokestop
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
@@ -626,7 +626,7 @@ async function PutMapMarkers ()
 		var loc = new L.latLng(gym.latitude, gym.longitude);
 		marker = new L.Marker(loc, {icon: igym, title: gym.nombre,} ).bindTooltip( '<b>'+gym.nombre+'</b>' );;
 		marker.bindPopup("<h2><b style='color: #ff8800'>" + gym.nombre + "<br>" + "</h2>" + gym.city + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +gym.latitude+","+gym.longitude+ "'>" + gym.latitude +", "+ gym.longitude + "</a></h3>" +
+  " <h3><a href='https://maps.google.com/maps?q=" +gym.latitude+","+gym.longitude+ "'>" + gym.latitude +", "+ gym.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gym.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gym);	// Añadimos al grupo de gyms
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
@@ -675,7 +675,8 @@ async function PutMapMarkers ()
 		var loc = new L.latLng(gymex.latitude, gymex.longitude);
 		marker = new L.Marker(loc, {icon: igymex, title: gymex.nombre,} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
+  " <h3><a href='https
+				 ://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
@@ -724,7 +725,7 @@ async function PutMapMarkers ()
 		var loc = [propuesta.latitude, propuesta.longitude];
 		marker = new L.Marker(loc, {icon: ipropuesta, title: propuesta.nombre,} ).bindTooltip( '<b>'+propuesta.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #44ff00'>" + propuesta.nombre + "<br>" + "</h2>" + propuesta.city + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
+  " <h3><a href='https://maps.google.com/maps?q=" +propuesta.latitude+","+propuesta.longitude+ "'>" + propuesta.latitude+", "+propuesta.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + propuesta.imagen + ");'></div></div></div>");
 		marker.addTo(LG_propuestas);	// Añadimos al grupo de pedidas
 		});
@@ -752,7 +753,7 @@ async function PutMapMarkers ()
 		var loc = new L.latLng(aceptada.latitude, aceptada.longitude);
 		marker = new L.Marker( loc , {icon: iaceptada, title: aceptada.nombre,} ).bindTooltip( '<b>'+aceptada.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #0044ff'>" + aceptada.nombre + "<br>" + "</h2>" + aceptada.city + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
+  " <h3><a href='https://maps.google.com/maps?q=" +aceptada.latitude+","+aceptada.longitude+ "'>" + aceptada.latitude+", "+aceptada.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + aceptada.imagen + ");'></div></div></div>");
 		marker.addTo(LG_aceptadas);	// Añadimos al grupo de Aceptadas
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
@@ -785,7 +786,7 @@ async function PutMapMarkers ()
 		var loc = [sugerencia.latitude, sugerencia.longitude];
 		marker = new L.Marker(loc, {icon: isugerencia, title: sugerencia.nombre,} ).bindTooltip( '<b>'+sugerencia.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #444444'>" + sugerencia.nombre + "<br>" + "</h2>" + sugerencia.city + "     (" + contador + ")"  + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
+  " <h3><a href='https://maps.google.com/maps?q=" +sugerencia.latitude+","+sugerencia.longitude+ "'>" + sugerencia.latitude+", "+sugerencia.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + sugerencia.imagen + ");'></div></div></div>");
 		marker.addTo(LG_sugerencias);	// Añadimos al grupo de Sugeridas
   		});
@@ -818,7 +819,7 @@ async function PutMapMarkers ()
 		
 		marker = new L.Marker(loc, {icon: iIngress, title: ingress.nombre,} ).bindTooltip( '<b>'+ingress.nombre+'</b>' );
 		marker.bindPopup("<h2><b style='color: #00AA00'>" + ingress.nombre + "<br>" + "</h2>" + ingress.city + "</b></h2>" +
-  " <h3><a href='http://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
+  " <h3><a href='https://maps.google.com/maps?q=" +ingress.latitude+","+ingress.longitude+ "'>" + ingress.latitude +", "+ ingress.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + ingress.imagen + ");'></div></div></div>");
 		marker.addTo(LG_Ingress);	// Añadimos al grupo de portales ingress
 		});
