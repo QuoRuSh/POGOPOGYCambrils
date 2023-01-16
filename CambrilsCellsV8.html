@@ -674,9 +674,7 @@ async function PutMapMarkers ()
 		contador++;
 		var loc = new L.latLng(gymex.latitude, gymex.longitude);
 		marker = new L.Marker(loc, {icon: igymex, title: gymex.nombre,} ).bindTooltip( '<b>'+gymex.nombre+'</b>' );
-		marker.bindPopup("<h2><b style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</b></h2>" +
-  " <h3><a href='https
-				 ://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
+		marker.bindPopup("<h2><b style='color: #ffdd00'>" + gymex.nombre + "<br>" + "</h2>" + gymex.city + "</b></h2>" + " <h3><a href='https://maps.google.com/maps?q=" +gymex.latitude+","+gymex.longitude+ "'>" + gymex.latitude+", "+gymex.longitude + "</a></h3>" +
   "<div id='infoboxpic'><div id='infoboxpicin'><div id='infoboxpicimg' style='background-image: url(" + gymex.imagen + ");'></div></div></div>");
 		marker.addTo(LG_gymex);	// Añadimos al grupo de gym ex
 		new L.circle ( loc , MarkerCirclerOptions ).addTo(LG_Circle20m);
